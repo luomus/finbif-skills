@@ -1,0 +1,794 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Laji API",
+    "description": "\n## Authentication\n\nThis API requires an **Access Token**. To obtain a token:\n1. [Send a `POST` request with your email address to the `/api-user` endpoint](https://api.laji.fi/openapi#/API%20user/ApiUsersController_register).\n2. An access token will be sent to your email.\n\nInclude the token in all requests using the HTTP header: `Authorization: Bearer <ACCESS_TOKEN>`\n\nHere on the API frontpage, you can configure the **Access Token**, **Person-Token**, and **Accept-Language** globally using the **Authorize** button below.\n\n---\n\n## Documentation & Resources\n\n- **Additional API documentation:**\n  [https://info.laji.fi/en/frontpage/api/api-laji-fi](https://info.laji.fi/en/frontpage/api/api-laji-fi)\n\n- **OpenAPI / Swagger 3.0 specification (machine-readable):**\n  [https://api.laji.fi/openapi-json](https://api.laji.fi/openapi-json)\n\n---\n\n## Support\n\nIf you have any questions, contact us at **helpdesk@laji.fi**.\n",
+    "version": "1",
+    "contact": {}
+  },
+  "target": {
+    "path": "/notifications/{id}",
+    "method": "PUT"
+  },
+  "pathItem": {
+    "parameters": []
+  },
+  "operation": {
+    "operationId": "NotificationsController_update",
+    "parameters": [
+      {
+        "name": "id",
+        "required": true,
+        "in": "path",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "Person-Token",
+        "required": false,
+        "description": "Person's authentication token. It is required.",
+        "in": "header",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/store-notification"
+            }
+          }
+        }
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "403": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "406": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "Access token": []
+      },
+      {
+        "Lang": []
+      },
+      {
+        "Person token": []
+      }
+    ],
+    "tags": [
+      "Notifications"
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/store-notification"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "store-notification": {
+        "type": "object",
+        "properties": {
+          "@context": {
+            "type": "string",
+            "title": "Context for the MHN.notification"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id for the MHN.notification"
+          },
+          "@type": {
+            "type": "string",
+            "title": "Type for the MHN.notification"
+          },
+          "annotation": {
+            "$ref": "#/components/schemas/store-annotation"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created"
+          },
+          "friendRequest": {
+            "type": "string",
+            "title": "Friend request from"
+          },
+          "friendRequestAccepted": {
+            "type": "string",
+            "title": "Friend request accepted by"
+          },
+          "notificationReason": {
+            "type": "string",
+            "enum": [
+              "",
+              "MHN.notificationReasonOwnDocumentAnnotated",
+              "MHN.notificationReasonAnnotatedDocumentAnnotated"
+            ],
+            "title": "Notification reason"
+          },
+          "seen": {
+            "type": "boolean",
+            "title": "Seen"
+          },
+          "toPerson": {
+            "type": "string",
+            "title": "Notification is for"
+          }
+        },
+        "required": [
+          "created",
+          "toPerson"
+        ],
+        "additionalProperties": false
+      },
+      "store-annotation": {
+        "type": "object",
+        "properties": {
+          "@context": {
+            "type": "string",
+            "title": "Context for the MAN.annotation"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id for the MAN.annotation"
+          },
+          "@type": {
+            "type": "string",
+            "title": "Type for the MAN.annotation"
+          },
+          "addedTags": {
+            "type": "array",
+            "uniqueItems": false,
+            "items": {
+              "type": "string"
+            },
+            "minItems": 0,
+            "title": "Added tags"
+          },
+          "annotationByPerson": {
+            "type": "string",
+            "title": "Person Id"
+          },
+          "annotationBySystem": {
+            "type": "string",
+            "title": "System Id"
+          },
+          "annotationClass": {
+            "type": "string",
+            "enum": [
+              "",
+              "MAN.annotationClassReliable",
+              "MAN.annotationClassLikely",
+              "MAN.annotationClassNeutral",
+              "MAN.annotationClassSuspicious",
+              "MAN.annotationClassUnreliable",
+              "MAN.annotationClassAcknowledged",
+              "MAN.annotationClassSpam"
+            ],
+            "title": "My evaluation of the observation"
+          },
+          "atlasCode": {
+            "type": "string",
+            "enum": [
+              "",
+              "MY.atlasCodeEnum1",
+              "MY.atlasCodeEnum2",
+              "MY.atlasCodeEnum3",
+              "MY.atlasCodeEnum4",
+              "MY.atlasCodeEnum5",
+              "MY.atlasCodeEnum6",
+              "MY.atlasCodeEnum61",
+              "MY.atlasCodeEnum62",
+              "MY.atlasCodeEnum63",
+              "MY.atlasCodeEnum64",
+              "MY.atlasCodeEnum65",
+              "MY.atlasCodeEnum66",
+              "MY.atlasCodeEnum7",
+              "MY.atlasCodeEnum71",
+              "MY.atlasCodeEnum72",
+              "MY.atlasCodeEnum73",
+              "MY.atlasCodeEnum74",
+              "MY.atlasCodeEnum75",
+              "MY.atlasCodeEnum8",
+              "MY.atlasCodeEnum81",
+              "MY.atlasCodeEnum82"
+            ],
+            "title": "Overriding Breeding Index"
+          },
+          "byRole": {
+            "type": "string",
+            "enum": [
+              "",
+              "MMAN.expert",
+              "MMAN.basic",
+              "MMAN.owner",
+              "MMAN.formAdmin",
+              "MMAN.ictAdmin"
+            ],
+            "title": "Annotators role"
+          },
+          "censusAnnotation": {
+            "type": "array",
+            "uniqueItems": false,
+            "items": {
+              "type": "string",
+              "enum": [
+                "",
+                "MAN.countError",
+                "MAN.innerCountError",
+                "MAN.otherError"
+              ]
+            },
+            "minItems": 0,
+            "title": "Census annotation"
+          },
+          "created": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Creation time"
+          },
+          "createdTimestamp": {
+            "type": "integer",
+            "minimum": 0,
+            "title": "Created timestamp"
+          },
+          "deletedTimestamp": {
+            "type": "integer",
+            "minimum": 0,
+            "title": "Deleted timestamp"
+          },
+          "identification": {
+            "$ref": "#/components/schemas/store-identification"
+          },
+          "invasiveControlEffectiveness": {
+            "type": "string",
+            "enum": [
+              "",
+              "MY.invasiveControlEffectivenessFull",
+              "MY.invasiveControlEffectivenessPartial",
+              "MY.invasiveControlEffectivenessNone",
+              "MY.invasiveControlEffectivenessNotFound"
+            ],
+            "title": "Annotation type for invasive control"
+          },
+          "lineTransectAnnotation": {
+            "type": "array",
+            "uniqueItems": false,
+            "items": {
+              "type": "string",
+              "enum": [
+                "",
+                "MAN.birdCountError",
+                "MAN.innerCountError",
+                "MAN.otherError"
+              ]
+            },
+            "minItems": 0,
+            "title": "Line transect annotation"
+          },
+          "notes": {
+            "type": "string",
+            "title": "Comment"
+          },
+          "occurrenceAtTimeOfAnnotation": {
+            "$ref": "#/components/schemas/store-annotationOccurrence"
+          },
+          "opinion": {
+            "type": "string",
+            "title": "Suggested identification"
+          },
+          "removedTags": {
+            "type": "array",
+            "uniqueItems": false,
+            "items": {
+              "type": "string"
+            },
+            "minItems": 0,
+            "title": "Removed tags"
+          },
+          "rootID": {
+            "type": "string",
+            "title": "Root ID"
+          },
+          "targetID": {
+            "type": "string",
+            "title": "Target Id"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "",
+              "MAN.typeOpinion",
+              "MAN.typeInvasiveControlEffectiveness",
+              "MAN.typeUnidentifiable",
+              "MAN.typeAdmin"
+            ],
+            "title": "My evaluation of the observation"
+          },
+          "createdBySystem": {
+            "type": "string",
+            "title": "Deleted by system"
+          },
+          "deleted": {
+            "type": "boolean",
+            "title": "Soft delete"
+          },
+          "deletedByPerson": {
+            "type": "string",
+            "title": "Deleted by person"
+          },
+          "deletedDateTime": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Deleted at"
+          }
+        },
+        "required": [
+          "rootID"
+        ],
+        "additionalProperties": false
+      },
+      "store-identification": {
+        "type": "object",
+        "properties": {
+          "@context": {
+            "type": "string",
+            "title": "Context for the Identification"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id for the Identification"
+          },
+          "@type": {
+            "type": "string",
+            "title": "Type for the Identification"
+          },
+          "associatedObservationTaxa": {
+            "type": "string",
+            "description": "Write associated observation taxa names here, separated by a semicolon (;). E.g.: \"Betula pendula; Betula pubescens; Poaceae\". These will form their own units of the type observation.",
+            "title": "Associated observation taxa"
+          },
+          "author": {
+            "type": "string",
+            "description": "Author for the taxon",
+            "title": "Taxon author"
+          },
+          "det": {
+            "type": "string",
+            "description": "Name of the identifier (person) preferably in format \"lastname, firstname\"",
+            "title": "Det."
+          },
+          "detDate": {
+            "type": "string",
+            "description": "Date or year when the identification was done, preferably in format \"d.m.Y\" or \"Y\"",
+            "title": "Det. date"
+          },
+          "detMethod": {
+            "type": "string",
+            "enum": [
+              "",
+              "MY.detMethodFreshSample",
+              "MY.detMethodMicroscopy",
+              "MY.detMethodPhoto"
+            ],
+            "title": "Det method"
+          },
+          "detVerbatim": {
+            "type": "string",
+            "description": "Name of the identifier and date of identification in original format (e.g. from the label), errors and all",
+            "title": "Det verbatim from the label or other original source"
+          },
+          "genusQualifier": {
+            "type": "string",
+            "description": "Additional qualifier or specifier at genus level (e.g. aff., cf.)",
+            "title": "Genus qualifier"
+          },
+          "identificationBasis": {
+            "type": "array",
+            "uniqueItems": false,
+            "items": {
+              "type": "string",
+              "enum": [
+                "",
+                "MY.identificationBasisDNA",
+                "MY.identificationBasisGenitals",
+                "MY.identificationBasisGenitalPreparate",
+                "MY.identificationBasisSpores",
+                "MY.identificationBasisHandled",
+                "MY.identificationBasisChemical",
+                "MY.identificationBasisHeard",
+                "MY.identificationBasisMicroscope",
+                "MY.identificationBasisSeen",
+                "MY.identificationBasisPreservedSpecimen",
+                "MY.identificationBasisFreshSpecimen",
+                "MY.identificationBasisMedia"
+              ]
+            },
+            "minItems": 0,
+            "title": "Identification basis"
+          },
+          "identificationNotes": {
+            "type": "string",
+            "description": "Additional information on the identification, basis or such",
+            "title": "Identification notes"
+          },
+          "infraAuthor": {
+            "type": "string",
+            "description": "Author for the taxon below species level/infra epithet",
+            "title": "Infra author"
+          },
+          "infraEpithet": {
+            "type": "string",
+            "description": "Taxon name for the epithet below species level",
+            "title": "Infra name"
+          },
+          "infraRank": {
+            "type": "string",
+            "enum": [
+              "",
+              "MY.infraRankSsp",
+              "MY.infraRankVar",
+              "MY.infraRankBeta",
+              "MY.infraRankB",
+              "MY.infraRankForma",
+              "MY.infraRankHybrid",
+              "MY.infraRankAnamorph",
+              "MY.infraRankAggregate",
+              "MY.infraRankAberration",
+              "MY.infraRankCultivar",
+              "MY.infraRankMorpha",
+              "MY.infraRankUnknown",
+              "MY.infraRankNothosubspecies",
+              "MY.infraRankCultivarGroup",
+              "MY.infraRankFsp",
+              "MY.infraRankNothovar"
+            ],
+            "description": "Taxonomic level of the epithet below species level",
+            "title": "Infra rank"
+          },
+          "infrasubspecificSubdivision": {
+            "type": "string",
+            "description": "Pathovars, serovars and other infrasubspecific subdivisions of microbes.",
+            "title": "Infrasubspecific subdivision"
+          },
+          "isPartOf": {
+            "type": "string",
+            "description": "Which parent or larger collection this is part of.",
+            "title": "Is part of"
+          },
+          "isTaxonGroup": {
+            "type": "boolean",
+            "title": "Is taxon group"
+          },
+          "preferredIdentification": {
+            "type": "string",
+            "description": "This can be used to select one of the identifications as 'recommended', which is the used as default when displaying information about the specimen.",
+            "title": "Preferred identification"
+          },
+          "sec": {
+            "type": "string",
+            "description": "Publication reference for the taxon concept, that was used in identification",
+            "title": "Taxon concept (sec)"
+          },
+          "speciesQualifier": {
+            "type": "string",
+            "description": "Additional qualifier at species level (e.g. aff., cf., sp. n., coll.)",
+            "title": "Species qualifier"
+          },
+          "taxon": {
+            "type": "string",
+            "description": "Taxon name",
+            "title": "Species"
+          },
+          "taxonID": {
+            "type": "string",
+            "description": "ID for the taxon if has some other than an MX code",
+            "title": "Taxon alternative ID"
+          },
+          "taxonRank": {
+            "type": "string",
+            "enum": [
+              "",
+              "MX.superdomain",
+              "MX.domain",
+              "MX.kingdom",
+              "MX.subkingdom",
+              "MX.infrakingdom",
+              "MX.superphylum",
+              "MX.phylum",
+              "MX.subphylum",
+              "MX.infraphylum",
+              "MX.superdivision",
+              "MX.division",
+              "MX.subdivision",
+              "MX.infradivision",
+              "MX.superclass",
+              "MX.class",
+              "MX.subclass",
+              "MX.infraclass",
+              "MX.parvclass",
+              "MX.superorder",
+              "MX.order",
+              "MX.suborder",
+              "MX.infraorder",
+              "MX.parvorder",
+              "MX.superfamily",
+              "MX.family",
+              "MX.subfamily",
+              "MX.tribe",
+              "MX.subtribe",
+              "MX.supergenus",
+              "MX.genus",
+              "MX.nothogenus",
+              "MX.subgenus",
+              "MX.section",
+              "MX.subsection",
+              "MX.series",
+              "MX.subseries",
+              "MX.infragenericTaxon",
+              "MX.aggregate",
+              "MX.speciesAggregate",
+              "MX.species",
+              "MX.nothospecies",
+              "MX.infraspecificTaxon",
+              "MX.subspecificAggregate",
+              "MX.subspecies",
+              "MX.nothosubspecies",
+              "MX.variety",
+              "MX.subvariety",
+              "MX.form",
+              "MX.subform",
+              "MX.hybrid",
+              "MX.anamorph",
+              "MX.ecotype",
+              "MX.populationGroup",
+              "MX.intergenericHybrid",
+              "MX.infragenericHybrid",
+              "MX.cultivar",
+              "MX.group",
+              "MX.grex"
+            ],
+            "description": "Taxonomic level for the identification",
+            "title": "Taxon rank"
+          },
+          "taxonSpecifier": {
+            "type": "string",
+            "title": "Taxon specifier"
+          },
+          "taxonURI": {
+            "type": "string",
+            "title": "Taxon URI"
+          },
+          "taxonVerbatim": {
+            "type": "string",
+            "description": "Taxon name in original format (e.g. from the label), errors and all",
+            "title": "Taxon verbatim"
+          },
+          "publicityRestrictions": {
+            "type": "string",
+            "enum": [
+              "",
+              "MZ.publicityRestrictionsPublic",
+              "MZ.publicityRestrictionsProtected",
+              "MZ.publicityRestrictionsPrivate"
+            ],
+            "description": "PUBLIC: all data can be published; PROTECTED: exact locality is hidden (100*100km square); PRIVATE: most of the data is hidden. Empty value means same as public.",
+            "title": "Publicity restrictions"
+          },
+          "sortOrder": {
+            "type": "integer",
+            "title": "sortOrder"
+          }
+        },
+        "additionalProperties": false
+      },
+      "store-annotationOccurrence": {
+        "type": "object",
+        "properties": {
+          "@context": {
+            "type": "string",
+            "title": "Context for the MAN.annotationOccurrenceClass"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id for the MAN.annotationOccurrenceClass"
+          },
+          "@type": {
+            "type": "string",
+            "title": "Type for the MAN.annotationOccurrenceClass"
+          },
+          "countryVerbatim": {
+            "type": "string",
+            "title": "Country verbatim"
+          },
+          "dateBegin": {
+            "type": "string",
+            "title": "Date begin"
+          },
+          "dateEnd": {
+            "type": "string",
+            "title": "Date end"
+          },
+          "locality": {
+            "type": "string",
+            "title": "Locality"
+          },
+          "municipalityVerbatim": {
+            "type": "string",
+            "title": "Municipality verbatim"
+          },
+          "taxonId": {
+            "type": "string",
+            "title": "Taxon ID"
+          },
+          "taxonVerbatim": {
+            "type": "string",
+            "title": "Taxon verbatim"
+          },
+          "wgs84centerPointLat": {
+            "type": "number",
+            "title": "Latitude (center point)"
+          },
+          "wgs84centerPointLon": {
+            "type": "number",
+            "title": "Longitude (center point)"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "resolvedRefs": [
+    "#/components/schemas/store-annotation",
+    "#/components/schemas/store-annotationOccurrence",
+    "#/components/schemas/store-identification",
+    "#/components/schemas/store-notification"
+  ]
+}

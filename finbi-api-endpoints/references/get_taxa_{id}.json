@@ -1,0 +1,1319 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Laji API",
+    "description": "\n## Authentication\n\nThis API requires an **Access Token**. To obtain a token:\n1. [Send a `POST` request with your email address to the `/api-user` endpoint](https://api.laji.fi/openapi#/API%20user/ApiUsersController_register).\n2. An access token will be sent to your email.\n\nInclude the token in all requests using the HTTP header: `Authorization: Bearer <ACCESS_TOKEN>`\n\nHere on the API frontpage, you can configure the **Access Token**, **Person-Token**, and **Accept-Language** globally using the **Authorize** button below.\n\n---\n\n## Documentation & Resources\n\n- **Additional API documentation:**\n  [https://info.laji.fi/en/frontpage/api/api-laji-fi](https://info.laji.fi/en/frontpage/api/api-laji-fi)\n\n- **OpenAPI / Swagger 3.0 specification (machine-readable):**\n  [https://api.laji.fi/openapi-json](https://api.laji.fi/openapi-json)\n\n---\n\n## Support\n\nIf you have any questions, contact us at **helpdesk@laji.fi**.\n",
+    "version": "1",
+    "contact": {}
+  },
+  "target": {
+    "path": "/taxa/{id}",
+    "method": "GET"
+  },
+  "pathItem": {
+    "parameters": []
+  },
+  "operation": {
+    "operationId": "TaxaController_get",
+    "parameters": [
+      {
+        "name": "id",
+        "required": true,
+        "in": "path",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "selectedFields",
+        "required": false,
+        "in": "query",
+        "description": "Select fields to include in the result. Multiple values are separated by a comma (,)",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "includeMedia",
+        "required": false,
+        "in": "query",
+        "description": "Include media objects in the response. Defaults to false.",
+        "schema": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "includeDescriptions",
+        "required": false,
+        "in": "query",
+        "description": "Include description objects in the response. Defaults to false.",
+        "schema": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "includeRedListEvaluations",
+        "required": false,
+        "in": "query",
+        "description": "Include red list evaluations in the response. Defaults to false.",
+        "schema": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "checklistVersion",
+        "required": false,
+        "in": "query",
+        "description": "Checklist version to be used. Defaults to the latest version.",
+        "schema": {
+          "default": "current",
+          "type": "string",
+          "enum": [
+            "current",
+            "MR.424",
+            "MR.425",
+            "MR.426",
+            "MR.427",
+            "MR.428",
+            "MR.484"
+          ]
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "qname": {
+                  "type": "string",
+                  "description": "Qname identifier"
+                },
+                "id": {
+                  "type": "string",
+                  "description": "Qname identifier"
+                },
+                "uri": {
+                  "type": "string"
+                },
+                "isPartOf": {
+                  "type": "string",
+                  "description": "Qname identifier"
+                },
+                "isPartOfNonHidden": {
+                  "type": "string",
+                  "description": "Qname identifier"
+                },
+                "parents": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "nonHiddenParents": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "depth": {
+                  "type": "integer"
+                },
+                "nonHiddenDepth": {
+                  "type": "integer"
+                },
+                "parentsIncludeSelf": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "nonHiddenParentsIncludeSelf": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "hiddenTaxon": {
+                  "type": "boolean"
+                },
+                "nameAccordingTo": {
+                  "type": "string",
+                  "description": "Qname identifier"
+                },
+                "taxonRank": {
+                  "type": "string",
+                  "description": "Qname identifier"
+                },
+                "scientificName": {
+                  "type": "string"
+                },
+                "scientificNameAuthorship": {
+                  "type": "string"
+                },
+                "scientificNameDisplayName": {
+                  "type": "string"
+                },
+                "cursiveName": {
+                  "type": "boolean"
+                },
+                "typeSpecimenURI": {
+                  "type": "string"
+                },
+                "synonymNames": {
+                  "type": "string"
+                },
+                "basionyms": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                  }
+                },
+                "objectiveSynonyms": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                  }
+                },
+                "subjectiveSynonyms": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                  }
+                },
+                "homotypicSynonyms": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                  }
+                },
+                "heterotypicSynonyms": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                  }
+                },
+                "synonyms": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                  }
+                },
+                "misspelledNames": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                  }
+                },
+                "orthographicVariants": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                  }
+                },
+                "uncertainSynonyms": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                  }
+                },
+                "misappliedNames": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                  }
+                },
+                "alternativeNames": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                  }
+                },
+                "vernacularName": {
+                  "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                },
+                "alternativeVernacularName": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                  }
+                },
+                "obsoleteVernacularName": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                  }
+                },
+                "colloquialVernacularName": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                  }
+                },
+                "tradeName": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                  }
+                },
+                "informalTaxonGroups": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "threatenedStatus": {
+                  "type": "string",
+                  "description": "Qname identifier"
+                },
+                "redListEvaluationGroups": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "occurrenceInFinland": {
+                  "type": "string",
+                  "description": "Qname identifier"
+                },
+                "occurrenceInFinlandSpecimenURI": {
+                  "type": "string"
+                },
+                "typeOfOccurrenceInFinland": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "occurrenceInFinlandPublications": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "typeOfOccurrenceInFinlandNotes": {
+                  "type": "string"
+                },
+                "originalPublications": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "originalDescription": {
+                  "type": "string",
+                  "description": "Qname identifier"
+                },
+                "nameDecidedBy": {
+                  "type": "string",
+                  "description": "Qname identifier"
+                },
+                "nameDecidedDate": {
+                  "type": "string"
+                },
+                "administrativeStatuses": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "primaryHabitat": {
+                  "$ref": "#/components/schemas/LajiBackendHabitatObject"
+                },
+                "secondaryHabitats": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LajiBackendHabitatObject"
+                  }
+                },
+                "latestRedListStatusFinland": {
+                  "$ref": "#/components/schemas/LajiBackendRedListStatus"
+                },
+                "redListStatusesInFinland": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LajiBackendRedListStatus"
+                  }
+                },
+                "taxonExpert": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "taxonEditor": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "invasiveSpeciesEstablishment": {
+                  "type": "string",
+                  "description": "Qname identifier"
+                },
+                "multimedia": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LajiBackendImage"
+                  }
+                },
+                "descriptions": {
+                  "$ref": "#/components/schemas/LajiBackendContent"
+                },
+                "secureLevel": {
+                  "type": "string",
+                  "description": "Qname identifier"
+                },
+                "breedingSecureLevel": {
+                  "type": "string",
+                  "description": "Qname identifier"
+                },
+                "winteringSecureLevel": {
+                  "type": "string",
+                  "description": "Qname identifier"
+                },
+                "nestSiteSecureLevel": {
+                  "type": "string",
+                  "description": "Qname identifier"
+                },
+                "naturaAreaSecureLevel": {
+                  "type": "string",
+                  "description": "Qname identifier"
+                },
+                "sensitive": {
+                  "type": "boolean"
+                },
+                "autoNonWild": {
+                  "type": "boolean"
+                },
+                "occurrences": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LajiBackendOccurrence"
+                  }
+                },
+                "habitatOccurrenceCounts": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LajiBackendHabitatOccurrenceCount"
+                  }
+                },
+                "birdlifeCode": {
+                  "type": "string"
+                },
+                "euringCode": {
+                  "type": "string"
+                },
+                "euringNumber": {
+                  "type": "integer"
+                },
+                "customReportFormLink": {
+                  "type": "string"
+                },
+                "taxonConceptIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "additionalIds": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "externalLinks": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LajiBackendLocalizedURL"
+                  }
+                },
+                "finnish": {
+                  "type": "boolean"
+                },
+                "species": {
+                  "type": "boolean"
+                },
+                "finnishSpecies": {
+                  "type": "boolean"
+                },
+                "invasiveSpecies": {
+                  "type": "boolean"
+                },
+                "stableInFinland": {
+                  "type": "boolean"
+                },
+                "countOfSpecies": {
+                  "type": "integer"
+                },
+                "countOfFinnishSpecies": {
+                  "type": "integer"
+                },
+                "observationCount": {
+                  "type": "integer"
+                },
+                "occurrenceCount": {
+                  "type": "integer"
+                },
+                "observationCountFinland": {
+                  "type": "integer"
+                },
+                "occurrenceCountFinland": {
+                  "type": "integer"
+                },
+                "observationCountInvasiveFinland": {
+                  "type": "integer"
+                },
+                "occurrenceCountInvasiveFinland": {
+                  "type": "integer"
+                },
+                "bold": {
+                  "$ref": "#/components/schemas/LajiBackendBoldRecords"
+                },
+                "hasBold": {
+                  "type": "boolean"
+                },
+                "isPartOfSynonym": {
+                  "type": "string",
+                  "description": "Qname identifier"
+                },
+                "hasParent": {
+                  "type": "boolean"
+                },
+                "hasChildren": {
+                  "type": "boolean"
+                },
+                "hasMultimedia": {
+                  "type": "boolean"
+                },
+                "hasDescriptions": {
+                  "type": "boolean"
+                },
+                "invasiveSpeciesMainGroups": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "taxonSets": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "notes": {
+                  "type": "string"
+                },
+                "taxonomicOrder": {
+                  "type": "integer"
+                },
+                "parent": {
+                  "type": "object",
+                  "properties": {
+                    "domain": {
+                      "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                    },
+                    "kingdom": {
+                      "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                    },
+                    "phylum": {
+                      "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                    },
+                    "subphylum": {
+                      "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                    },
+                    "division": {
+                      "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                    },
+                    "class": {
+                      "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                    },
+                    "subclass": {
+                      "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                    },
+                    "order": {
+                      "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                    },
+                    "suborder": {
+                      "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                    },
+                    "superfamily": {
+                      "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                    },
+                    "family": {
+                      "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                    },
+                    "subfamily": {
+                      "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                    },
+                    "tribe": {
+                      "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                    },
+                    "subtribe": {
+                      "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                    },
+                    "genus": {
+                      "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                    },
+                    "subgenus": {
+                      "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                    },
+                    "aggregate": {
+                      "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                    },
+                    "species": {
+                      "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                    }
+                  }
+                },
+                "synonymOf": {
+                  "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+                },
+                "latestRedListEvaluation": {
+                  "$ref": "#/components/schemas/LajiBackendEvaluation"
+                },
+                "hasLatestRedListEvaluation": {
+                  "type": "boolean"
+                },
+                "primaryHabitatSearchStrings": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "anyHabitatSearchStrings": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "vernacularNameMultiLang": {
+                  "type": "object",
+                  "properties": {
+                    "fi": {
+                      "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                    },
+                    "sv": {
+                      "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                    },
+                    "en": {
+                      "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                    }
+                  },
+                  "_patchMultiLang": false
+                },
+                "alternativeVernacularNameMultiLang": {
+                  "type": "object",
+                  "properties": {
+                    "fi": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                      }
+                    },
+                    "sv": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                      }
+                    },
+                    "en": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                      }
+                    }
+                  },
+                  "_patchMultiLang": false
+                },
+                "colloquialVernacularNameMultiLang": {
+                  "type": "object",
+                  "properties": {
+                    "fi": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                      }
+                    },
+                    "sv": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                      }
+                    },
+                    "en": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                      }
+                    }
+                  },
+                  "_patchMultiLang": false
+                },
+                "obsoleteVernacularNameMultiLang": {
+                  "type": "object",
+                  "properties": {
+                    "fi": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                      }
+                    },
+                    "sv": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                      }
+                    },
+                    "en": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                      }
+                    }
+                  },
+                  "_patchMultiLang": false
+                },
+                "tradeNameMultiLang": {
+                  "type": "object",
+                  "properties": {
+                    "fi": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                      }
+                    },
+                    "sv": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                      }
+                    },
+                    "en": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                      }
+                    }
+                  },
+                  "_patchMultiLang": false
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "403": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "406": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "Access token": []
+      },
+      {
+        "Lang": []
+      },
+      {
+        "Person token": []
+      }
+    ],
+    "summary": "Get a taxon by id",
+    "tags": [
+      "Taxa"
+    ]
+  },
+  "components": {
+    "schemas": {
+      "LajiBackendSimpleTaxon": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "scientificName": {
+            "type": "string"
+          },
+          "scientificNameAuthorship": {
+            "type": "string"
+          },
+          "vernacularName": {
+            "$ref": "#/components/schemas/LajiBackendLocalizedText"
+          },
+          "taxonRank": {
+            "type": "string"
+          },
+          "cursiveName": {
+            "type": "boolean"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "bold": {
+            "$ref": "#/components/schemas/LajiBackendBoldRecords"
+          },
+          "hasBold": {
+            "type": "boolean"
+          }
+        }
+      },
+      "LajiBackendLocalizedText": {
+        "type": "string"
+      },
+      "LajiBackendBoldRecords": {
+        "type": "object",
+        "properties": {
+          "barcodes": {
+            "type": "integer"
+          },
+          "binCount": {
+            "type": "integer"
+          },
+          "bins": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "publicRecords": {
+            "type": "integer"
+          },
+          "specimens": {
+            "type": "integer"
+          }
+        }
+      },
+      "LajiBackendRedListStatus": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "Qname identifier"
+          },
+          "year": {
+            "type": "integer"
+          }
+        }
+      },
+      "LajiBackendOccurrence": {
+        "type": "object",
+        "properties": {
+          "area": {
+            "type": "string",
+            "description": "Qname identifier"
+          },
+          "id": {
+            "type": "string",
+            "description": "Qname identifier"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "occurrenceCount": {
+            "type": "integer"
+          },
+          "specimenURI": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "description": "Qname identifier"
+          },
+          "threatened": {
+            "type": "boolean"
+          },
+          "year": {
+            "type": "integer"
+          }
+        }
+      },
+      "LajiBackendLocalizedURL": {
+        "type": "object",
+        "properties": {
+          "locale": {
+            "type": "string"
+          },
+          "uri": {
+            "type": "string"
+          }
+        }
+      },
+      "LajiBackendImage": {
+        "type": "object",
+        "properties": {
+          "author": {
+            "type": "string"
+          },
+          "caption": {
+            "type": "string"
+          },
+          "captureDateTime": {
+            "type": "string"
+          },
+          "copyrightOwner": {
+            "type": "string"
+          },
+          "fullURL": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "description": "Qname identifier"
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "largeURL": {
+            "type": "string"
+          },
+          "licenseAbbreviation": {
+            "type": "string"
+          },
+          "licenseFullname": {
+            "$ref": "#/components/schemas/LajiBackendLocalizedText"
+          },
+          "licenseId": {
+            "type": "string",
+            "description": "Qname identifier"
+          },
+          "lifeStage": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "plantLifeStage": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sex": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "side": {
+            "type": "string",
+            "description": "Qname identifier"
+          },
+          "sortOrder": {
+            "type": "integer"
+          },
+          "source": {
+            "type": "string",
+            "description": "Qname identifier"
+          },
+          "squareThumbnailURL": {
+            "type": "string"
+          },
+          "taxon": {
+            "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+          },
+          "taxonDescriptionCaption": {
+            "$ref": "#/components/schemas/LajiBackendLocalizedText"
+          },
+          "thumbnailURL": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "description": "Qname identifier"
+          },
+          "uploadDateTime": {
+            "type": "string"
+          },
+          "primaryForTaxon": {
+            "type": "boolean"
+          }
+        }
+      },
+      "LajiBackendHabitatOccurrenceCount": {
+        "type": "object",
+        "properties": {
+          "habitat": {
+            "$ref": "#/components/schemas/LajiBackendLocalizedText"
+          },
+          "id": {
+            "type": "string"
+          },
+          "occurrenceCount": {
+            "type": "integer"
+          }
+        }
+      },
+      "LajiBackendHabitatObject": {
+        "type": "object",
+        "properties": {
+          "habitat": {
+            "type": "string",
+            "description": "Qname identifier"
+          },
+          "habitatSpecificTypes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "id": {
+            "type": "string",
+            "description": "Qname identifier"
+          },
+          "order": {
+            "type": "integer"
+          }
+        }
+      },
+      "LajiBackendEvaluation": {
+        "type": "object",
+        "properties": {
+          "evaluationYear": {
+            "type": "integer"
+          },
+          "redListStatus": {
+            "type": "string",
+            "enum": [
+              "MX.iucnEX",
+              "MX.iucnEW",
+              "MX.iucnRE",
+              "MX.iucnCR",
+              "MX.iucnEN",
+              "MX.iucnVU",
+              "MX.iucnNT",
+              "MX.iucnLC",
+              "MX.iucnDD",
+              "MX.iucnNA",
+              "MX.iucnNE"
+            ],
+            "x-enum-origin": "MX.iucnStatuses"
+          },
+          "externalPopulationImpactOnRedListStatus": {
+            "type": "string",
+            "enum": [
+              "MKV.externalPopulationImpactOnRedListStatusEnumMinus1",
+              "MKV.externalPopulationImpactOnRedListStatusEnumMinus2",
+              "MKV.externalPopulationImpactOnRedListStatusEnumPlus1",
+              "MKV.externalPopulationImpactOnRedListStatusEnumPlus2"
+            ],
+            "x-enum-origin": "MKV.externalPopulationImpactOnRedListStatusEnum"
+          },
+          "criteriaForStatus": {
+            "type": "string"
+          },
+          "possiblyRE": {
+            "type": "string",
+            "enum": [
+              "MX.iucnRE",
+              "MX.iucnEW",
+              "MX.iucnEX"
+            ],
+            "x-enum-origin": "MKV.possiblyREEnum"
+          },
+          "reasonForStatusChange": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "MKV.reasonForStatusChangeGenuine",
+                "MKV.reasonForStatusChangeGenuineBeforePreviousEvaluation",
+                "MKV.reasonForStatusChangeChangesInCriteria",
+                "MKV.reasonForStatusChangeMoreInformation",
+                "MKV.reasonForStatusChangeChangesInTaxonomy",
+                "MKV.reasonForStatusChangeError",
+                "MKV.reasonForStatusChangeErroneousInformation",
+                "MKV.reasonForStatusChangeOther"
+              ],
+              "x-enum-origin": "MKV.reasonForStatusChangeEnum"
+            }
+          },
+          "lastSightingNotes": {
+            "type": "string"
+          },
+          "primaryHabitat": {
+            "$ref": "#/components/schemas/LajiBackendHabitatObject"
+          },
+          "secondaryHabitats": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LajiBackendHabitatObject"
+            }
+          },
+          "primaryHabitatSearchStrings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "anyHabitatSearchStrings": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "endangermentReasons": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "primaryEndangermentReason": {
+            "type": "string"
+          },
+          "threats": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "primaryThreat": {
+            "type": "string"
+          },
+          "occurrences": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LajiBackendOccurrence"
+            }
+          },
+          "threatenedAtArea": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "calculatedRedListIndex": {
+            "type": "integer"
+          },
+          "calculatedCorrectedRedListIndex": {
+            "type": "integer"
+          },
+          "correctedStatusForRedListIndex": {
+            "type": "string"
+          }
+        }
+      },
+      "LajiBackendContent": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/LajiBackendContext"
+        }
+      },
+      "LajiBackendContext": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "$ref": "#/components/schemas/LajiBackendLocalizedText"
+          },
+          "groups": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "group": {
+                  "type": "string"
+                },
+                "title": {
+                  "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                },
+                "variables": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "variable": {
+                        "type": "string"
+                      },
+                      "title": {
+                        "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                      },
+                      "content": {
+                        "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "speciesCardAuthors": {
+            "type": "object",
+            "properties": {
+              "variable": {
+                "type": "string"
+              },
+              "title": {
+                "$ref": "#/components/schemas/LajiBackendLocalizedText"
+              },
+              "content": {
+                "$ref": "#/components/schemas/LajiBackendLocalizedText"
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "resolvedRefs": [
+    "#/components/schemas/LajiBackendBoldRecords",
+    "#/components/schemas/LajiBackendContent",
+    "#/components/schemas/LajiBackendContext",
+    "#/components/schemas/LajiBackendEvaluation",
+    "#/components/schemas/LajiBackendHabitatObject",
+    "#/components/schemas/LajiBackendHabitatOccurrenceCount",
+    "#/components/schemas/LajiBackendImage",
+    "#/components/schemas/LajiBackendLocalizedText",
+    "#/components/schemas/LajiBackendLocalizedURL",
+    "#/components/schemas/LajiBackendOccurrence",
+    "#/components/schemas/LajiBackendRedListStatus",
+    "#/components/schemas/LajiBackendSimpleTaxon"
+  ]
+}

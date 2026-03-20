@@ -1,0 +1,4316 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Laji API",
+    "description": "\n## Authentication\n\nThis API requires an **Access Token**. To obtain a token:\n1. [Send a `POST` request with your email address to the `/api-user` endpoint](https://api.laji.fi/openapi#/API%20user/ApiUsersController_register).\n2. An access token will be sent to your email.\n\nInclude the token in all requests using the HTTP header: `Authorization: Bearer <ACCESS_TOKEN>`\n\nHere on the API frontpage, you can configure the **Access Token**, **Person-Token**, and **Accept-Language** globally using the **Authorize** button below.\n\n---\n\n## Documentation & Resources\n\n- **Additional API documentation:**\n  [https://info.laji.fi/en/frontpage/api/api-laji-fi](https://info.laji.fi/en/frontpage/api/api-laji-fi)\n\n- **OpenAPI / Swagger 3.0 specification (machine-readable):**\n  [https://api.laji.fi/openapi-json](https://api.laji.fi/openapi-json)\n\n---\n\n## Support\n\nIf you have any questions, contact us at **helpdesk@laji.fi**.\n",
+    "version": "1",
+    "contact": {}
+  },
+  "target": {
+    "path": "/warehouse/query/annotation/list",
+    "method": "GET"
+  },
+  "pathItem": {
+    "parameters": []
+  },
+  "operation": {
+    "summary": "Get list of annotations using given filters",
+    "description": "Get list of results as a 'flat row'. Application/json and application/xml responses respect the \"selected\" parameter, but application/rdf+xml returns always the same \"CETAF standard\" fields.",
+    "parameters": [
+      {
+        "name": "selected",
+        "in": "query",
+        "required": false,
+        "description": "Define what fields to include to the result. Defaults to [annotation.addedTags, annotation.annotationByPerson, annotation.annotationByPersonName, annotation.annotationBySystem, annotation.annotationBySystemName, annotation.atlasCode, annotation.byRole, annotation.created, annotation.deleted, annotation.deletedByPerson, annotation.deletedByPersonName, annotation.deletedDateTime, annotation.id, annotation.identification.author, annotation.identification.facts.decimalValue, annotation.identification.facts.fact, annotation.identification.facts.integerValue, annotation.identification.facts.value, annotation.identification.id, annotation.identification.linkings.taxon.administrativeStatuses, annotation.identification.linkings.taxon.checklist, annotation.identification.linkings.taxon.cursiveName, annotation.identification.linkings.taxon.finnish, annotation.identification.linkings.taxon.id, annotation.identification.linkings.taxon.informalTaxonGroups, annotation.identification.linkings.taxon.kingdomScientificName, annotation.identification.linkings.taxon.latestRedListStatusFinland.status, annotation.identification.linkings.taxon.latestRedListStatusFinland.year, annotation.identification.linkings.taxon.nameEnglish, annotation.identification.linkings.taxon.nameFinnish, annotation.identification.linkings.taxon.nameSwedish, annotation.identification.linkings.taxon.occurrenceCountFinland, annotation.identification.linkings.taxon.primaryHabitat.habitat, annotation.identification.linkings.taxon.primaryHabitat.habitatSpecificTypes, annotation.identification.linkings.taxon.primaryHabitat.id, annotation.identification.linkings.taxon.primaryHabitat.order, annotation.identification.linkings.taxon.qname, annotation.identification.linkings.taxon.scientificName, annotation.identification.linkings.taxon.scientificNameAuthorship, annotation.identification.linkings.taxon.scientificNameDisplayName, annotation.identification.linkings.taxon.sensitive, annotation.identification.linkings.taxon.taxonConceptIds, annotation.identification.linkings.taxon.taxonRank, annotation.identification.linkings.taxon.taxonomicOrder, annotation.identification.linkings.taxon.threatenedStatus, annotation.identification.linkings.taxon.vernacularName, annotation.identification.notes, annotation.identification.taxon, annotation.identification.taxonID, annotation.identification.taxonSpecifier, annotation.identification.taxonSpecifierAuthor, annotation.notes, annotation.occurrenceAtTimeOfAnnotation.countryVerbatim, annotation.occurrenceAtTimeOfAnnotation.dateBegin, annotation.occurrenceAtTimeOfAnnotation.dateEnd, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.administrativeStatuses, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.checklist, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.cursiveName, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.finnish, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.id, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.informalTaxonGroups, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.kingdomScientificName, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.latestRedListStatusFinland.status, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.latestRedListStatusFinland.year, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.nameEnglish, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.nameFinnish, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.nameSwedish, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.occurrenceCountFinland, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.primaryHabitat.habitat, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.primaryHabitat.habitatSpecificTypes, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.primaryHabitat.id, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.primaryHabitat.order, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.qname, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.scientificName, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.scientificNameAuthorship, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.scientificNameDisplayName, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.sensitive, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.taxonConceptIds, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.taxonRank, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.taxonomicOrder, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.threatenedStatus, annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.vernacularName, annotation.occurrenceAtTimeOfAnnotation.locality, annotation.occurrenceAtTimeOfAnnotation.municipalityVerbatim, annotation.occurrenceAtTimeOfAnnotation.taxonId, annotation.occurrenceAtTimeOfAnnotation.taxonVerbatim, annotation.occurrenceAtTimeOfAnnotation.wgs84centerPointLat, annotation.occurrenceAtTimeOfAnnotation.wgs84centerPointLon, annotation.removedTags, annotation.valid, document.collectionId, document.documentId, gathering.displayDateTime, gathering.team, unit.linkings.originalTaxon.id, unit.linkings.originalTaxon.scientificName, unit.linkings.originalTaxon.vernacularName, unit.linkings.taxon.id, unit.linkings.taxon.scientificName, unit.linkings.taxon.vernacularName, unit.taxonVerbatim, unit.unitId] Multiple values are seperated by ','.",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "annotation.addedTags",
+              "annotation.annotationByPerson",
+              "annotation.annotationByPersonName",
+              "annotation.annotationBySystem",
+              "annotation.annotationBySystemName",
+              "annotation.atlasCode",
+              "annotation.byRole",
+              "annotation.created",
+              "annotation.deleted",
+              "annotation.deletedByPerson",
+              "annotation.deletedByPersonName",
+              "annotation.deletedDateTime",
+              "annotation.id",
+              "annotation.identification.author",
+              "annotation.identification.facts.decimalValue",
+              "annotation.identification.facts.fact",
+              "annotation.identification.facts.integerValue",
+              "annotation.identification.facts.value",
+              "annotation.identification.id",
+              "annotation.identification.linkings.taxon.administrativeStatuses",
+              "annotation.identification.linkings.taxon.checklist",
+              "annotation.identification.linkings.taxon.cursiveName",
+              "annotation.identification.linkings.taxon.finnish",
+              "annotation.identification.linkings.taxon.id",
+              "annotation.identification.linkings.taxon.informalTaxonGroups",
+              "annotation.identification.linkings.taxon.kingdomScientificName",
+              "annotation.identification.linkings.taxon.latestRedListStatusFinland.status",
+              "annotation.identification.linkings.taxon.latestRedListStatusFinland.year",
+              "annotation.identification.linkings.taxon.nameEnglish",
+              "annotation.identification.linkings.taxon.nameFinnish",
+              "annotation.identification.linkings.taxon.nameSwedish",
+              "annotation.identification.linkings.taxon.occurrenceCountFinland",
+              "annotation.identification.linkings.taxon.primaryHabitat.habitat",
+              "annotation.identification.linkings.taxon.primaryHabitat.habitatSpecificTypes",
+              "annotation.identification.linkings.taxon.primaryHabitat.id",
+              "annotation.identification.linkings.taxon.primaryHabitat.order",
+              "annotation.identification.linkings.taxon.qname",
+              "annotation.identification.linkings.taxon.scientificName",
+              "annotation.identification.linkings.taxon.scientificNameAuthorship",
+              "annotation.identification.linkings.taxon.scientificNameDisplayName",
+              "annotation.identification.linkings.taxon.sensitive",
+              "annotation.identification.linkings.taxon.taxonConceptIds",
+              "annotation.identification.linkings.taxon.taxonRank",
+              "annotation.identification.linkings.taxon.taxonomicOrder",
+              "annotation.identification.linkings.taxon.threatenedStatus",
+              "annotation.identification.linkings.taxon.vernacularName",
+              "annotation.identification.notes",
+              "annotation.identification.taxon",
+              "annotation.identification.taxonID",
+              "annotation.identification.taxonSpecifier",
+              "annotation.identification.taxonSpecifierAuthor",
+              "annotation.notes",
+              "annotation.occurrenceAtTimeOfAnnotation.countryVerbatim",
+              "annotation.occurrenceAtTimeOfAnnotation.dateBegin",
+              "annotation.occurrenceAtTimeOfAnnotation.dateEnd",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.administrativeStatuses",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.checklist",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.cursiveName",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.finnish",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.id",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.informalTaxonGroups",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.kingdomScientificName",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.latestRedListStatusFinland.status",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.latestRedListStatusFinland.year",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.nameEnglish",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.nameFinnish",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.nameSwedish",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.occurrenceCountFinland",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.primaryHabitat.habitat",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.primaryHabitat.habitatSpecificTypes",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.primaryHabitat.id",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.primaryHabitat.order",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.qname",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.scientificName",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.scientificNameAuthorship",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.scientificNameDisplayName",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.sensitive",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.taxonConceptIds",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.taxonRank",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.taxonomicOrder",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.threatenedStatus",
+              "annotation.occurrenceAtTimeOfAnnotation.linkings.taxon.vernacularName",
+              "annotation.occurrenceAtTimeOfAnnotation.locality",
+              "annotation.occurrenceAtTimeOfAnnotation.municipalityVerbatim",
+              "annotation.occurrenceAtTimeOfAnnotation.taxonId",
+              "annotation.occurrenceAtTimeOfAnnotation.taxonVerbatim",
+              "annotation.occurrenceAtTimeOfAnnotation.wgs84centerPointLat",
+              "annotation.occurrenceAtTimeOfAnnotation.wgs84centerPointLon",
+              "annotation.removedTags",
+              "annotation.valid",
+              "document.annotations.addedTags",
+              "document.annotations.annotationByPerson",
+              "document.annotations.annotationByPersonName",
+              "document.annotations.annotationBySystem",
+              "document.annotations.annotationBySystemName",
+              "document.annotations.atlasCode",
+              "document.annotations.byRole",
+              "document.annotations.created",
+              "document.annotations.deleted",
+              "document.annotations.deletedByPerson",
+              "document.annotations.deletedByPersonName",
+              "document.annotations.deletedDateTime",
+              "document.annotations.id",
+              "document.annotations.notes",
+              "document.annotations.removedTags",
+              "document.annotations.valid",
+              "document.collectionId",
+              "document.completeListTaxonId",
+              "document.completeListType",
+              "document.createdDate",
+              "document.dataSource",
+              "document.documentId",
+              "document.editorUserIds",
+              "document.facts.decimalValue",
+              "document.facts.fact",
+              "document.facts.integerValue",
+              "document.facts.value",
+              "document.firstLoadDate",
+              "document.formId",
+              "document.keywords",
+              "document.licenseId",
+              "document.linkings.collectionQuality",
+              "document.linkings.editors.fullName",
+              "document.linkings.editors.id",
+              "document.linkings.editors.userId",
+              "document.loadDate",
+              "document.media.author",
+              "document.media.caption",
+              "document.media.copyrightOwner",
+              "document.media.fullResolutionMediaAvailable",
+              "document.media.fullURL",
+              "document.media.highDetailModelURL",
+              "document.media.licenseId",
+              "document.media.lowDetailModelURL",
+              "document.media.mediaType",
+              "document.media.mp3URL",
+              "document.media.squareThumbnailURL",
+              "document.media.thumbnailURL",
+              "document.media.type",
+              "document.media.videoURL",
+              "document.media.wavURL",
+              "document.mediaCount",
+              "document.modifiedDate",
+              "document.namedPlace.alternativeId",
+              "document.namedPlace.alternativeIds",
+              "document.namedPlace.birdAssociationAreaDisplayName",
+              "document.namedPlace.birdAssociationAreaId",
+              "document.namedPlace.collectionId",
+              "document.namedPlace.id",
+              "document.namedPlace.municipalityDisplayName",
+              "document.namedPlace.municipalityId",
+              "document.namedPlace.name",
+              "document.namedPlace.tags",
+              "document.namedPlace.wgs84CenterPoint.lat",
+              "document.namedPlace.wgs84CenterPoint.lon",
+              "document.namedPlace.ykj10km.lat",
+              "document.namedPlace.ykj10km.lon",
+              "document.namedPlaceId",
+              "document.notes",
+              "document.partial",
+              "document.prefix",
+              "document.quality.issue.issue",
+              "document.quality.issue.message",
+              "document.quality.issue.source",
+              "document.referenceURL",
+              "document.secureLevel",
+              "document.secureReasons",
+              "document.secured",
+              "document.siteDead",
+              "document.siteStatus",
+              "document.siteType",
+              "document.sourceId",
+              "document.sourceTags",
+              "gathering.accurateArea",
+              "gathering.biogeographicalProvince",
+              "gathering.conversions.birdAssociationArea",
+              "gathering.conversions.boundingBoxAreaInSquareMeters",
+              "gathering.conversions.century",
+              "gathering.conversions.day",
+              "gathering.conversions.dayOfYearBegin",
+              "gathering.conversions.dayOfYearEnd",
+              "gathering.conversions.decade",
+              "gathering.conversions.euref.latMax",
+              "gathering.conversions.euref.latMin",
+              "gathering.conversions.euref.lonMax",
+              "gathering.conversions.euref.lonMin",
+              "gathering.conversions.eurefCenterPoint.lat",
+              "gathering.conversions.eurefCenterPoint.lon",
+              "gathering.conversions.eurefWKT",
+              "gathering.conversions.linelengthInMeters",
+              "gathering.conversions.month",
+              "gathering.conversions.seasonBegin",
+              "gathering.conversions.seasonEnd",
+              "gathering.conversions.wgs84.latMax",
+              "gathering.conversions.wgs84.latMin",
+              "gathering.conversions.wgs84.lonMax",
+              "gathering.conversions.wgs84.lonMin",
+              "gathering.conversions.wgs84CenterPoint.lat",
+              "gathering.conversions.wgs84CenterPoint.lon",
+              "gathering.conversions.wgs84Grid005.lat",
+              "gathering.conversions.wgs84Grid005.lon",
+              "gathering.conversions.wgs84Grid01.lat",
+              "gathering.conversions.wgs84Grid01.lon",
+              "gathering.conversions.wgs84Grid05.lat",
+              "gathering.conversions.wgs84Grid05.lon",
+              "gathering.conversions.wgs84Grid1.lat",
+              "gathering.conversions.wgs84Grid1.lon",
+              "gathering.conversions.wgs84WKT",
+              "gathering.conversions.year",
+              "gathering.conversions.ykj.latMax",
+              "gathering.conversions.ykj.latMin",
+              "gathering.conversions.ykj.lonMax",
+              "gathering.conversions.ykj.lonMin",
+              "gathering.conversions.ykj100km.lat",
+              "gathering.conversions.ykj100km.lon",
+              "gathering.conversions.ykj100kmCenter.lat",
+              "gathering.conversions.ykj100kmCenter.lon",
+              "gathering.conversions.ykj10km.lat",
+              "gathering.conversions.ykj10km.lon",
+              "gathering.conversions.ykj10kmCenter.lat",
+              "gathering.conversions.ykj10kmCenter.lon",
+              "gathering.conversions.ykj1km.lat",
+              "gathering.conversions.ykj1km.lon",
+              "gathering.conversions.ykj1kmCenter.lat",
+              "gathering.conversions.ykj1kmCenter.lon",
+              "gathering.conversions.ykj50km.lat",
+              "gathering.conversions.ykj50km.lon",
+              "gathering.conversions.ykj50kmCenter.lat",
+              "gathering.conversions.ykj50kmCenter.lon",
+              "gathering.conversions.ykjWKT",
+              "gathering.coordinatesVerbatim",
+              "gathering.country",
+              "gathering.displayDateTime",
+              "gathering.eventDate.begin",
+              "gathering.eventDate.end",
+              "gathering.facts.decimalValue",
+              "gathering.facts.fact",
+              "gathering.facts.integerValue",
+              "gathering.facts.value",
+              "gathering.gatheringId",
+              "gathering.gatheringOrder",
+              "gathering.gatheringSection",
+              "gathering.higherGeography",
+              "gathering.hourBegin",
+              "gathering.hourEnd",
+              "gathering.interpretations.biogeographicalProvince",
+              "gathering.interpretations.biogeographicalProvinceDisplayname",
+              "gathering.interpretations.biogeographicalProvinces",
+              "gathering.interpretations.coordinateAccuracy",
+              "gathering.interpretations.country",
+              "gathering.interpretations.countryDisplayname",
+              "gathering.interpretations.finnishMunicipalities",
+              "gathering.interpretations.finnishMunicipality",
+              "gathering.interpretations.municipalityDisplayname",
+              "gathering.interpretations.sourceOfBiogeographicalProvince",
+              "gathering.interpretations.sourceOfCoordinates",
+              "gathering.interpretations.sourceOfCountry",
+              "gathering.interpretations.sourceOfFinnishMunicipality",
+              "gathering.linkings.observers.fullName",
+              "gathering.linkings.observers.id",
+              "gathering.linkings.observers.userId",
+              "gathering.locality",
+              "gathering.media.author",
+              "gathering.media.caption",
+              "gathering.media.copyrightOwner",
+              "gathering.media.fullResolutionMediaAvailable",
+              "gathering.media.fullURL",
+              "gathering.media.highDetailModelURL",
+              "gathering.media.licenseId",
+              "gathering.media.lowDetailModelURL",
+              "gathering.media.mediaType",
+              "gathering.media.mp3URL",
+              "gathering.media.squareThumbnailURL",
+              "gathering.media.thumbnailURL",
+              "gathering.media.type",
+              "gathering.media.videoURL",
+              "gathering.media.wavURL",
+              "gathering.mediaCount",
+              "gathering.minutesBegin",
+              "gathering.minutesEnd",
+              "gathering.municipality",
+              "gathering.notes",
+              "gathering.observerUserIds",
+              "gathering.province",
+              "gathering.quality.issue.issue",
+              "gathering.quality.issue.message",
+              "gathering.quality.issue.source",
+              "gathering.quality.locationIssue.issue",
+              "gathering.quality.locationIssue.message",
+              "gathering.quality.locationIssue.source",
+              "gathering.quality.timeIssue.issue",
+              "gathering.quality.timeIssue.message",
+              "gathering.quality.timeIssue.source",
+              "gathering.stateLand",
+              "gathering.taxonCensus.taxonId",
+              "gathering.taxonCensus.type",
+              "gathering.team",
+              "unit.abundanceString",
+              "unit.abundanceUnit",
+              "unit.alive",
+              "unit.annotationCount",
+              "unit.annotations.addedTags",
+              "unit.annotations.annotationByPerson",
+              "unit.annotations.annotationByPersonName",
+              "unit.annotations.annotationBySystem",
+              "unit.annotations.annotationBySystemName",
+              "unit.annotations.atlasCode",
+              "unit.annotations.byRole",
+              "unit.annotations.created",
+              "unit.annotations.deleted",
+              "unit.annotations.deletedByPerson",
+              "unit.annotations.deletedByPersonName",
+              "unit.annotations.deletedDateTime",
+              "unit.annotations.id",
+              "unit.annotations.identification.author",
+              "unit.annotations.identification.facts.decimalValue",
+              "unit.annotations.identification.facts.fact",
+              "unit.annotations.identification.facts.integerValue",
+              "unit.annotations.identification.facts.value",
+              "unit.annotations.identification.id",
+              "unit.annotations.identification.linkings.taxon.administrativeStatuses",
+              "unit.annotations.identification.linkings.taxon.checklist",
+              "unit.annotations.identification.linkings.taxon.cursiveName",
+              "unit.annotations.identification.linkings.taxon.finnish",
+              "unit.annotations.identification.linkings.taxon.id",
+              "unit.annotations.identification.linkings.taxon.informalTaxonGroups",
+              "unit.annotations.identification.linkings.taxon.kingdomScientificName",
+              "unit.annotations.identification.linkings.taxon.latestRedListStatusFinland.status",
+              "unit.annotations.identification.linkings.taxon.latestRedListStatusFinland.year",
+              "unit.annotations.identification.linkings.taxon.nameEnglish",
+              "unit.annotations.identification.linkings.taxon.nameFinnish",
+              "unit.annotations.identification.linkings.taxon.nameSwedish",
+              "unit.annotations.identification.linkings.taxon.occurrenceCountFinland",
+              "unit.annotations.identification.linkings.taxon.primaryHabitat.habitat",
+              "unit.annotations.identification.linkings.taxon.primaryHabitat.habitatSpecificTypes",
+              "unit.annotations.identification.linkings.taxon.primaryHabitat.id",
+              "unit.annotations.identification.linkings.taxon.primaryHabitat.order",
+              "unit.annotations.identification.linkings.taxon.qname",
+              "unit.annotations.identification.linkings.taxon.scientificName",
+              "unit.annotations.identification.linkings.taxon.scientificNameAuthorship",
+              "unit.annotations.identification.linkings.taxon.scientificNameDisplayName",
+              "unit.annotations.identification.linkings.taxon.sensitive",
+              "unit.annotations.identification.linkings.taxon.taxonConceptIds",
+              "unit.annotations.identification.linkings.taxon.taxonRank",
+              "unit.annotations.identification.linkings.taxon.taxonomicOrder",
+              "unit.annotations.identification.linkings.taxon.threatenedStatus",
+              "unit.annotations.identification.linkings.taxon.vernacularName",
+              "unit.annotations.identification.notes",
+              "unit.annotations.identification.taxon",
+              "unit.annotations.identification.taxonID",
+              "unit.annotations.identification.taxonSpecifier",
+              "unit.annotations.identification.taxonSpecifierAuthor",
+              "unit.annotations.notes",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.countryVerbatim",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.dateBegin",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.dateEnd",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.administrativeStatuses",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.checklist",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.cursiveName",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.finnish",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.id",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.informalTaxonGroups",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.kingdomScientificName",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.latestRedListStatusFinland.status",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.latestRedListStatusFinland.year",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.nameEnglish",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.nameFinnish",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.nameSwedish",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.occurrenceCountFinland",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.primaryHabitat.habitat",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.primaryHabitat.habitatSpecificTypes",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.primaryHabitat.id",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.primaryHabitat.order",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.qname",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.scientificName",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.scientificNameAuthorship",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.scientificNameDisplayName",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.sensitive",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.taxonConceptIds",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.taxonRank",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.taxonomicOrder",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.threatenedStatus",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.linkings.taxon.vernacularName",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.locality",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.municipalityVerbatim",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.taxonId",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.taxonVerbatim",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.wgs84centerPointLat",
+              "unit.annotations.occurrenceAtTimeOfAnnotation.wgs84centerPointLon",
+              "unit.annotations.removedTags",
+              "unit.annotations.valid",
+              "unit.atlasClass",
+              "unit.atlasCode",
+              "unit.audioCount",
+              "unit.author",
+              "unit.breedingSite",
+              "unit.det",
+              "unit.externalMediaCount",
+              "unit.facts.decimalValue",
+              "unit.facts.fact",
+              "unit.facts.integerValue",
+              "unit.facts.value",
+              "unit.identificationBasis",
+              "unit.identifications.author",
+              "unit.identifications.det",
+              "unit.identifications.detDate",
+              "unit.identifications.facts.decimalValue",
+              "unit.identifications.facts.fact",
+              "unit.identifications.facts.integerValue",
+              "unit.identifications.facts.value",
+              "unit.identifications.id",
+              "unit.identifications.linkings.taxon.administrativeStatuses",
+              "unit.identifications.linkings.taxon.checklist",
+              "unit.identifications.linkings.taxon.cursiveName",
+              "unit.identifications.linkings.taxon.finnish",
+              "unit.identifications.linkings.taxon.id",
+              "unit.identifications.linkings.taxon.informalTaxonGroups",
+              "unit.identifications.linkings.taxon.kingdomScientificName",
+              "unit.identifications.linkings.taxon.latestRedListStatusFinland.status",
+              "unit.identifications.linkings.taxon.latestRedListStatusFinland.year",
+              "unit.identifications.linkings.taxon.nameEnglish",
+              "unit.identifications.linkings.taxon.nameFinnish",
+              "unit.identifications.linkings.taxon.nameSwedish",
+              "unit.identifications.linkings.taxon.occurrenceCountFinland",
+              "unit.identifications.linkings.taxon.primaryHabitat.habitat",
+              "unit.identifications.linkings.taxon.primaryHabitat.habitatSpecificTypes",
+              "unit.identifications.linkings.taxon.primaryHabitat.id",
+              "unit.identifications.linkings.taxon.primaryHabitat.order",
+              "unit.identifications.linkings.taxon.qname",
+              "unit.identifications.linkings.taxon.scientificName",
+              "unit.identifications.linkings.taxon.scientificNameAuthorship",
+              "unit.identifications.linkings.taxon.scientificNameDisplayName",
+              "unit.identifications.linkings.taxon.sensitive",
+              "unit.identifications.linkings.taxon.taxonConceptIds",
+              "unit.identifications.linkings.taxon.taxonRank",
+              "unit.identifications.linkings.taxon.taxonomicOrder",
+              "unit.identifications.linkings.taxon.threatenedStatus",
+              "unit.identifications.linkings.taxon.vernacularName",
+              "unit.identifications.notes",
+              "unit.identifications.preferred",
+              "unit.identifications.taxon",
+              "unit.identifications.taxonID",
+              "unit.identifications.taxonSpecifier",
+              "unit.identifications.taxonSpecifierAuthor",
+              "unit.imageCount",
+              "unit.individualCountFemale",
+              "unit.individualCountMale",
+              "unit.individualId",
+              "unit.interpretations.annotatedTaxonId",
+              "unit.interpretations.collectionAndRecordQuality",
+              "unit.interpretations.det",
+              "unit.interpretations.effectiveTags",
+              "unit.interpretations.individualCount",
+              "unit.interpretations.invasiveControlEffectiveness",
+              "unit.interpretations.invasiveControlled",
+              "unit.interpretations.needsCheck",
+              "unit.interpretations.needsIdentification",
+              "unit.interpretations.pairCount",
+              "unit.interpretations.recordQuality",
+              "unit.interpretations.recordQualityNumeric",
+              "unit.interpretations.reliability",
+              "unit.keywords",
+              "unit.lifeStage",
+              "unit.linkings.originalTaxon.administrativeStatuses",
+              "unit.linkings.originalTaxon.checklist",
+              "unit.linkings.originalTaxon.cursiveName",
+              "unit.linkings.originalTaxon.finnish",
+              "unit.linkings.originalTaxon.id",
+              "unit.linkings.originalTaxon.informalTaxonGroups",
+              "unit.linkings.originalTaxon.kingdomScientificName",
+              "unit.linkings.originalTaxon.latestRedListStatusFinland.status",
+              "unit.linkings.originalTaxon.latestRedListStatusFinland.year",
+              "unit.linkings.originalTaxon.nameEnglish",
+              "unit.linkings.originalTaxon.nameFinnish",
+              "unit.linkings.originalTaxon.nameSwedish",
+              "unit.linkings.originalTaxon.occurrenceCountFinland",
+              "unit.linkings.originalTaxon.primaryHabitat.habitat",
+              "unit.linkings.originalTaxon.primaryHabitat.habitatSpecificTypes",
+              "unit.linkings.originalTaxon.primaryHabitat.id",
+              "unit.linkings.originalTaxon.primaryHabitat.order",
+              "unit.linkings.originalTaxon.qname",
+              "unit.linkings.originalTaxon.scientificName",
+              "unit.linkings.originalTaxon.scientificNameAuthorship",
+              "unit.linkings.originalTaxon.scientificNameDisplayName",
+              "unit.linkings.originalTaxon.sensitive",
+              "unit.linkings.originalTaxon.taxonConceptIds",
+              "unit.linkings.originalTaxon.taxonRank",
+              "unit.linkings.originalTaxon.taxonomicOrder",
+              "unit.linkings.originalTaxon.threatenedStatus",
+              "unit.linkings.originalTaxon.vernacularName",
+              "unit.linkings.taxon.administrativeStatuses",
+              "unit.linkings.taxon.checklist",
+              "unit.linkings.taxon.cursiveName",
+              "unit.linkings.taxon.finnish",
+              "unit.linkings.taxon.id",
+              "unit.linkings.taxon.informalTaxonGroups",
+              "unit.linkings.taxon.kingdomScientificName",
+              "unit.linkings.taxon.latestRedListStatusFinland.status",
+              "unit.linkings.taxon.latestRedListStatusFinland.year",
+              "unit.linkings.taxon.nameEnglish",
+              "unit.linkings.taxon.nameFinnish",
+              "unit.linkings.taxon.nameSwedish",
+              "unit.linkings.taxon.occurrenceCountFinland",
+              "unit.linkings.taxon.primaryHabitat.habitat",
+              "unit.linkings.taxon.primaryHabitat.habitatSpecificTypes",
+              "unit.linkings.taxon.primaryHabitat.id",
+              "unit.linkings.taxon.primaryHabitat.order",
+              "unit.linkings.taxon.qname",
+              "unit.linkings.taxon.scientificName",
+              "unit.linkings.taxon.scientificNameAuthorship",
+              "unit.linkings.taxon.scientificNameDisplayName",
+              "unit.linkings.taxon.sensitive",
+              "unit.linkings.taxon.taxonConceptIds",
+              "unit.linkings.taxon.taxonRank",
+              "unit.linkings.taxon.taxonomicOrder",
+              "unit.linkings.taxon.threatenedStatus",
+              "unit.linkings.taxon.vernacularName",
+              "unit.local",
+              "unit.media.author",
+              "unit.media.caption",
+              "unit.media.copyrightOwner",
+              "unit.media.fullResolutionMediaAvailable",
+              "unit.media.fullURL",
+              "unit.media.highDetailModelURL",
+              "unit.media.licenseId",
+              "unit.media.lowDetailModelURL",
+              "unit.media.mediaType",
+              "unit.media.mp3URL",
+              "unit.media.squareThumbnailURL",
+              "unit.media.thumbnailURL",
+              "unit.media.type",
+              "unit.media.videoURL",
+              "unit.media.wavURL",
+              "unit.mediaCount",
+              "unit.modelCount",
+              "unit.notes",
+              "unit.plantStatusCode",
+              "unit.primarySpecimen",
+              "unit.quality.documentGatheringUnitQualityIssues",
+              "unit.quality.issue.issue",
+              "unit.quality.issue.message",
+              "unit.quality.issue.source",
+              "unit.recordBasis",
+              "unit.reportedInformalTaxonGroup",
+              "unit.reportedTaxonConfidence",
+              "unit.reportedTaxonId",
+              "unit.sampleCount",
+              "unit.samples.collectionId",
+              "unit.samples.facts.decimalValue",
+              "unit.samples.facts.fact",
+              "unit.samples.facts.integerValue",
+              "unit.samples.facts.value",
+              "unit.samples.keywords",
+              "unit.samples.material",
+              "unit.samples.multiple",
+              "unit.samples.notes",
+              "unit.samples.quality",
+              "unit.samples.sampleId",
+              "unit.samples.sampleOrder",
+              "unit.samples.status",
+              "unit.samples.type",
+              "unit.samplingMethod",
+              "unit.sequenceText",
+              "unit.sex",
+              "unit.sourceTags",
+              "unit.superRecordBasis",
+              "unit.taxonVerbatim",
+              "unit.typeSpecimen",
+              "unit.types.author",
+              "unit.types.basionymePublication",
+              "unit.types.facts.decimalValue",
+              "unit.types.facts.fact",
+              "unit.types.facts.integerValue",
+              "unit.types.facts.value",
+              "unit.types.id",
+              "unit.types.linkings.taxon.administrativeStatuses",
+              "unit.types.linkings.taxon.checklist",
+              "unit.types.linkings.taxon.cursiveName",
+              "unit.types.linkings.taxon.finnish",
+              "unit.types.linkings.taxon.id",
+              "unit.types.linkings.taxon.informalTaxonGroups",
+              "unit.types.linkings.taxon.kingdomScientificName",
+              "unit.types.linkings.taxon.latestRedListStatusFinland.status",
+              "unit.types.linkings.taxon.latestRedListStatusFinland.year",
+              "unit.types.linkings.taxon.nameEnglish",
+              "unit.types.linkings.taxon.nameFinnish",
+              "unit.types.linkings.taxon.nameSwedish",
+              "unit.types.linkings.taxon.occurrenceCountFinland",
+              "unit.types.linkings.taxon.primaryHabitat.habitat",
+              "unit.types.linkings.taxon.primaryHabitat.habitatSpecificTypes",
+              "unit.types.linkings.taxon.primaryHabitat.id",
+              "unit.types.linkings.taxon.primaryHabitat.order",
+              "unit.types.linkings.taxon.qname",
+              "unit.types.linkings.taxon.scientificName",
+              "unit.types.linkings.taxon.scientificNameAuthorship",
+              "unit.types.linkings.taxon.scientificNameDisplayName",
+              "unit.types.linkings.taxon.sensitive",
+              "unit.types.linkings.taxon.taxonConceptIds",
+              "unit.types.linkings.taxon.taxonRank",
+              "unit.types.linkings.taxon.taxonomicOrder",
+              "unit.types.linkings.taxon.threatenedStatus",
+              "unit.types.linkings.taxon.vernacularName",
+              "unit.types.notes",
+              "unit.types.publication",
+              "unit.types.status",
+              "unit.types.taxon",
+              "unit.types.taxonID",
+              "unit.types.taxonSpecifier",
+              "unit.types.taxonSpecifierAuthor",
+              "unit.types.typif",
+              "unit.types.typifDate",
+              "unit.types.verification",
+              "unit.unitId",
+              "unit.unitOrder",
+              "unit.videoCount",
+              "unit.wild"
+            ]
+          }
+        }
+      },
+      {
+        "name": "orderBy",
+        "in": "query",
+        "required": false,
+        "description": "Define what fields to use when sorting results. Defaults to [unit.annotations.created DESC, unit.annotations.id ASC]. Unit key is always added as a last parameter to ensure correct paging. You can include ASC or DESC after the name of the field (defaults to ASC).Multiple values are seperated by ','.",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "RANDOM",
+              "RANDOM:seed",
+              "document.collectionId",
+              "document.createdDate",
+              "document.dataSource",
+              "document.documentId",
+              "document.firstLoadDate",
+              "document.linkings.collectionQuality",
+              "document.loadDate",
+              "document.mediaCount",
+              "document.modifiedDate",
+              "document.namedPlace.birdAssociationAreaDisplayName",
+              "document.namedPlace.municipalityDisplayName",
+              "document.namedPlace.name",
+              "document.quality.issue.issue",
+              "document.quality.issue.source",
+              "document.secureLevel",
+              "document.secured",
+              "document.siteStatus",
+              "document.siteType",
+              "document.sourceId",
+              "gathering.biogeographicalProvince",
+              "gathering.conversions.boundingBoxAreaInSquareMeters",
+              "gathering.conversions.century",
+              "gathering.conversions.day",
+              "gathering.conversions.dayOfYearBegin",
+              "gathering.conversions.dayOfYearEnd",
+              "gathering.conversions.decade",
+              "gathering.conversions.euref.latMax",
+              "gathering.conversions.euref.latMin",
+              "gathering.conversions.euref.lonMax",
+              "gathering.conversions.euref.lonMin",
+              "gathering.conversions.month",
+              "gathering.conversions.seasonBegin",
+              "gathering.conversions.seasonEnd",
+              "gathering.conversions.wgs84.latMax",
+              "gathering.conversions.wgs84.latMin",
+              "gathering.conversions.wgs84.lonMax",
+              "gathering.conversions.wgs84.lonMin",
+              "gathering.conversions.wgs84CenterPoint.lat",
+              "gathering.conversions.wgs84CenterPoint.lon",
+              "gathering.conversions.wgs84Grid005.lat",
+              "gathering.conversions.wgs84Grid005.lon",
+              "gathering.conversions.wgs84Grid01.lat",
+              "gathering.conversions.wgs84Grid01.lon",
+              "gathering.conversions.wgs84Grid05.lat",
+              "gathering.conversions.wgs84Grid05.lon",
+              "gathering.conversions.wgs84Grid1.lat",
+              "gathering.conversions.wgs84Grid1.lon",
+              "gathering.conversions.year",
+              "gathering.conversions.ykj.latMax",
+              "gathering.conversions.ykj.latMin",
+              "gathering.conversions.ykj.lonMax",
+              "gathering.conversions.ykj.lonMin",
+              "gathering.conversions.ykj100km.lat",
+              "gathering.conversions.ykj100km.lon",
+              "gathering.conversions.ykj100kmCenter.lat",
+              "gathering.conversions.ykj100kmCenter.lon",
+              "gathering.conversions.ykj10km.lat",
+              "gathering.conversions.ykj10km.lon",
+              "gathering.conversions.ykj10kmCenter.lat",
+              "gathering.conversions.ykj10kmCenter.lon",
+              "gathering.conversions.ykj1km.lat",
+              "gathering.conversions.ykj1km.lon",
+              "gathering.conversions.ykj1kmCenter.lat",
+              "gathering.conversions.ykj1kmCenter.lon",
+              "gathering.conversions.ykj50km.lat",
+              "gathering.conversions.ykj50km.lon",
+              "gathering.conversions.ykj50kmCenter.lat",
+              "gathering.conversions.ykj50kmCenter.lon",
+              "gathering.coordinatesVerbatim",
+              "gathering.country",
+              "gathering.displayDateTime",
+              "gathering.eventDate.begin",
+              "gathering.eventDate.end",
+              "gathering.gatheringId",
+              "gathering.gatheringOrder",
+              "gathering.gatheringSection",
+              "gathering.higherGeography",
+              "gathering.hourBegin",
+              "gathering.hourEnd",
+              "gathering.interpretations.biogeographicalProvince",
+              "gathering.interpretations.biogeographicalProvinceDisplayname",
+              "gathering.interpretations.coordinateAccuracy",
+              "gathering.interpretations.country",
+              "gathering.interpretations.countryDisplayname",
+              "gathering.interpretations.finnishMunicipality",
+              "gathering.interpretations.municipalityDisplayname",
+              "gathering.interpretations.sourceOfBiogeographicalProvince",
+              "gathering.interpretations.sourceOfCoordinates",
+              "gathering.interpretations.sourceOfCountry",
+              "gathering.interpretations.sourceOfFinnishMunicipality",
+              "gathering.locality",
+              "gathering.mediaCount",
+              "gathering.minutesBegin",
+              "gathering.minutesEnd",
+              "gathering.municipality",
+              "gathering.province",
+              "gathering.quality.issue.issue",
+              "gathering.quality.issue.source",
+              "gathering.quality.locationIssue.issue",
+              "gathering.quality.locationIssue.source",
+              "gathering.quality.timeIssue.issue",
+              "gathering.quality.timeIssue.source",
+              "gathering.stateLand",
+              "gathering.team",
+              "unit.abundanceString",
+              "unit.alive",
+              "unit.annotations.annotationByPersonName",
+              "unit.annotations.annotationBySystemName",
+              "unit.annotations.created",
+              "unit.annotations.id",
+              "unit.author",
+              "unit.breedingSite",
+              "unit.det",
+              "unit.individualId",
+              "unit.interpretations.annotatedTaxonId",
+              "unit.interpretations.individualCount",
+              "unit.interpretations.invasiveControlEffectiveness",
+              "unit.interpretations.invasiveControlled",
+              "unit.interpretations.recordQuality",
+              "unit.interpretations.recordQualityNumeric",
+              "unit.interpretations.reliability",
+              "unit.lifeStage",
+              "unit.linkings.originalTaxon.author",
+              "unit.linkings.originalTaxon.finnish",
+              "unit.linkings.originalTaxon.invasive",
+              "unit.linkings.originalTaxon.nameEnglish",
+              "unit.linkings.originalTaxon.nameFinnish",
+              "unit.linkings.originalTaxon.nameSwedish",
+              "unit.linkings.originalTaxon.occurrenceCount",
+              "unit.linkings.originalTaxon.occurrenceCountFinland",
+              "unit.linkings.originalTaxon.redListStatus",
+              "unit.linkings.originalTaxon.scientificName",
+              "unit.linkings.originalTaxon.scientificNameDisplayName",
+              "unit.linkings.originalTaxon.species",
+              "unit.linkings.originalTaxon.speciesNameEnglish",
+              "unit.linkings.originalTaxon.speciesNameFinnish",
+              "unit.linkings.originalTaxon.speciesNameSwedish",
+              "unit.linkings.originalTaxon.speciesScientificName",
+              "unit.linkings.originalTaxon.taxonRank",
+              "unit.linkings.originalTaxon.taxonomicOrder",
+              "unit.linkings.taxon.author",
+              "unit.linkings.taxon.finnish",
+              "unit.linkings.taxon.invasive",
+              "unit.linkings.taxon.nameEnglish",
+              "unit.linkings.taxon.nameFinnish",
+              "unit.linkings.taxon.nameSwedish",
+              "unit.linkings.taxon.occurrenceCount",
+              "unit.linkings.taxon.occurrenceCountFinland",
+              "unit.linkings.taxon.redListStatus",
+              "unit.linkings.taxon.scientificName",
+              "unit.linkings.taxon.scientificNameDisplayName",
+              "unit.linkings.taxon.species",
+              "unit.linkings.taxon.speciesNameEnglish",
+              "unit.linkings.taxon.speciesNameFinnish",
+              "unit.linkings.taxon.speciesNameSwedish",
+              "unit.linkings.taxon.speciesScientificName",
+              "unit.linkings.taxon.taxonRank",
+              "unit.linkings.taxon.taxonomicOrder",
+              "unit.local",
+              "unit.mediaCount",
+              "unit.notes",
+              "unit.quality.documentGatheringUnitQualityIssues",
+              "unit.quality.issue.issue",
+              "unit.quality.issue.source",
+              "unit.recordBasis",
+              "unit.reportedTaxonConfidence",
+              "unit.sex",
+              "unit.superRecordBasis",
+              "unit.taxonVerbatim",
+              "unit.typeSpecimen",
+              "unit.unitId",
+              "unit.unitOrder",
+              "unit.wild"
+            ]
+          }
+        }
+      },
+      {
+        "name": "crs",
+        "in": "query",
+        "required": false,
+        "description": "For GeoJSON requests there are two additional parameters: crs and featureType. This controls the coordinate reference system used in the returned GeoJSON features. (WGS84 = EPSG:4326; EUREF = ETRS-TM35FIN EPSG:3067; YKJ = EPSG:2393)",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "WGS84",
+            "EUREF",
+            "YKJ"
+          ]
+        }
+      },
+      {
+        "name": "featureType",
+        "in": "query",
+        "required": false,
+        "description": "For GeoJSON requests there are two additional parameters: crs and featureType. This controls the type of returned GeoJSON features.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "CENTER_POINT",
+            "ENVELOPE",
+            "ORIGINAL_FEATURE"
+          ]
+        }
+      },
+      {
+        "name": "pageSize",
+        "in": "query",
+        "required": false,
+        "description": "Set number of results in one page.",
+        "schema": {
+          "type": "integer",
+          "default": 100,
+          "minimum": 1,
+          "maximum": 10000
+        }
+      },
+      {
+        "name": "page",
+        "in": "query",
+        "required": false,
+        "description": "Set current page.",
+        "schema": {
+          "type": "integer",
+          "default": 1,
+          "minimum": 1
+        }
+      },
+      {
+        "name": "cache",
+        "in": "query",
+        "required": false,
+        "description": "Use cache for this query. Defaults to false.",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      {
+        "name": "taxonId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of a taxon. Use Taxonomy-API to find identifiers. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /taxa",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "target",
+        "in": "query",
+        "required": false,
+        "description": "Same as taxonId, but system resolves identifier of the taxon based on the given target name. If no such match can be resolved (name does not exist in taxonomy), will filter based on the given verbatim target name (case insensitive). Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "useIdentificationAnnotations",
+        "in": "query",
+        "required": false,
+        "description": "By default, all taxon linking related filters use taxon linking that may have been altered because of quality control identification annotations. If you want to use original user identifications, set this to false.",
+        "schema": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      {
+        "name": "includeSubTaxa",
+        "in": "query",
+        "required": false,
+        "description": "By default, all taxon linking related filters return all entries that belong to the filtered taxa. To return only exact matches (no subtaxa), set this to false.",
+        "schema": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      {
+        "name": "includeNonValidTaxa",
+        "in": "query",
+        "required": false,
+        "description": "Set to false if you want to include only those entries where reported target name can be linked with a taxon of the reference taxonomy. By default includes all entries.",
+        "schema": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      {
+        "name": "onlyNonValidTaxa",
+        "in": "query",
+        "required": false,
+        "description": "Set to true if you want to include only those entries where reported target name can not be linked with a taxon of the reference taxonomy. By default includes all entries.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "informalTaxonGroupId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of an informal taxon group. Use InformalTaxonGroups-API to find identifiers. Will return entries that have been linked with taxa that belong to one of the given groups. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /informal-taxon-groups",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "informalTaxonGroupIdNot",
+        "in": "query",
+        "required": false,
+        "description": "Exclude based on URI or Qname identifier of an informal taxon group. Use InformalTaxonGroups-API to find identifiers. Will exclude entries that have been linked with taxa that belong to any of the given groups. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /informal-taxon-groups",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "informalTaxonGroupIdIncludingReported",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of an informal taxon group. Use InformalTaxonGroups-API to find identifiers. Will return entries that have been linked with taxa that belong to one of the given groups OR reported to belong to one of the given groups. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /informal-taxon-groups",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "administrativeStatusId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of an administrative status. Use Metadata-API to find identifiers. Will return entries of taxa that are marked with the admin status. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /metadata/ranges/MX.adminStatusEnum",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "redListStatusId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of red list status. Use Metadata-API to find identifiers. Will return entries of taxa that are marked with the red list status. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /metadata/ranges/MX.iucnStatuses",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "taxonAdminFiltersOperator",
+        "in": "query",
+        "required": false,
+        "description": "This parameter controls if search between administrativeStatusId and redListStatusId is an AND (default) or OR search.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "AND",
+            "OR"
+          ]
+        }
+      },
+      {
+        "name": "typeOfOccurrenceId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of type of occurrence in Finland. Use Metadata-API to find identifiers. Will return entries of taxa that are marked with one or more of the specified statuses. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /metadata/ranges/MX.typeOfOccurrenceEnum",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "typeOfOccurrenceIdNot",
+        "in": "query",
+        "required": false,
+        "description": "Exclude based on URI or Qname identifier of type of occurrence in Finland. Use Metadata-API to find identifiers. Will return entries of taxa that are not marked with any of the specified statuses. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /metadata/ranges/MX.typeOfOccurrenceEnum",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "primaryHabitat",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on primary habitat of taxa. Will return entries of taxa that have one of the specified habitats or a subhabitat of the given habitats. Syntax: MKV.habitatMk[MKV.habitatSpecificTypeJ,MKV.habitatSpecificTypePAK] Multiple values are seperated by ';'. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "anyHabitat",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on habitat of taxa (primary or secondary). Will return entries of taxa that have one of the specified habitats or a subhabitat of the given habitats. Syntax: MKV.habitatMk[MKV.habitatSpecificTypeJ,MKV.habitatSpecificTypePAK] Multiple values are seperated by ';'. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "occurrenceCountMax",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on occurrence count of taxa. Will return entries of taxa that have less occurrences than the given parameter.",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "occurrenceCountFinlandMax",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on occurrence count in Finland of taxa. Will return entries of taxa that have less occurrences in Finland than the given parameter.",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "finnish",
+        "in": "query",
+        "required": false,
+        "description": "Filter only those taxa that are finnish or are not finnish.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "invasive",
+        "in": "query",
+        "required": false,
+        "description": "Filter only those taxa that are invasive or are not invasive.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "sensitive",
+        "in": "query",
+        "required": false,
+        "description": "Include only those occurrences that are of sensitive species or those that are of non-sensitive species",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "higherTaxon",
+        "in": "query",
+        "required": false,
+        "description": "True: Filter those occurrence that are linked to a higher taxon (like genus, family). False: linked to taxon that is species, subspecies, aggregate or other lower rank.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "taxonRankId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of taxon rank. Use Metadata-API to find identifiers. Will return entries of taxa that are of the specified ranks. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /metadata/ranges/MX.taxonRankEnum",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "countryId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of a country. Use Area-API to find identifiers. Will return entries where we have been able to interpret the country from coordinates or from reported area name. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /areas",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "finnishMunicipalityId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of a finnish municipality. Use Area-API to find identifiers. Will return entries where we have been able to interpret the municipality from coordinates or from reported area name. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /areas",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "biogeographicalProvinceId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of a biogeographical province. Use Area-API to find identifiers. Will return entries where we have been able to interpret the province from coordinates or from reported area name. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /areas",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "elyCentreId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of a ELY centre. Use Area-API to find identifiers. Implementation is based on municipality interpretations. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /areas",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "provinceId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of a Finnish province. Use Area-API to find identifiers. Implementation is based on municipality interpretations. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /areas",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "area",
+        "in": "query",
+        "required": false,
+        "description": "Filter using name of country, municipality, province or locality. If the given name matches exactly one known area, the search will perform an identifier search. Otherwise the search looks from country verbatim, municipality verbatim, province verbatim and locality using exact match case insensitive search. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "namedPlaceId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of a NamedPlace. Use NamedPlace-API to find identifiers. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /named-places",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "namedPlaceTag",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of MNP.tagEnum (use metadata-api to resolve identifiers) Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /metadata/ranges/MNP.tagEnum",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "birdAssociationAreaId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of a BirdAssociationArea. Use Area-API to find identifiers. Bird association area is interpreted based on YKJ 10KM grids (the grid the occurrence centerpoint is in). Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /areas",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "formId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of a Vihko Notebook form that was used to report the entry. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /forms",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "time",
+        "in": "query",
+        "required": false,
+        "description": "Filter using event date. Date can be a full date or part of a date, for example 2000, 2000-06 or 2000-06-25. Time can be a range, for example 2000/2005 or 2000-01-01/2005-12-31. Relative days \"last N days\" can be used: 0 is today, -1 is yesterday and so on; for example -7/0 is a range between 7 days ago and today. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "timeAccuracy",
+        "in": "query",
+        "required": false,
+        "description": "Filter using event date accuracy range in days. Will include entries where time span in days is less or equal to the given value.",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "yearMonth",
+        "in": "query",
+        "required": false,
+        "description": "Filter using event date. Value can be a year (2000), year range (2000/2001), year-month (2000-06) or a year-month range (2000-06/2000-08). (Note: this filter is mostly aimed to be used in /statistics queries because 'time' filter is not available for /statistics queries.) Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "dayOfYear",
+        "in": "query",
+        "required": false,
+        "description": "Filter using day of year. For example \"100/160\" gives all records during spring and \"330/30\" during mid winter. If begin is ommited will use day 1 and if end is ommited will use day 366. Multiple ranges can be given by providing the parameter more times. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "season",
+        "in": "query",
+        "required": false,
+        "description": "Filter using season. For example \"501/630\" gives all records for May and July and \"1220/0220\" between 20.12. - 20.2. If begin is ommited will use 1.1. and if end is ommited will use 31.12. Multiple ranges can be given by providing the parameter more times. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "keyword",
+        "in": "query",
+        "required": false,
+        "description": "Filter using keywords that have been tagged to entries. There are many types of keywods varying from legacy identifiers, project names and IDs, dataset ids, etc.  Will include records with quality issues (normally exluded by default). Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "collectionId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of collections. Use Collections-API to resolve identifiers. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /collections",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "collectionIdExplicit",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of collections. Use Collections-API to resolve identifiers. Will not include child collections Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /collections",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "collectionIdNot",
+        "in": "query",
+        "required": false,
+        "description": "Exclude certain collections. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /collections",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "collectionIdExplicitNot",
+        "in": "query",
+        "required": false,
+        "description": "Exclude certain collection (only the specified collection, not child collections) Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /collections",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "includeSubCollections",
+        "in": "query",
+        "required": false,
+        "description": "Defines if collectionId filter should include sub collections of the given collection ids. By default sub collections are included.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "sourceId",
+        "in": "query",
+        "required": false,
+        "description": "Filter using identifiers of data sources (information systems). Use InformationSystem-API to resolve identifiers. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /sources",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "recordBasis",
+        "in": "query",
+        "required": false,
+        "description": "Filter using record basis. This can be used for example to get only preserved specimens. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "PRESERVED_SPECIMEN",
+            "LIVING_SPECIMEN",
+            "FOSSIL_SPECIMEN",
+            "SUBFOSSIL_SPECIMEN",
+            "SUBFOSSIL_AMBER_INCLUSION_SPECIMEN",
+            "MICROBIAL_SPECIMEN",
+            "HUMAN_OBSERVATION_UNSPECIFIED",
+            "HUMAN_OBSERVATION_SEEN",
+            "HUMAN_OBSERVATION_HEARD",
+            "HUMAN_OBSERVATION_PHOTO",
+            "HUMAN_OBSERVATION_INDIRECT",
+            "HUMAN_OBSERVATION_HANDLED",
+            "HUMAN_OBSERVATION_VIDEO",
+            "HUMAN_OBSERVATION_RECORDED_AUDIO",
+            "MACHINE_OBSERVATION_UNSPECIFIED",
+            "MACHINE_OBSERVATION_PHOTO",
+            "MACHINE_OBSERVATION_VIDEO",
+            "MACHINE_OBSERVATION_AUDIO",
+            "MACHINE_OBSERVATION_GEOLOGGER",
+            "MACHINE_OBSERVATION_SATELLITE_TRANSMITTER",
+            "LITERATURE",
+            "MATERIAL_SAMPLE",
+            "MATERIAL_SAMPLE_AIR",
+            "MATERIAL_SAMPLE_SOIL",
+            "MATERIAL_SAMPLE_WATER"
+          ]
+        }
+      },
+      {
+        "name": "superRecordBasis",
+        "in": "query",
+        "required": false,
+        "description": "Filter using super record basis. (Note: Even though the enumeration lists all record basis values, only few of those are super record basis: PRESERVED_SPECIMEN, HUMAN_OBSERVATION_UNSPECIFIED, ..; use aggregate by superRecordBasis to find used values. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "PRESERVED_SPECIMEN",
+            "LIVING_SPECIMEN",
+            "FOSSIL_SPECIMEN",
+            "SUBFOSSIL_SPECIMEN",
+            "SUBFOSSIL_AMBER_INCLUSION_SPECIMEN",
+            "MICROBIAL_SPECIMEN",
+            "HUMAN_OBSERVATION_UNSPECIFIED",
+            "HUMAN_OBSERVATION_SEEN",
+            "HUMAN_OBSERVATION_HEARD",
+            "HUMAN_OBSERVATION_PHOTO",
+            "HUMAN_OBSERVATION_INDIRECT",
+            "HUMAN_OBSERVATION_HANDLED",
+            "HUMAN_OBSERVATION_VIDEO",
+            "HUMAN_OBSERVATION_RECORDED_AUDIO",
+            "MACHINE_OBSERVATION_UNSPECIFIED",
+            "MACHINE_OBSERVATION_PHOTO",
+            "MACHINE_OBSERVATION_VIDEO",
+            "MACHINE_OBSERVATION_AUDIO",
+            "MACHINE_OBSERVATION_GEOLOGGER",
+            "MACHINE_OBSERVATION_SATELLITE_TRANSMITTER",
+            "LITERATURE",
+            "MATERIAL_SAMPLE",
+            "MATERIAL_SAMPLE_AIR",
+            "MATERIAL_SAMPLE_SOIL",
+            "MATERIAL_SAMPLE_WATER"
+          ]
+        }
+      },
+      {
+        "name": "lifeStage",
+        "in": "query",
+        "required": false,
+        "description": "Filter using life stage of an unit. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "ADULT",
+            "JUVENILE",
+            "IMMATURE",
+            "EGG",
+            "TADPOLE",
+            "PUPA",
+            "NYMPH",
+            "SUBIMAGO",
+            "LARVA",
+            "SNAG",
+            "EMBRYO",
+            "SUBADULT",
+            "MATURE",
+            "STERILE",
+            "FERTILE",
+            "SPROUT",
+            "DEAD_SPROUT",
+            "BUD",
+            "FLOWER",
+            "WITHERED_FLOWER",
+            "SEED",
+            "RIPENING_FRUIT",
+            "RIPE_FRUIT",
+            "SUBTERRANEAN",
+            "GALL",
+            "MARKS",
+            "TRIUNGULIN"
+          ]
+        }
+      },
+      {
+        "name": "sex",
+        "in": "query",
+        "required": false,
+        "description": "Filter using sex of an unit. When filtering MALE or FEMALE, will include those where individualCountMale/Female is >= 1 Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "MALE",
+            "FEMALE",
+            "WORKER",
+            "UNKNOWN",
+            "NOT_APPLICABLE",
+            "GYNANDROMORPH",
+            "MULTIPLE",
+            "CONFLICTING"
+          ]
+        }
+      },
+      {
+        "name": "invasiveControl",
+        "in": "query",
+        "required": false,
+        "description": "Filter using effectiveness of invasive control measures Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "FULL",
+            "PARTIAL",
+            "NO_EFFECT",
+            "NOT_FOUND"
+          ]
+        }
+      },
+      {
+        "name": "invasiveControlled",
+        "in": "query",
+        "required": false,
+        "description": "Filter only invasives that are reported to have been controlled successfully or not reported to have been controlled succesfully.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "documentId",
+        "in": "query",
+        "required": false,
+        "description": "Filter using document URIs. Will include records with quality issues (normally exluded by default). Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "documentIdPrefix",
+        "in": "query",
+        "required": false,
+        "description": "Filter using document URI prefix. For example prefix of http://id.luomus.fi/JA.1 is luomus:JA.  Will include records with quality issues (normally exluded by default). Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "gatheringId",
+        "in": "query",
+        "required": false,
+        "description": "Filter using gathering URIs. Will include records with quality issues (normally exluded by default). Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "unitId",
+        "in": "query",
+        "required": false,
+        "description": "Filter using unit ids.  Will include records with quality issues (normally exluded by default). Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "individualId",
+        "in": "query",
+        "required": false,
+        "description": "Filter using identifier of an individual, for example bird ring. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "individualCountMin",
+        "in": "query",
+        "required": false,
+        "description": "Filter using idividual count. Unreported individual count is assumed to mean \"1+\", so searching min=1 returns where count > 0 or count is not given. To search for \"zero observations\" use max=0. Defaults to 1 but when using annotation endpoint defaults to null.",
+        "schema": {
+          "type": "integer",
+          "default": 1
+        }
+      },
+      {
+        "name": "individualCountMax",
+        "in": "query",
+        "required": false,
+        "description": "Filter using idividual count. Unreported individual count is assumed to mean \"1+\", so searching min=1 returns where count > 0 or count is not given. To search for \"null observations\" use max=0.",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "loadedSameOrAfter",
+        "in": "query",
+        "required": false,
+        "description": "Filter using the date data was loaded to Data Warehouse. Format is yyyy-MM-dd or UNIX EPOCH timestamp in seconds. Returns entries loaded later or on the same date/timestamp.",
+        "schema": {
+          "type": "string",
+          "format": "yyyy-MM-dd"
+        }
+      },
+      {
+        "name": "loadedSameOrBefore",
+        "in": "query",
+        "required": false,
+        "description": "Filter using the date data was loaded to Data Warehouse. Format is yyyy-MM-dd or UNIX EPOCH timestamp in seconds. Returns entries loaded before or on the same date/timestamp.",
+        "schema": {
+          "type": "string",
+          "format": "yyyy-MM-dd"
+        }
+      },
+      {
+        "name": "firstLoadedSameOrAfter",
+        "in": "query",
+        "required": false,
+        "description": "Filter using the date data was loaded to Data Warehouse (first load of document). Format is yyyy-MM-dd or UNIX EPOCH timestamp in seconds. Returns entries loaded later or on the same date/timestamp.",
+        "schema": {
+          "type": "string",
+          "format": "yyyy-MM-dd"
+        }
+      },
+      {
+        "name": "firstLoadedSameOrBefore",
+        "in": "query",
+        "required": false,
+        "description": "Filter using the date data was loaded to Data Warehouse (first load of document). Format is yyyy-MM-dd or UNIX EPOCH timestamp in seconds. Returns entries loaded before or on the same date/timestamp.",
+        "schema": {
+          "type": "string",
+          "format": "yyyy-MM-dd"
+        }
+      },
+      {
+        "name": "includeNullLoadDates",
+        "in": "query",
+        "required": false,
+        "description": "Used with filters loadedSameOrAfter, loadedSameOrBefore, firstLoadedSameOrAfter, firstLoadedSameOrBefore: If set to true will include matches even if the date is not present. Default is false.",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      {
+        "name": "createdDateYear",
+        "in": "query",
+        "required": false,
+        "description": "Filter using the year the record was created",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "coordinates",
+        "in": "query",
+        "required": false,
+        "description": "Filter using coordinates. Valid formats are latMin:latMax:lonMin:lonMax:CRS:ratio and lat:lon:CRS:ratio. The last parameter (ratio) is not required. Valid CRSs are WGS84, YKJ and EUREF (WGS84 = EPSG:4326; EUREF = ETRS-TM35FIN EPSG:3067; YKJ = EPSG:2393). For metric coordinates (ykj, euref): the search 666:333:YKJ means lat between 6660000-6670000 and lon between 3330000-3340000. Ratio is a number between 0.0-1.0. Default ratio is 1.0 (observation area must be entirely inside the search area). Ratio 0.0: the search area must intersect with the observation area. For WGS84 the ratio is not calculated in meters but in degrees so it an approximation. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "polygon",
+        "in": "query",
+        "required": false,
+        "description": "Filter centerpoint of occurrences by polygon. Valid formats are WKT and WKT:CRS. Valid CRSs are WGS84, YKJ and EUREF (default) (WGS84 = EPSG:4326; EUREF = ETRS-TM35FIN EPSG:3067; YKJ = EPSG:2393).  Polygon search is implemented only for Finland (based on ETRS-TM35FIN coordinate system). WKT must be somewhat shorter than 4000 chars. To overcome this limitation use polygonId filter and /polygon/ endpoint to get the polygonIds.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "polygonId",
+        "in": "query",
+        "required": false,
+        "description": "Filter centerpoint occurrences using ID of a search polygon. Use /polygon/ endpoint to get id if the polygon.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "coordinateAccuracyMax",
+        "in": "query",
+        "required": false,
+        "description": "Exclude coordinates that are less accurate or equal than the provided value (inclusive). Value is meters. Accuracy is a guiding logaritmic figure, for example 1m, 10m, 100m or 100km. (More specifically the longest length of the area bouding box rounded up on the logarithmic scale.)",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "wgs84CenterPoint",
+        "in": "query",
+        "required": false,
+        "description": "Filter using WGS84 (EPSG:4326) centerpoint. Valid formats are lat:lon:WGS84 and latMin:latMax:lonMin:lonMax:WGS84. (You must include the crs WGS84 even though it is the only supported type.) Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "ykj1km",
+        "in": "query",
+        "required": false,
+        "description": "Filter using uniform (YKJ, EPSG:2393) 1km grid square(s). Valid format is lat:lon. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "ykj10km",
+        "in": "query",
+        "required": false,
+        "description": "Filter using uniform (YKJ, EPSG:2393) 10km grid square(s). Valid format is lat:lon. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "ykj50km",
+        "in": "query",
+        "required": false,
+        "description": "Filter using uniform (YKJ, EPSG:2393) 50km grid square(s). Valid format is lat:lon. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "ykj100km",
+        "in": "query",
+        "required": false,
+        "description": "Filter using uniform (YKJ, EPSG:2393) 100km grid square(s). Valid format is lat:lon. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "ykj1kmCenter",
+        "in": "query",
+        "required": false,
+        "description": "Filter using uniform (YKJ, EPSG:2393) 1km grid square(s) that are resolved using center point of the area. Valid format is lat:lon. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "ykj10kmCenter",
+        "in": "query",
+        "required": false,
+        "description": "Filter using uniform (YKJ, EPSG:2393) 10km grid square(s) that are resolved using center point of the area. Valid format is lat:lon. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "ykj50kmCenter",
+        "in": "query",
+        "required": false,
+        "description": "Filter using uniform (YKJ, EPSG:2393) 50km grid square(s) that are resolved using center point of the area. Valid format is lat:lon. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "ykj100kmCenter",
+        "in": "query",
+        "required": false,
+        "description": "Filter using uniform (YKJ, EPSG:2393) 100km grid square(s) that are resolved using center point of the area. Valid format is lat:lon. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "sourceOfCoordinates",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on source of coordinates. Possible values are REPORTED_VALUE = the reported coordinates or FINNISH_MUNICIPALITY = the coordinates are the bounding box of the reported Finnish municipality (no coordinates were reported). Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "COORDINATES",
+            "COORDINATE_CENTERPOINT",
+            "REPORTED_VALUE",
+            "FINNISH_MUNICIPALITY",
+            "OLD_FINNISH_MUNICIPALITY"
+          ]
+        }
+      },
+      {
+        "name": "typeSpecimen",
+        "in": "query",
+        "required": false,
+        "description": "Filter only type specimens or those that are not type specimens.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "wild",
+        "in": "query",
+        "required": false,
+        "description": "Filter occurrences based on reported/annotated wild status. By default, non-wild occurrences are exluded. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "WILD",
+            "WILD_UNKNOWN",
+            "NON_WILD"
+          ],
+          "default": "WILD,UNKNOWN"
+        }
+      },
+      {
+        "name": "breedingSite",
+        "in": "query",
+        "required": false,
+        "description": "Filter only occurrences reported to be at their breeding site.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "local",
+        "in": "query",
+        "required": false,
+        "description": "Filter only for local species.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "alive",
+        "in": "query",
+        "required": false,
+        "description": "Filter occurences reported to be dead (alive=false) or alive or unknown ( reported to be alive (true) or dead (false).",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "identificationBasis",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of identification basis. Use Metadata-API to find identifiers. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /metadata/ranges/MY.identificationBasisEnum",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "samplingMethod",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of sampling method. Use Metadata-API to find identifiers. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /metadata/ranges/MY.samplingMethods",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "plantStatusCode",
+        "in": "query",
+        "required": false,
+        "description": "Filter only occurrences reported with a certain plant status code. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /metadata/ranges/MY.plantStatusCodeEnum",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "hasDocumentMedia",
+        "in": "query",
+        "required": false,
+        "description": "Filter only units where parent document has media or doesn't have media.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "hasGatheringMedia",
+        "in": "query",
+        "required": false,
+        "description": "Filter only units where parent gathering has media or doesn't have media.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "hasUnitMedia",
+        "in": "query",
+        "required": false,
+        "description": "Filter only units where unit has media or doesn't have media.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "hasUnitImages",
+        "in": "query",
+        "required": false,
+        "description": "Filter only units where unit has images or doesn't have images.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "hasUnitAudio",
+        "in": "query",
+        "required": false,
+        "description": "Filter only units where unit has audio or doesn't have audio.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "hasUnitVideo",
+        "in": "query",
+        "required": false,
+        "description": "Filter only units where unit has video or doesn't have video.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "hasUnitModel",
+        "in": "query",
+        "required": false,
+        "description": "Filter only units where unit has 3d models or doesn't have 3d-models.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "hasMedia",
+        "in": "query",
+        "required": false,
+        "description": "Filter only records where parent document, gathering or unit has media or none have media.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "hasSequenceText",
+        "in": "query",
+        "required": false,
+        "description": "Filter only units where at least one sequence text is present (unit fact 'MY.sequenceText').",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "teamMember",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on verbatim observer names. Search is case insensitive and wildcard * can be used. Multiple values are seperated by ';'. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "teamMemberId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on ids of verbatim observer name strings. (The only way to access these ids is to aggregate by gathering.team.memberId) Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "secureReason",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on secure reasons. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "DEFAULT_TAXON_CONSERVATION",
+            "BREEDING_SITE_CONSERVATION",
+            "NATURA_AREA_CONSERVATION",
+            "WINTER_SEASON_TAXON_CONSERVATION",
+            "BREEDING_SEASON_TAXON_CONSERVATION",
+            "CUSTOM",
+            "USER_HIDDEN",
+            "ADMIN_HIDDEN",
+            "DATA_QUARANTINE_PERIOD",
+            "ONLY_PRIVATE",
+            "USER_PERSON_NAMES_HIDDEN",
+            "USER_HIDDEN_LOCATION",
+            "USER_HIDDEN_TIME"
+          ]
+        }
+      },
+      {
+        "name": "secureLevel",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on secure level. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "NOSHOW",
+            "HIGHEST",
+            "KM100",
+            "KM50",
+            "KM25",
+            "KM10",
+            "KM5",
+            "KM1",
+            "NONE"
+          ]
+        }
+      },
+      {
+        "name": "secured",
+        "in": "query",
+        "required": false,
+        "description": "Include only those that are secured or those that are not secured.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "annotated",
+        "in": "query",
+        "required": false,
+        "description": "Include only those units that have annotations or those that do not have annotations.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "annotationType",
+        "in": "query",
+        "required": false,
+        "description": "Include only those units/annotations that are of the selected annotation type. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "ALL",
+            "USER_EFFECTIVE",
+            "USER_CHECK",
+            "DW_AUTO",
+            "ADMIN",
+            "FORM_ADMIN",
+            "INVASIVE_CONTROL",
+            "COMMENT",
+            "DELETED"
+          ]
+        }
+      },
+      {
+        "name": "includeSystemAnnotations",
+        "in": "query",
+        "required": false,
+        "description": "Include those annotations that are made by automated quality checks. Defaults to false.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "annotatedSameOrAfter",
+        "in": "query",
+        "required": false,
+        "description": "Include only those annotations that have been made after or on the same date/timestamp. Format is yyyy-MM-dd or UNIX EPOCH timestamp in seconds.",
+        "schema": {
+          "type": "string",
+          "format": "yyyy-MM-dd"
+        }
+      },
+      {
+        "name": "annotatedSameOrBefore",
+        "in": "query",
+        "required": false,
+        "description": "Include only those annotations that have been made before or on the same date/timestamp. Format is yyyy-MM-dd or UNIX EPOCH timestamp in seconds.",
+        "schema": {
+          "type": "string",
+          "format": "yyyy-MM-dd"
+        }
+      },
+      {
+        "name": "qualityIssues",
+        "in": "query",
+        "required": false,
+        "description": "Possible values: NO_ISSUES, BOTH, ONLY_ISSUES. Include records with quality issues (document, gathering or unit issues). Default is NO_ISSUES, but when searching by id (documentId, unitId, keyword) or using annotation endpoint the default is BOTH.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "NO_ISSUES",
+            "BOTH",
+            "ONLY_ISSUES"
+          ],
+          "default": "NO_ISSUES"
+        }
+      },
+      {
+        "name": "collectionQuality",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on quality rating of collections. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "PROFESSIONAL",
+            "HOBBYIST",
+            "AMATEUR"
+          ]
+        }
+      },
+      {
+        "name": "recordQuality",
+        "in": "query",
+        "required": false,
+        "description": "Filter using quality rating of the occurrence Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "EXPERT_VERIFIED",
+            "COMMUNITY_VERIFIED",
+            "NEUTRAL",
+            "UNCERTAIN",
+            "ERRONEOUS"
+          ]
+        }
+      },
+      {
+        "name": "collectionAndRecordQuality",
+        "in": "query",
+        "required": false,
+        "description": "Filter using quality rating of collection and occurrence. Format: \"PROFESSIONAL:NEUTRAL,UNCERTAIN\". Multiple values are seperated by ';'. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "reliability",
+        "in": "query",
+        "required": false,
+        "description": "Filter using reliability of the occurrence Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "RELIABLE",
+            "UNDEFINED",
+            "UNRELIABLE"
+          ]
+        }
+      },
+      {
+        "name": "effectiveTag",
+        "in": "query",
+        "required": false,
+        "description": "Filter using effective tags of the record Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "ADMIN_MARKED_SPAM",
+            "ADMIN_MARKED_COARSE",
+            "ADMIN_MARKED_NON_WILD",
+            "EXPERT_TAG_VERIFIED",
+            "EXPERT_TAG_UNCERTAIN",
+            "EXPERT_TAG_ERRONEOUS",
+            "COMMUNITY_TAG_VERIFIED",
+            "AUTO_VALIDATIONS_PASS",
+            "CHECKED_CANNOT_VERIFY",
+            "CHANGED_OWNER_MANUAL",
+            "CHANGED_DW_AUTO",
+            "CHECK",
+            "CHECK_COORDINATES",
+            "CHECK_DATETIME",
+            "CHECK_LOCATION",
+            "CHECK_OBSERVER",
+            "CHECK_TAXON",
+            "CHECK_DUPLICATE",
+            "CHECK_WILDNESS",
+            "CHECK_NEEDS_INFO",
+            "CHECK_SPAM",
+            "CHECK_BREEDING_INDEX",
+            "AUTO_DISTRIBUTION_CHECK",
+            "AUTO_PERIOD_CHECK",
+            "FORMADMIN_CENSUS_COUNT_ERROR",
+            "FORMADMIN_CENSUS_INNER_COUNT_ERROR",
+            "FORMADMIN_CENSUS_OTHER_ERROR",
+            "FORMADMIN_VERIFIED",
+            "FORMADMIN_UNCERTAIN",
+            "INVASIVE_FULL",
+            "INVASIVE_PARTIAL",
+            "INVASIVE_NO_EFFECT",
+            "INVASIVE_NOT_FOUND"
+          ]
+        }
+      },
+      {
+        "name": "unidentified",
+        "in": "query",
+        "required": false,
+        "description": "Show only records that need an identification (or do not need an identification)",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "needsCheck",
+        "in": "query",
+        "required": false,
+        "description": "Show only records that are marked to need checking by experts (or do not need checking)",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "completeListTaxonId",
+        "in": "query",
+        "required": false,
+        "description": "Show only records where document contains complete list for this higher taxon. For example include only records where all birds or mammals were documented, if they were seens -> something that is not documented was not seen. Use taxon IDs. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /taxa",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "completeListType",
+        "in": "query",
+        "required": false,
+        "description": "Show only records where document contains complete list and the list is of this type: URI or Qname identifier of MY.completeListTypeEnum (use metadata-api to resolve identifiers) Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /metadata/ranges/MY.completeListTypeEnum",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "taxonSetId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of an taxon sets: Use Metadata-API to find identifiers. Returns occurrences of taxa that belong to the specified taxon set. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /metadata/ranges/MX.taxonSetEnum",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "taxonCensus",
+        "in": "query",
+        "required": false,
+        "description": "Show only records where observations are completely recorded for this higher taxon. For example include only records where all birds or mammals were documented, if they were seens -> something that is not documented was not seen. Use taxon IDs. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /taxa",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "hasSample",
+        "in": "query",
+        "required": false,
+        "description": "Include only those units that have samples or those that do not have samples.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "unitFact",
+        "in": "query",
+        "required": false,
+        "description": "Format is \"factName=value;otherFact=value\". If value is not given (for example just \"factName\"), this filter matches all records that have the given fact. If value is a numeric range (for example \"factName=-5.0/-1.5\"), this filter matches all values where the value is between the range (inclusive). When multiple fact names are given, this is an AND search. For facts that are URIs, you can use full URI or Qname.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "gatheringFact",
+        "in": "query",
+        "required": false,
+        "description": "Format is \"factName=value;otherFact=value\". If value is not given (for example just \"factName\"), this filter matches all records that have the given fact. If value is a numeric range (for example \"factName=-5.0/-1.5\"), this filter matches all values where the value is between the range (inclusive). When multiple fact names are given, this is an AND search. For facts that are URIs, you can use full URI or Qname.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "documentFact",
+        "in": "query",
+        "required": false,
+        "description": "Format is \"factName=value;otherFact=value\". If value is not given (for example just \"factName\"), this filter matches all records that have the given fact. If value is a numeric range (for example \"factName=-5.0/-1.5\"), this filter matches all values where the value is between the range (inclusive). When multiple fact names are given, this is an AND search. For facts that are URIs, you can use full URI or Qname.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "partition",
+        "in": "query",
+        "required": false,
+        "description": "You can split search results into partitions. Syntax: '1/5' splits the results to five partitions and returns the first. Useful when downloading large lists of results and you want to split the task into smaller sub-queries.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "hasValue",
+        "in": "query",
+        "required": false,
+        "description": "Name (or names) of fields that must be non-null for the occurrence to be included to results. The field must be from level document, gathering or unit (not for example annotation) and must not be an array field. Also, when quering gathering level, unit fields can not be used, etc. When multiple fields are listed, this is an AND search (all must be non-null). Multiple values are seperated by ','.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "atlasCode",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of atlas code. Use Metadata-API to find identifiers. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /metadata/ranges/MY.atlasCodeEnum",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "atlasClass",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of atlas class. Use Metadata-API to find identifiers. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /metadata/ranges/MY.atlasClassEnum",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "onlyNonStateLands",
+        "in": "query",
+        "required": false,
+        "description": "Filter to occurrences that are not on state lands (true) or to occurrences that are only from state lands (false)",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "selfAsEditor",
+        "in": "query",
+        "required": false,
+        "description": "Search for records the user has save or modified. When using this filter, results come from the private warehouse! You  must provide a Person-Token header when using this filter.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "selfAsObserver",
+        "in": "query",
+        "required": false,
+        "description": "Search for records where the user has been marked as the observer. When using this filter, results come from the private warehouse! You  must provide a Person-Token header when using this filter.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "selfAsEditorOrObserver",
+        "in": "query",
+        "required": false,
+        "description": "Search for records the user has saved OR where marked as the observer. When using this filter, results come from the private warehouse! You  must provide a Person-Token header when using this filter.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "selfIsNotEditorOrObserver",
+        "in": "query",
+        "required": false,
+        "description": "Search for records where the user has not saved or observed the record (= everyone else's records). These come from the public warehouse! -> Results may contain records that have actually been saved by the user, but the info is not available in public (has been secured). You  must provide a Person-Token header when using this filter.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "Permission-Token",
+        "in": "header",
+        "required": false,
+        "description": "Use granted permissions to search the private warehouse",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "Person-Token",
+        "in": "header",
+        "required": false,
+        "description": "Provide identify of the user that is using [selfAsEditor, selfAsObserver, selfAsEditorOrObserver, selfIsNotEditorOrObserver] filters.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "format",
+        "in": "query",
+        "required": false,
+        "description": "Alternative way to Accept header to define content type of the response.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "json",
+            "geojson",
+            "xml",
+            "rdf_xml"
+          ]
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Succesful query. Schema varies based on content-type of the response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_ListResponse"
+            }
+          },
+          "application/geo+json": {
+            "schema": {
+              "type": "string"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "type": "string"
+            }
+          },
+          "application/rdf+xml": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Parameters were not accepted. Message has details.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WarehouseDwError"
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "Invalid credentials. Message has details.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WarehouseDwError"
+            }
+          }
+        }
+      },
+      "429": {
+        "description": "Too many pending requests for the access_token; max is 12",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WarehouseDwError"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Service is in unknown erroneous state.",
+        "content": {
+          "text/plain": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "tags": [
+      "Warehouse"
+    ],
+    "security": [
+      {
+        "Access token": []
+      },
+      {
+        "Lang": []
+      },
+      {
+        "Person token": []
+      }
+    ]
+  },
+  "components": {
+    "schemas": {
+      "WarehouseDwQuery_ListResponse": {
+        "type": "object",
+        "properties": {
+          "currentPage": {
+            "type": "integer"
+          },
+          "prevPage": {
+            "type": "integer"
+          },
+          "nextPage": {
+            "type": "integer"
+          },
+          "lastPage": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          },
+          "total": {
+            "type": "integer"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_JoinedRow"
+            }
+          },
+          "cacheTimestamp": {
+            "type": "integer"
+          }
+        }
+      },
+      "WarehouseDwQuery_JoinedRow": {
+        "type": "object",
+        "properties": {
+          "document": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_Document"
+          },
+          "gathering": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_Gathering"
+          },
+          "unit": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_Unit"
+          },
+          "annotation": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_Annotation"
+          },
+          "media": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_MediaObject"
+          },
+          "sample": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_Sample"
+          }
+        }
+      },
+      "WarehouseDwQuery_Unit": {
+        "type": "object",
+        "properties": {
+          "unitId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "unitOrder": {
+            "type": "integer"
+          },
+          "taxonVerbatim": {
+            "type": "string"
+          },
+          "quality": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_UnitQuality"
+          },
+          "reportedTaxonConfidence": {
+            "type": "string",
+            "enum": [
+              "SURE",
+              "UNSURE",
+              "SUBSPECIES_UNSURE"
+            ]
+          },
+          "linkings": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_UnitDWLinkings"
+          },
+          "abundanceString": {
+            "type": "string"
+          },
+          "abundanceUnit": {
+            "type": "string",
+            "enum": [
+              "OCCURS_DOES_NOT_OCCUR",
+              "INDIVIDUAL_COUNT",
+              "PAIRCOUNT",
+              "NESTS",
+              "BREEDING_SITES",
+              "FEEDING_SITES",
+              "COLONIES",
+              "QUEENS",
+              "FRUITBODIES",
+              "SPROUTS",
+              "HUMMOCKS",
+              "THALLI",
+              "FLOWERS",
+              "SPOTS",
+              "TRUNKS",
+              "SHELLS",
+              "DROPPINGS",
+              "FEEDING_MARKS",
+              "INDIRECT_MARKS",
+              "SQUARE_DM",
+              "SQUARE_M",
+              "RELATIVE_DENSITY"
+            ]
+          },
+          "interpretations": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_UnitInterpretations"
+          },
+          "superRecordBasis": {
+            "type": "string",
+            "enum": [
+              "PRESERVED_SPECIMEN",
+              "LIVING_SPECIMEN",
+              "FOSSIL_SPECIMEN",
+              "SUBFOSSIL_SPECIMEN",
+              "SUBFOSSIL_AMBER_INCLUSION_SPECIMEN",
+              "MICROBIAL_SPECIMEN",
+              "HUMAN_OBSERVATION_UNSPECIFIED",
+              "HUMAN_OBSERVATION_SEEN",
+              "HUMAN_OBSERVATION_HEARD",
+              "HUMAN_OBSERVATION_PHOTO",
+              "HUMAN_OBSERVATION_INDIRECT",
+              "HUMAN_OBSERVATION_HANDLED",
+              "HUMAN_OBSERVATION_VIDEO",
+              "HUMAN_OBSERVATION_RECORDED_AUDIO",
+              "MACHINE_OBSERVATION_UNSPECIFIED",
+              "MACHINE_OBSERVATION_PHOTO",
+              "MACHINE_OBSERVATION_VIDEO",
+              "MACHINE_OBSERVATION_AUDIO",
+              "MACHINE_OBSERVATION_GEOLOGGER",
+              "MACHINE_OBSERVATION_SATELLITE_TRANSMITTER",
+              "LITERATURE",
+              "MATERIAL_SAMPLE",
+              "MATERIAL_SAMPLE_AIR",
+              "MATERIAL_SAMPLE_SOIL",
+              "MATERIAL_SAMPLE_WATER"
+            ]
+          },
+          "recordBasis": {
+            "type": "string",
+            "enum": [
+              "PRESERVED_SPECIMEN",
+              "LIVING_SPECIMEN",
+              "FOSSIL_SPECIMEN",
+              "SUBFOSSIL_SPECIMEN",
+              "SUBFOSSIL_AMBER_INCLUSION_SPECIMEN",
+              "MICROBIAL_SPECIMEN",
+              "HUMAN_OBSERVATION_UNSPECIFIED",
+              "HUMAN_OBSERVATION_SEEN",
+              "HUMAN_OBSERVATION_HEARD",
+              "HUMAN_OBSERVATION_PHOTO",
+              "HUMAN_OBSERVATION_INDIRECT",
+              "HUMAN_OBSERVATION_HANDLED",
+              "HUMAN_OBSERVATION_VIDEO",
+              "HUMAN_OBSERVATION_RECORDED_AUDIO",
+              "MACHINE_OBSERVATION_UNSPECIFIED",
+              "MACHINE_OBSERVATION_PHOTO",
+              "MACHINE_OBSERVATION_VIDEO",
+              "MACHINE_OBSERVATION_AUDIO",
+              "MACHINE_OBSERVATION_GEOLOGGER",
+              "MACHINE_OBSERVATION_SATELLITE_TRANSMITTER",
+              "LITERATURE",
+              "MATERIAL_SAMPLE",
+              "MATERIAL_SAMPLE_AIR",
+              "MATERIAL_SAMPLE_SOIL",
+              "MATERIAL_SAMPLE_WATER"
+            ]
+          },
+          "typeSpecimen": {
+            "type": "boolean"
+          },
+          "det": {
+            "type": "string"
+          },
+          "sex": {
+            "type": "string",
+            "enum": [
+              "MALE",
+              "FEMALE",
+              "WORKER",
+              "UNKNOWN",
+              "NOT_APPLICABLE",
+              "GYNANDROMORPH",
+              "MULTIPLE",
+              "CONFLICTING"
+            ]
+          },
+          "lifeStage": {
+            "type": "string",
+            "enum": [
+              "ADULT",
+              "JUVENILE",
+              "IMMATURE",
+              "EGG",
+              "TADPOLE",
+              "PUPA",
+              "NYMPH",
+              "SUBIMAGO",
+              "LARVA",
+              "SNAG",
+              "EMBRYO",
+              "SUBADULT",
+              "MATURE",
+              "STERILE",
+              "FERTILE",
+              "SPROUT",
+              "DEAD_SPROUT",
+              "BUD",
+              "FLOWER",
+              "WITHERED_FLOWER",
+              "SEED",
+              "RIPENING_FRUIT",
+              "RIPE_FRUIT",
+              "SUBTERRANEAN",
+              "GALL",
+              "MARKS",
+              "TRIUNGULIN"
+            ]
+          },
+          "wild": {
+            "type": "boolean"
+          },
+          "alive": {
+            "type": "boolean"
+          },
+          "local": {
+            "type": "boolean"
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "breedingSite": {
+            "type": "boolean"
+          },
+          "plantStatusCode": {
+            "type": "string"
+          },
+          "atlasCode": {
+            "type": "string"
+          },
+          "atlasClass": {
+            "type": "string"
+          },
+          "individualId": {
+            "type": "string"
+          },
+          "sequenceText": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "annotationCount": {
+            "type": "integer"
+          },
+          "annotations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_Annotation"
+            }
+          },
+          "audioCount": {
+            "type": "integer"
+          },
+          "author": {
+            "type": "string"
+          },
+          "externalMediaCount": {
+            "type": "integer"
+          },
+          "facts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_Fact"
+            }
+          },
+          "identificationBasis": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "identifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_IdentificationEvent"
+            }
+          },
+          "imageCount": {
+            "type": "integer"
+          },
+          "individualCountFemale": {
+            "type": "integer"
+          },
+          "individualCountMale": {
+            "type": "integer"
+          },
+          "media": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_MediaObject"
+            }
+          },
+          "mediaCount": {
+            "type": "integer"
+          },
+          "modelCount": {
+            "type": "integer"
+          },
+          "primarySpecimen": {
+            "type": "boolean"
+          },
+          "reportedInformalTaxonGroup": {
+            "type": "string",
+            "format": "URI"
+          },
+          "reportedTaxonId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "sampleCount": {
+            "type": "integer"
+          },
+          "samples": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_Sample"
+            }
+          },
+          "samplingMethod": {
+            "type": "string"
+          },
+          "sourceTags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "ADMIN_MARKED_SPAM",
+                "ADMIN_MARKED_COARSE",
+                "ADMIN_MARKED_NON_WILD",
+                "EXPERT_TAG_VERIFIED",
+                "EXPERT_TAG_UNCERTAIN",
+                "EXPERT_TAG_ERRONEOUS",
+                "COMMUNITY_TAG_VERIFIED",
+                "AUTO_VALIDATIONS_PASS",
+                "CHECKED_CANNOT_VERIFY",
+                "CHANGED_OWNER_MANUAL",
+                "CHANGED_DW_AUTO",
+                "CHECK",
+                "CHECK_COORDINATES",
+                "CHECK_DATETIME",
+                "CHECK_LOCATION",
+                "CHECK_OBSERVER",
+                "CHECK_TAXON",
+                "CHECK_DUPLICATE",
+                "CHECK_WILDNESS",
+                "CHECK_NEEDS_INFO",
+                "CHECK_SPAM",
+                "CHECK_BREEDING_INDEX",
+                "AUTO_DISTRIBUTION_CHECK",
+                "AUTO_PERIOD_CHECK",
+                "FORMADMIN_CENSUS_COUNT_ERROR",
+                "FORMADMIN_CENSUS_INNER_COUNT_ERROR",
+                "FORMADMIN_CENSUS_OTHER_ERROR",
+                "FORMADMIN_VERIFIED",
+                "FORMADMIN_UNCERTAIN",
+                "INVASIVE_FULL",
+                "INVASIVE_PARTIAL",
+                "INVASIVE_NO_EFFECT",
+                "INVASIVE_NOT_FOUND"
+              ]
+            }
+          },
+          "types": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_TypeSpecimen"
+            }
+          },
+          "videoCount": {
+            "type": "integer"
+          }
+        }
+      },
+      "WarehouseDwQuery_MediaObject": {
+        "type": "object",
+        "properties": {
+          "author": {
+            "type": "string"
+          },
+          "caption": {
+            "type": "string"
+          },
+          "copyrightOwner": {
+            "type": "string"
+          },
+          "fullResolutionMediaAvailable": {
+            "type": "boolean"
+          },
+          "fullURL": {
+            "type": "string"
+          },
+          "highDetailModelURL": {
+            "type": "string"
+          },
+          "licenseId": {
+            "type": "string"
+          },
+          "lowDetailModelURL": {
+            "type": "string"
+          },
+          "mediaType": {
+            "type": "string",
+            "enum": [
+              "IMAGE",
+              "AUDIO",
+              "VIDEO",
+              "MODEL"
+            ]
+          },
+          "mp3URL": {
+            "type": "string"
+          },
+          "squareThumbnailURL": {
+            "type": "string"
+          },
+          "thumbnailURL": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "format": "URI"
+          },
+          "videoURL": {
+            "type": "string"
+          },
+          "wavURL": {
+            "type": "string"
+          }
+        }
+      },
+      "WarehouseDwQuery_UnitInterpretations": {
+        "type": "object",
+        "properties": {
+          "annotatedTaxonId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "collectionAndRecordQuality": {
+            "type": "string"
+          },
+          "det": {
+            "type": "string"
+          },
+          "effectiveTags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "ADMIN_MARKED_SPAM",
+                "ADMIN_MARKED_COARSE",
+                "ADMIN_MARKED_NON_WILD",
+                "EXPERT_TAG_VERIFIED",
+                "EXPERT_TAG_UNCERTAIN",
+                "EXPERT_TAG_ERRONEOUS",
+                "COMMUNITY_TAG_VERIFIED",
+                "AUTO_VALIDATIONS_PASS",
+                "CHECKED_CANNOT_VERIFY",
+                "CHANGED_OWNER_MANUAL",
+                "CHANGED_DW_AUTO",
+                "CHECK",
+                "CHECK_COORDINATES",
+                "CHECK_DATETIME",
+                "CHECK_LOCATION",
+                "CHECK_OBSERVER",
+                "CHECK_TAXON",
+                "CHECK_DUPLICATE",
+                "CHECK_WILDNESS",
+                "CHECK_NEEDS_INFO",
+                "CHECK_SPAM",
+                "CHECK_BREEDING_INDEX",
+                "AUTO_DISTRIBUTION_CHECK",
+                "AUTO_PERIOD_CHECK",
+                "FORMADMIN_CENSUS_COUNT_ERROR",
+                "FORMADMIN_CENSUS_INNER_COUNT_ERROR",
+                "FORMADMIN_CENSUS_OTHER_ERROR",
+                "FORMADMIN_VERIFIED",
+                "FORMADMIN_UNCERTAIN",
+                "INVASIVE_FULL",
+                "INVASIVE_PARTIAL",
+                "INVASIVE_NO_EFFECT",
+                "INVASIVE_NOT_FOUND"
+              ]
+            }
+          },
+          "individualCount": {
+            "type": "integer"
+          },
+          "invasiveControlEffectiveness": {
+            "type": "string",
+            "enum": [
+              "FULL",
+              "PARTIAL",
+              "NO_EFFECT",
+              "NOT_FOUND"
+            ]
+          },
+          "invasiveControlled": {
+            "type": "boolean"
+          },
+          "needsCheck": {
+            "type": "boolean"
+          },
+          "needsIdentification": {
+            "type": "boolean"
+          },
+          "pairCount": {
+            "type": "integer"
+          },
+          "recordQuality": {
+            "type": "string",
+            "enum": [
+              "EXPERT_VERIFIED",
+              "COMMUNITY_VERIFIED",
+              "NEUTRAL",
+              "UNCERTAIN",
+              "ERRONEOUS"
+            ]
+          },
+          "recordQualityNumeric": {
+            "type": "number"
+          },
+          "reliability": {
+            "type": "string",
+            "enum": [
+              "RELIABLE",
+              "UNDEFINED",
+              "UNRELIABLE"
+            ]
+          }
+        }
+      },
+      "WarehouseDwQuery_UnitQuality": {
+        "type": "object",
+        "properties": {
+          "documentGatheringUnitQualityIssues": {
+            "type": "boolean"
+          },
+          "issue": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_Quality"
+          }
+        }
+      },
+      "WarehouseDwQuery_Quality": {
+        "type": "object",
+        "properties": {
+          "issue": {
+            "type": "string",
+            "enum": [
+              "REPORTED_UNRELIABLE",
+              "MEDIA_ISSUE",
+              "INVALID_CREATED_DATE",
+              "INVALID_MODIFIED_DATE",
+              "COORDINATES_COUNTRY_MISMATCH",
+              "COORDINATES_MUNICIPALITY_MISMATCH",
+              "TOO_LARGE_AREA",
+              "INVALID_GEO",
+              "INVALID_YKJ_COORDINATES",
+              "INVALID_EUREF_COORDINATES",
+              "INVALID_WGS84_COORDINATES",
+              "DATE_END_BEFORE_BEGIN",
+              "DATE_END_GIVEN_WITHOUT_BEGIN",
+              "DATE_IN_FUTURE",
+              "DATE_TOO_FAR_IN_THE_PAST",
+              "INVALID_DATE",
+              "RECORD_BASIS_MISSING",
+              "INVALID_HOUR",
+              "INVALID_MINUTE",
+              "TIME_END_BEFORE_BEGIN",
+              "INVALID_COORDINATES",
+              "ETL_ISSUE"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "AUTOMATED_FINBIF_VALIDATION",
+              "ORIGINAL_DOCUMENT",
+              "QUALITY_CONTROL"
+            ]
+          }
+        }
+      },
+      "WarehouseDwQuery_IdentificationEvent": {
+        "type": "object",
+        "properties": {
+          "notes": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "det": {
+            "type": "string"
+          },
+          "detDate": {
+            "type": "string"
+          },
+          "facts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_Fact"
+            }
+          },
+          "id": {
+            "type": "string",
+            "format": "URI"
+          },
+          "linkings": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_IdentificationDwLinkings"
+          },
+          "preferred": {
+            "type": "boolean"
+          },
+          "taxon": {
+            "type": "string"
+          },
+          "taxonID": {
+            "type": "string",
+            "format": "URI"
+          },
+          "taxonSpecifier": {
+            "type": "string"
+          },
+          "taxonSpecifierAuthor": {
+            "type": "string"
+          }
+        }
+      },
+      "WarehouseDwQuery_Fact": {
+        "type": "object",
+        "properties": {
+          "fact": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "integerValue": {
+            "type": "integer"
+          },
+          "decimalValue": {
+            "type": "number"
+          }
+        }
+      },
+      "WarehouseDwQuery_IdentificationDwLinkings": {
+        "type": "object",
+        "properties": {
+          "taxon": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_Taxon"
+          }
+        }
+      },
+      "WarehouseDwQuery_Taxon": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "format": "URI"
+          },
+          "qname": {
+            "type": "string"
+          },
+          "checklist": {
+            "type": "string",
+            "format": "URI"
+          },
+          "scientificName": {
+            "type": "string"
+          },
+          "scientificNameAuthorship": {
+            "type": "string"
+          },
+          "scientificNameDisplayName": {
+            "type": "string"
+          },
+          "cursiveName": {
+            "type": "boolean"
+          },
+          "finnish": {
+            "type": "boolean"
+          },
+          "taxonRank": {
+            "type": "string",
+            "format": "URI"
+          },
+          "vernacularName": {
+            "type": "object"
+          },
+          "nameFinnish": {
+            "type": "string"
+          },
+          "nameSwedish": {
+            "type": "string"
+          },
+          "nameEnglish": {
+            "type": "string"
+          },
+          "informalTaxonGroups": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "taxonomicOrder": {
+            "type": "integer"
+          },
+          "latestRedListStatusFinland": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_RedListStatus"
+          },
+          "sensitive": {
+            "type": "boolean"
+          },
+          "kingdomScientificName": {
+            "type": "string"
+          },
+          "occurrenceCountFinland": {
+            "type": "integer"
+          },
+          "primaryHabitat": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_HabitatObject"
+          },
+          "administrativeStatuses": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "threatenedStatus": {
+            "type": "string",
+            "format": "URI"
+          },
+          "taxonConceptIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "type": "object"
+      },
+      "WarehouseDwQuery_HabitatObject": {
+        "type": "object",
+        "properties": {
+          "habitat": {
+            "type": "string",
+            "format": "URI"
+          },
+          "habitatSpecificTypes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "id": {
+            "type": "string",
+            "format": "URI"
+          },
+          "order": {
+            "type": "integer"
+          }
+        }
+      },
+      "WarehouseDwQuery_RedListStatus": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "format": "URI"
+          },
+          "year": {
+            "type": "integer"
+          }
+        }
+      },
+      "WarehouseDwQuery_Annotation": {
+        "type": "object",
+        "properties": {
+          "addedTags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "ADMIN_MARKED_SPAM",
+                "ADMIN_MARKED_COARSE",
+                "ADMIN_MARKED_NON_WILD",
+                "EXPERT_TAG_VERIFIED",
+                "EXPERT_TAG_UNCERTAIN",
+                "EXPERT_TAG_ERRONEOUS",
+                "COMMUNITY_TAG_VERIFIED",
+                "AUTO_VALIDATIONS_PASS",
+                "CHECKED_CANNOT_VERIFY",
+                "CHANGED_OWNER_MANUAL",
+                "CHANGED_DW_AUTO",
+                "CHECK",
+                "CHECK_COORDINATES",
+                "CHECK_DATETIME",
+                "CHECK_LOCATION",
+                "CHECK_OBSERVER",
+                "CHECK_TAXON",
+                "CHECK_DUPLICATE",
+                "CHECK_WILDNESS",
+                "CHECK_NEEDS_INFO",
+                "CHECK_SPAM",
+                "CHECK_BREEDING_INDEX",
+                "AUTO_DISTRIBUTION_CHECK",
+                "AUTO_PERIOD_CHECK",
+                "FORMADMIN_CENSUS_COUNT_ERROR",
+                "FORMADMIN_CENSUS_INNER_COUNT_ERROR",
+                "FORMADMIN_CENSUS_OTHER_ERROR",
+                "FORMADMIN_VERIFIED",
+                "FORMADMIN_UNCERTAIN",
+                "INVASIVE_FULL",
+                "INVASIVE_PARTIAL",
+                "INVASIVE_NO_EFFECT",
+                "INVASIVE_NOT_FOUND"
+              ]
+            }
+          },
+          "annotationByPerson": {
+            "type": "string",
+            "format": "URI"
+          },
+          "annotationByPersonName": {
+            "type": "string"
+          },
+          "annotationBySystem": {
+            "type": "string",
+            "format": "URI"
+          },
+          "annotationBySystemName": {
+            "type": "string"
+          },
+          "atlasCode": {
+            "type": "string",
+            "format": "URI"
+          },
+          "byRole": {
+            "type": "string",
+            "format": "URI"
+          },
+          "created": {
+            "type": "string"
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "deletedByPerson": {
+            "type": "string",
+            "format": "URI"
+          },
+          "deletedByPersonName": {
+            "type": "string"
+          },
+          "deletedDateTime": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "format": "URI"
+          },
+          "identification": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_Identification"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "occurrenceAtTimeOfAnnotation": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_OccurrenceAtTimeOfAnnotation"
+          },
+          "removedTags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "ADMIN_MARKED_SPAM",
+                "ADMIN_MARKED_COARSE",
+                "ADMIN_MARKED_NON_WILD",
+                "EXPERT_TAG_VERIFIED",
+                "EXPERT_TAG_UNCERTAIN",
+                "EXPERT_TAG_ERRONEOUS",
+                "COMMUNITY_TAG_VERIFIED",
+                "AUTO_VALIDATIONS_PASS",
+                "CHECKED_CANNOT_VERIFY",
+                "CHANGED_OWNER_MANUAL",
+                "CHANGED_DW_AUTO",
+                "CHECK",
+                "CHECK_COORDINATES",
+                "CHECK_DATETIME",
+                "CHECK_LOCATION",
+                "CHECK_OBSERVER",
+                "CHECK_TAXON",
+                "CHECK_DUPLICATE",
+                "CHECK_WILDNESS",
+                "CHECK_NEEDS_INFO",
+                "CHECK_SPAM",
+                "CHECK_BREEDING_INDEX",
+                "AUTO_DISTRIBUTION_CHECK",
+                "AUTO_PERIOD_CHECK",
+                "FORMADMIN_CENSUS_COUNT_ERROR",
+                "FORMADMIN_CENSUS_INNER_COUNT_ERROR",
+                "FORMADMIN_CENSUS_OTHER_ERROR",
+                "FORMADMIN_VERIFIED",
+                "FORMADMIN_UNCERTAIN",
+                "INVASIVE_FULL",
+                "INVASIVE_PARTIAL",
+                "INVASIVE_NO_EFFECT",
+                "INVASIVE_NOT_FOUND"
+              ]
+            }
+          },
+          "valid": {
+            "type": "boolean"
+          }
+        }
+      },
+      "WarehouseDwQuery_Identification": {
+        "type": "object",
+        "properties": {
+          "notes": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "facts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_Fact"
+            }
+          },
+          "id": {
+            "type": "string",
+            "format": "URI"
+          },
+          "linkings": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_IdentificationDwLinkings"
+          },
+          "taxon": {
+            "type": "string"
+          },
+          "taxonID": {
+            "type": "string",
+            "format": "URI"
+          },
+          "taxonSpecifier": {
+            "type": "string"
+          },
+          "taxonSpecifierAuthor": {
+            "type": "string"
+          }
+        }
+      },
+      "WarehouseDwQuery_OccurrenceAtTimeOfAnnotation": {
+        "type": "object",
+        "properties": {
+          "countryVerbatim": {
+            "type": "string"
+          },
+          "dateBegin": {
+            "type": "string",
+            "format": "yyyy-MM-dd"
+          },
+          "dateEnd": {
+            "type": "string",
+            "format": "yyyy-MM-dd"
+          },
+          "linkings": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_IdentificationDwLinkings"
+          },
+          "locality": {
+            "type": "string"
+          },
+          "municipalityVerbatim": {
+            "type": "string"
+          },
+          "taxonId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "taxonVerbatim": {
+            "type": "string"
+          },
+          "wgs84centerPointLat": {
+            "type": "number"
+          },
+          "wgs84centerPointLon": {
+            "type": "number"
+          }
+        }
+      },
+      "WarehouseDwQuery_TypeSpecimen": {
+        "type": "object",
+        "properties": {
+          "notes": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "basionymePublication": {
+            "type": "string"
+          },
+          "facts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_Fact"
+            }
+          },
+          "id": {
+            "type": "string",
+            "format": "URI"
+          },
+          "linkings": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_IdentificationDwLinkings"
+          },
+          "publication": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "format": "URI"
+          },
+          "taxon": {
+            "type": "string"
+          },
+          "taxonID": {
+            "type": "string",
+            "format": "URI"
+          },
+          "taxonSpecifier": {
+            "type": "string"
+          },
+          "taxonSpecifierAuthor": {
+            "type": "string"
+          },
+          "typif": {
+            "type": "string"
+          },
+          "typifDate": {
+            "type": "string"
+          },
+          "verification": {
+            "type": "string",
+            "format": "URI"
+          }
+        }
+      },
+      "WarehouseDwQuery_Sample": {
+        "type": "object",
+        "properties": {
+          "notes": {
+            "type": "string"
+          },
+          "collectionId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "facts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_Fact"
+            }
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "material": {
+            "type": "string"
+          },
+          "multiple": {
+            "type": "boolean"
+          },
+          "quality": {
+            "type": "string"
+          },
+          "sampleId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "sampleOrder": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "WarehouseDwQuery_UnitDWLinkings": {
+        "type": "object",
+        "properties": {
+          "taxon": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_Taxon"
+          },
+          "originalTaxon": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_Taxon"
+          }
+        }
+      },
+      "WarehouseDwQuery_Document": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "secureLevel": {
+            "type": "string",
+            "enum": [
+              "NOSHOW",
+              "HIGHEST",
+              "KM100",
+              "KM50",
+              "KM25",
+              "KM10",
+              "KM5",
+              "KM1",
+              "NONE"
+            ]
+          },
+          "secureReasons": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "DEFAULT_TAXON_CONSERVATION",
+                "BREEDING_SITE_CONSERVATION",
+                "NATURA_AREA_CONSERVATION",
+                "WINTER_SEASON_TAXON_CONSERVATION",
+                "BREEDING_SEASON_TAXON_CONSERVATION",
+                "CUSTOM",
+                "USER_HIDDEN",
+                "ADMIN_HIDDEN",
+                "DATA_QUARANTINE_PERIOD",
+                "ONLY_PRIVATE",
+                "USER_PERSON_NAMES_HIDDEN",
+                "USER_HIDDEN_LOCATION",
+                "USER_HIDDEN_TIME"
+              ]
+            }
+          },
+          "partial": {
+            "type": "boolean"
+          },
+          "collectionId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "licenseId": {
+            "type": "string"
+          },
+          "dataSource": {
+            "type": "string"
+          },
+          "linkings": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_DocumentDWLinkings"
+          },
+          "quality": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_DocumentQuality"
+          },
+          "sourceId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "namedPlace": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_NamedPlaceEntity"
+          },
+          "siteType": {
+            "type": "string"
+          },
+          "siteStatus": {
+            "type": "string"
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "firstLoadDate": {
+            "type": "string",
+            "format": "yyyy-MM-dd"
+          },
+          "loadDate": {
+            "type": "string",
+            "format": "yyyy-MM-dd"
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "yyyy-MM-dd"
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "yyyy-MM-dd"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "annotations": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_Annotation"
+            }
+          },
+          "completeListTaxonId": {
+            "type": "string"
+          },
+          "completeListType": {
+            "type": "string"
+          },
+          "editorUserIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "facts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_Fact"
+            }
+          },
+          "formId": {
+            "type": "string"
+          },
+          "media": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_MediaObject"
+            }
+          },
+          "mediaCount": {
+            "type": "integer"
+          },
+          "namedPlaceId": {
+            "type": "string"
+          },
+          "prefix": {
+            "type": "string"
+          },
+          "referenceURL": {
+            "type": "string"
+          },
+          "secured": {
+            "type": "boolean"
+          },
+          "siteDead": {
+            "type": "boolean"
+          },
+          "sourceTags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "ADMIN_MARKED_SPAM",
+                "ADMIN_MARKED_COARSE",
+                "ADMIN_MARKED_NON_WILD",
+                "EXPERT_TAG_VERIFIED",
+                "EXPERT_TAG_UNCERTAIN",
+                "EXPERT_TAG_ERRONEOUS",
+                "COMMUNITY_TAG_VERIFIED",
+                "AUTO_VALIDATIONS_PASS",
+                "CHECKED_CANNOT_VERIFY",
+                "CHANGED_OWNER_MANUAL",
+                "CHANGED_DW_AUTO",
+                "CHECK",
+                "CHECK_COORDINATES",
+                "CHECK_DATETIME",
+                "CHECK_LOCATION",
+                "CHECK_OBSERVER",
+                "CHECK_TAXON",
+                "CHECK_DUPLICATE",
+                "CHECK_WILDNESS",
+                "CHECK_NEEDS_INFO",
+                "CHECK_SPAM",
+                "CHECK_BREEDING_INDEX",
+                "AUTO_DISTRIBUTION_CHECK",
+                "AUTO_PERIOD_CHECK",
+                "FORMADMIN_CENSUS_COUNT_ERROR",
+                "FORMADMIN_CENSUS_INNER_COUNT_ERROR",
+                "FORMADMIN_CENSUS_OTHER_ERROR",
+                "FORMADMIN_VERIFIED",
+                "FORMADMIN_UNCERTAIN",
+                "INVASIVE_FULL",
+                "INVASIVE_PARTIAL",
+                "INVASIVE_NO_EFFECT",
+                "INVASIVE_NOT_FOUND"
+              ]
+            }
+          }
+        }
+      },
+      "WarehouseDwQuery_NamedPlaceEntity": {
+        "type": "object",
+        "properties": {
+          "alternativeId": {
+            "type": "string"
+          },
+          "alternativeIds": {
+            "type": "string"
+          },
+          "birdAssociationAreaDisplayName": {
+            "type": "string"
+          },
+          "birdAssociationAreaId": {
+            "type": "string"
+          },
+          "collectionId": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "municipalityDisplayName": {
+            "type": "string"
+          },
+          "municipalityId": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "tags": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "wgs84CenterPoint": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_SingleCoordinates"
+          },
+          "ykj10km": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_SingleCoordinates"
+          }
+        }
+      },
+      "WarehouseDwQuery_SingleCoordinates": {
+        "type": "object",
+        "properties": {
+          "lat": {
+            "type": "number"
+          },
+          "lon": {
+            "type": "number"
+          }
+        }
+      },
+      "WarehouseDwQuery_DocumentQuality": {
+        "type": "object",
+        "properties": {
+          "issue": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_Quality"
+          }
+        }
+      },
+      "WarehouseDwQuery_DocumentDWLinkings": {
+        "type": "object",
+        "properties": {
+          "collectionQuality": {
+            "type": "string",
+            "enum": [
+              "PROFESSIONAL",
+              "HOBBYIST",
+              "AMATEUR"
+            ]
+          },
+          "editors": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_Person"
+            }
+          }
+        }
+      },
+      "WarehouseDwQuery_Person": {
+        "type": "object",
+        "properties": {
+          "fullName": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "format": "URI"
+          },
+          "userId": {
+            "type": "string"
+          }
+        }
+      },
+      "WarehouseDwQuery_Gathering": {
+        "type": "object",
+        "properties": {
+          "gatheringId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "gatheringOrder": {
+            "type": "integer"
+          },
+          "gatheringSection": {
+            "type": "integer"
+          },
+          "geo": {
+            "type": "object",
+            "externalDocs": {
+              "url": "http://geojson.org/geojson-spec.html#geometry-objects"
+            },
+            "description": "GeoJSON object with custom \"crs\" required property that takes in values WGS84,EUREF,YKJ (WGS84 = EPSG:4326; EUREF = ETRS-TM35FIN EPSG:3067; YKJ = EPSG:2393)"
+          },
+          "eventDate": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_DateRange"
+          },
+          "hourBegin": {
+            "type": "integer"
+          },
+          "hourEnd": {
+            "type": "integer"
+          },
+          "displayDateTime": {
+            "type": "string"
+          },
+          "team": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "conversions": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_GatheringConversions"
+          },
+          "interpretations": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_GatheringInterpretations"
+          },
+          "stateLand": {
+            "type": "boolean"
+          },
+          "accurateArea": {
+            "type": "boolean"
+          },
+          "higherGeography": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "municipality": {
+            "type": "string"
+          },
+          "biogeographicalProvince": {
+            "type": "string"
+          },
+          "province": {
+            "type": "string"
+          },
+          "locality": {
+            "type": "string"
+          },
+          "quality": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_GatheringQuality"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "coordinatesVerbatim": {
+            "type": "string"
+          },
+          "facts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_Fact"
+            }
+          },
+          "linkings": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_GatheringDWLinkings"
+          },
+          "media": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_MediaObject"
+            }
+          },
+          "mediaCount": {
+            "type": "integer"
+          },
+          "minutesBegin": {
+            "type": "integer"
+          },
+          "minutesEnd": {
+            "type": "integer"
+          },
+          "observerUserIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "taxonCensus": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_TaxonCensus"
+            }
+          }
+        }
+      },
+      "WarehouseDwQuery_GatheringDWLinkings": {
+        "type": "object",
+        "properties": {
+          "observers": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_Person"
+            }
+          }
+        }
+      },
+      "WarehouseDwQuery_GatheringQuality": {
+        "type": "object",
+        "properties": {
+          "issue": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_Quality"
+          },
+          "locationIssue": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_Quality"
+          },
+          "timeIssue": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_Quality"
+          }
+        }
+      },
+      "WarehouseDwQuery_DateRange": {
+        "type": "object",
+        "properties": {
+          "begin": {
+            "type": "string",
+            "format": "yyyy-MM-dd"
+          },
+          "end": {
+            "type": "string",
+            "format": "yyyy-MM-dd"
+          }
+        }
+      },
+      "WarehouseDwQuery_TaxonCensus": {
+        "type": "object",
+        "properties": {
+          "taxonId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "type": {
+            "type": "string",
+            "format": "URI"
+          }
+        }
+      },
+      "WarehouseDwQuery_GatheringConversions": {
+        "type": "object",
+        "properties": {
+          "birdAssociationArea": {
+            "type": "string",
+            "format": "URI"
+          },
+          "boundingBoxAreaInSquareMeters": {
+            "type": "integer"
+          },
+          "century": {
+            "type": "integer"
+          },
+          "day": {
+            "type": "integer"
+          },
+          "dayOfYearBegin": {
+            "type": "integer"
+          },
+          "dayOfYearEnd": {
+            "type": "integer"
+          },
+          "decade": {
+            "type": "integer"
+          },
+          "euref": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_Coordinates"
+          },
+          "eurefCenterPoint": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_SingleCoordinates"
+          },
+          "eurefGeo": {
+            "type": "object",
+            "externalDocs": {
+              "url": "http://geojson.org/geojson-spec.html#geometry-objects"
+            },
+            "description": "GeoJSON object with custom \"crs\" required property that takes in values WGS84,EUREF,YKJ (WGS84 = EPSG:4326; EUREF = ETRS-TM35FIN EPSG:3067; YKJ = EPSG:2393)"
+          },
+          "eurefWKT": {
+            "type": "string"
+          },
+          "linelengthInMeters": {
+            "type": "integer"
+          },
+          "month": {
+            "type": "integer"
+          },
+          "seasonBegin": {
+            "type": "integer"
+          },
+          "seasonEnd": {
+            "type": "integer"
+          },
+          "wgs84": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_Coordinates"
+          },
+          "wgs84CenterPoint": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_SingleCoordinates"
+          },
+          "wgs84Geo": {
+            "type": "object",
+            "externalDocs": {
+              "url": "http://geojson.org/geojson-spec.html#geometry-objects"
+            },
+            "description": "GeoJSON object with custom \"crs\" required property that takes in values WGS84,EUREF,YKJ (WGS84 = EPSG:4326; EUREF = ETRS-TM35FIN EPSG:3067; YKJ = EPSG:2393)"
+          },
+          "wgs84Grid005": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_SingleCoordinates"
+          },
+          "wgs84Grid01": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_SingleCoordinates"
+          },
+          "wgs84Grid05": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_SingleCoordinates"
+          },
+          "wgs84Grid1": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_SingleCoordinates"
+          },
+          "wgs84WKT": {
+            "type": "string"
+          },
+          "year": {
+            "type": "integer"
+          },
+          "ykj": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_Coordinates"
+          },
+          "ykj100km": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_SingleCoordinates"
+          },
+          "ykj100kmCenter": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_SingleCoordinates"
+          },
+          "ykj10km": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_SingleCoordinates"
+          },
+          "ykj10kmCenter": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_SingleCoordinates"
+          },
+          "ykj1km": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_SingleCoordinates"
+          },
+          "ykj1kmCenter": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_SingleCoordinates"
+          },
+          "ykj50km": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_SingleCoordinates"
+          },
+          "ykj50kmCenter": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwQuery_SingleCoordinates"
+          },
+          "ykjGeo": {
+            "type": "object",
+            "externalDocs": {
+              "url": "http://geojson.org/geojson-spec.html#geometry-objects"
+            },
+            "description": "GeoJSON object with custom \"crs\" required property that takes in values WGS84,EUREF,YKJ (WGS84 = EPSG:4326; EUREF = ETRS-TM35FIN EPSG:3067; YKJ = EPSG:2393)"
+          },
+          "ykjWKT": {
+            "type": "string"
+          }
+        }
+      },
+      "WarehouseDwQuery_Coordinates": {
+        "type": "object",
+        "properties": {
+          "latMax": {
+            "type": "number"
+          },
+          "latMin": {
+            "type": "number"
+          },
+          "lonMax": {
+            "type": "number"
+          },
+          "lonMin": {
+            "type": "number"
+          }
+        }
+      },
+      "WarehouseDwQuery_GatheringInterpretations": {
+        "type": "object",
+        "properties": {
+          "biogeographicalProvince": {
+            "type": "string",
+            "format": "URI"
+          },
+          "biogeographicalProvinceDisplayname": {
+            "type": "string"
+          },
+          "biogeographicalProvinces": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "coordinateAccuracy": {
+            "type": "integer"
+          },
+          "country": {
+            "type": "string",
+            "format": "URI"
+          },
+          "countryDisplayname": {
+            "type": "string"
+          },
+          "finnishMunicipalities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "finnishMunicipality": {
+            "type": "string",
+            "format": "URI"
+          },
+          "municipalityDisplayname": {
+            "type": "string"
+          },
+          "sourceOfBiogeographicalProvince": {
+            "type": "string",
+            "enum": [
+              "COORDINATES",
+              "COORDINATE_CENTERPOINT",
+              "REPORTED_VALUE",
+              "FINNISH_MUNICIPALITY",
+              "OLD_FINNISH_MUNICIPALITY"
+            ]
+          },
+          "sourceOfCoordinates": {
+            "type": "string",
+            "enum": [
+              "COORDINATES",
+              "COORDINATE_CENTERPOINT",
+              "REPORTED_VALUE",
+              "FINNISH_MUNICIPALITY",
+              "OLD_FINNISH_MUNICIPALITY"
+            ]
+          },
+          "sourceOfCountry": {
+            "type": "string",
+            "enum": [
+              "COORDINATES",
+              "COORDINATE_CENTERPOINT",
+              "REPORTED_VALUE",
+              "FINNISH_MUNICIPALITY",
+              "OLD_FINNISH_MUNICIPALITY"
+            ]
+          },
+          "sourceOfFinnishMunicipality": {
+            "type": "string",
+            "enum": [
+              "COORDINATES",
+              "COORDINATE_CENTERPOINT",
+              "REPORTED_VALUE",
+              "FINNISH_MUNICIPALITY",
+              "OLD_FINNISH_MUNICIPALITY"
+            ]
+          }
+        }
+      },
+      "WarehouseDwError": {
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    }
+  },
+  "resolvedRefs": [
+    "#/components/schemas/WarehouseDwError",
+    "#/components/schemas/WarehouseDwQuery_Annotation",
+    "#/components/schemas/WarehouseDwQuery_Coordinates",
+    "#/components/schemas/WarehouseDwQuery_DateRange",
+    "#/components/schemas/WarehouseDwQuery_Document",
+    "#/components/schemas/WarehouseDwQuery_DocumentDWLinkings",
+    "#/components/schemas/WarehouseDwQuery_DocumentQuality",
+    "#/components/schemas/WarehouseDwQuery_Fact",
+    "#/components/schemas/WarehouseDwQuery_Gathering",
+    "#/components/schemas/WarehouseDwQuery_GatheringConversions",
+    "#/components/schemas/WarehouseDwQuery_GatheringDWLinkings",
+    "#/components/schemas/WarehouseDwQuery_GatheringInterpretations",
+    "#/components/schemas/WarehouseDwQuery_GatheringQuality",
+    "#/components/schemas/WarehouseDwQuery_HabitatObject",
+    "#/components/schemas/WarehouseDwQuery_Identification",
+    "#/components/schemas/WarehouseDwQuery_IdentificationDwLinkings",
+    "#/components/schemas/WarehouseDwQuery_IdentificationEvent",
+    "#/components/schemas/WarehouseDwQuery_JoinedRow",
+    "#/components/schemas/WarehouseDwQuery_ListResponse",
+    "#/components/schemas/WarehouseDwQuery_MediaObject",
+    "#/components/schemas/WarehouseDwQuery_NamedPlaceEntity",
+    "#/components/schemas/WarehouseDwQuery_OccurrenceAtTimeOfAnnotation",
+    "#/components/schemas/WarehouseDwQuery_Person",
+    "#/components/schemas/WarehouseDwQuery_Quality",
+    "#/components/schemas/WarehouseDwQuery_RedListStatus",
+    "#/components/schemas/WarehouseDwQuery_Sample",
+    "#/components/schemas/WarehouseDwQuery_SingleCoordinates",
+    "#/components/schemas/WarehouseDwQuery_Taxon",
+    "#/components/schemas/WarehouseDwQuery_TaxonCensus",
+    "#/components/schemas/WarehouseDwQuery_TypeSpecimen",
+    "#/components/schemas/WarehouseDwQuery_Unit",
+    "#/components/schemas/WarehouseDwQuery_UnitDWLinkings",
+    "#/components/schemas/WarehouseDwQuery_UnitInterpretations",
+    "#/components/schemas/WarehouseDwQuery_UnitQuality"
+  ]
+}

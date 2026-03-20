@@ -1,0 +1,124 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Laji API",
+    "description": "\n## Authentication\n\nThis API requires an **Access Token**. To obtain a token:\n1. [Send a `POST` request with your email address to the `/api-user` endpoint](https://api.laji.fi/openapi#/API%20user/ApiUsersController_register).\n2. An access token will be sent to your email.\n\nInclude the token in all requests using the HTTP header: `Authorization: Bearer <ACCESS_TOKEN>`\n\nHere on the API frontpage, you can configure the **Access Token**, **Person-Token**, and **Accept-Language** globally using the **Authorize** button below.\n\n---\n\n## Documentation & Resources\n\n- **Additional API documentation:**\n  [https://info.laji.fi/en/frontpage/api/api-laji-fi](https://info.laji.fi/en/frontpage/api/api-laji-fi)\n\n- **OpenAPI / Swagger 3.0 specification (machine-readable):**\n  [https://api.laji.fi/openapi-json](https://api.laji.fi/openapi-json)\n\n---\n\n## Support\n\nIf you have any questions, contact us at **helpdesk@laji.fi**.\n",
+    "version": "1",
+    "contact": {}
+  },
+  "target": {
+    "path": "/warehouse/push",
+    "method": "DELETE"
+  },
+  "pathItem": {
+    "parameters": []
+  },
+  "operation": {
+    "summary": "Report document deleted",
+    "description": "Requires that API key has load permissions. Note that you can only delete documents from the source that is defined by access_token",
+    "parameters": [
+      {
+        "name": "documentId",
+        "in": "query",
+        "required": true,
+        "description": "Document URI to be deleted.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "sourceId",
+        "in": "query",
+        "required": false,
+        "description": "Normally sourceId is received via the API key. By giving this parameter you can override the sourceId. API key must have permissions to use that sourceId.",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Accepted delete request. Does not neccesarilly mean there was anything to delete or that delete has gone through yet. Returns \"ok\"",
+        "content": {
+          "text/plain": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Data was not accepted. Message tells why.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WarehouseDwError"
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "Invalid credentials. Message has details.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WarehouseDwError"
+            }
+          }
+        }
+      },
+      "429": {
+        "description": "Too many pending requests for the access_token; max is 12",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WarehouseDwError"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Service is in unknown erroneous state.",
+        "content": {
+          "text/plain": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "tags": [
+      "Warehouse"
+    ],
+    "security": [
+      {
+        "Access token": []
+      },
+      {
+        "Lang": []
+      },
+      {
+        "Person token": []
+      }
+    ]
+  },
+  "components": {
+    "schemas": {
+      "WarehouseDwError": {
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    }
+  },
+  "resolvedRefs": [
+    "#/components/schemas/WarehouseDwError"
+  ]
+}

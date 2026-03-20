@@ -1,0 +1,177 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Laji API",
+    "description": "\n## Authentication\n\nThis API requires an **Access Token**. To obtain a token:\n1. [Send a `POST` request with your email address to the `/api-user` endpoint](https://api.laji.fi/openapi#/API%20user/ApiUsersController_register).\n2. An access token will be sent to your email.\n\nInclude the token in all requests using the HTTP header: `Authorization: Bearer <ACCESS_TOKEN>`\n\nHere on the API frontpage, you can configure the **Access Token**, **Person-Token**, and **Accept-Language** globally using the **Authorize** button below.\n\n---\n\n## Documentation & Resources\n\n- **Additional API documentation:**\n  [https://info.laji.fi/en/frontpage/api/api-laji-fi](https://info.laji.fi/en/frontpage/api/api-laji-fi)\n\n- **OpenAPI / Swagger 3.0 specification (machine-readable):**\n  [https://api.laji.fi/openapi-json](https://api.laji.fi/openapi-json)\n\n---\n\n## Support\n\nIf you have any questions, contact us at **helpdesk@laji.fi**.\n",
+    "version": "1",
+    "contact": {}
+  },
+  "target": {
+    "path": "/google-maps/geocode/json",
+    "method": "GET"
+  },
+  "pathItem": {
+    "parameters": []
+  },
+  "operation": {
+    "operationId": "geocode",
+    "tags": [
+      "Google Maps"
+    ],
+    "description": "The Geocoding API is a service that provides geocoding and reverse geocoding of addresses.",
+    "parameters": [
+      {
+        "name": "address",
+        "description": "The street address or plus code that you want to geocode.",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "latlng",
+        "description": "The latitude and longitude of the location to geocode.",
+        "in": "query",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "components",
+        "description": "A components filter with elements separated by a pipe (|).",
+        "in": "query",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "200 OK",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GoogleMapsGeocodingResponse"
+            }
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "Access token": []
+      },
+      {
+        "Lang": []
+      },
+      {
+        "Person token": []
+      }
+    ]
+  },
+  "components": {
+    "schemas": {
+      "GoogleMapsGeocodingResponse": {
+        "type": "object",
+        "required": [
+          "status",
+          "results"
+        ],
+        "properties": {
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GoogleMapsGeocodingResult"
+            }
+          },
+          "status": {
+            "type": "string"
+          }
+        }
+      },
+      "GoogleMapsGeocodingResult": {
+        "type": "object",
+        "required": [
+          "address_components",
+          "formatted_address",
+          "geometry",
+          "place_id",
+          "types"
+        ],
+        "properties": {
+          "address_components": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/GoogleMapsAddressComponent"
+            }
+          },
+          "formatted_address": {
+            "type": "string"
+          },
+          "geometry": {
+            "type": "object",
+            "required": [
+              "location"
+            ],
+            "properties": {
+              "location": {
+                "type": "object",
+                "required": [
+                  "lat",
+                  "lng"
+                ],
+                "properties": {
+                  "lat": {
+                    "type": "number"
+                  },
+                  "lng": {
+                    "type": "number"
+                  }
+                }
+              }
+            }
+          },
+          "place_id": {
+            "type": "string"
+          },
+          "types": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "GoogleMapsAddressComponent": {
+        "type": "object",
+        "required": [
+          "long_name",
+          "short_name",
+          "types"
+        ],
+        "properties": {
+          "long_name": {
+            "type": "string"
+          },
+          "short_name": {
+            "type": "string"
+          },
+          "types": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  },
+  "resolvedRefs": [
+    "#/components/schemas/GoogleMapsAddressComponent",
+    "#/components/schemas/GoogleMapsGeocodingResponse",
+    "#/components/schemas/GoogleMapsGeocodingResult"
+  ]
+}

@@ -1,6 +1,6 @@
 ---
 name: finbif-api
-description: General guide to the FinBIF (Finnish Biodiversity Information Facility) REST API at api.laji.fi. Use this skill whenever the user mentions FinBIF, laji.fi, Finnish biodiversity data, or is building software that uses the FinBIF API. Covers overview of the API, authentication, pagination, rate limiting, error handling. Start here for any FinBIF-related task.
+description: General guide to the FinBIF (Finnish Biodiversity Information Facility) REST API at api.laji.fi. Use this skill whenever the user is building something that uses the FinBIF API or data. Covers overview of the API, authentication, pagination, rate limiting, error handling etc. Start here for any FinBIF data or API-related task.
 ---
 
 # Purpose
@@ -11,6 +11,7 @@ If the task is clearly about one API area, prefer the matching specialized skill
 
 - `finbif-occurrence` for occurrence search and filtering
 - `finbif-taxonomy` for taxon lookup and taxonomic metadata
+- `finbif-api-endpoints` for a list of all API endpoints and detailed information about each
 
 # OpenAPI specs
 
@@ -107,11 +108,11 @@ Important: The test API uses a different Access Token than the production API.
 
 ## Endpoints
 
-The following are the most commonly used endpoints of the API.
+The following are the most commonly used endpoints of the API. To see all endpoints and get more details about a specific endpoint, use the `finbif-api-endpoints` skill.
 
 ### Occurrence data (i.e. nature observations)
 
-Use occurrence-skill for more details about occurrence-related endpoints.
+Use `occurrence-skill` for more details about occurrence-related endpoints.
 
 - `/warehouse` – Querying occurrence data from FinBIF data warehouse. Can be also used to send data to the data warehouse.
 - `/collection` – Metadata about occurrence datasets/collections. All occurrences belong to one collection and the metadata provides information about the dataset.
@@ -140,7 +141,7 @@ curl -X 'GET' \
 
 ### Taxonomy
 
-Use taxonomy-skill for more details about taxonomy-related endpoints.
+Use `taxonomy-skill` for more details about taxonomy-related endpoints.
 
 - `/taxa` – Information about naming of organisms, classifying organisms in a hierarchical system or in taxonomic ranks, distribution data and biological interactions, identifiers across different systems, etc.
 - `/informalTaxonGroup` – Informal groups may be taxonomic groups (such as Aves) or can be used to group similar species together (for example Aphyllophoroid fungi). Some species do not belong to any informal groups and some may belong to several. Informal groups can be used to filter taxa and occurrences.
@@ -171,180 +172,3 @@ curl -X 'GET' \
   -H 'Accept-Language: fi' \
   -H 'API-Version: 1'
 ```
-
-### All endpoints
-
-GET /annotations
-POST /annotations
-GET /annotations/tags
-DELETE /annotations/{id}
-GET /api-user
-POST /api-user
-PUT /api-user/{email}
-GET /areas
-GET /areas/{id}
-POST /audio
-GET /audio/{id}
-PUT /audio/{id}
-DELETE /audio/{id}
-GET /audio/{id}/flac
-GET /audio/{id}/mp3
-GET /audio/{id}/thumbnail.jpg
-GET /audio/{id}/wav
-POST /audio/{tempId}
-GET /authentication-event
-DELETE /authentication-event
-GET /autocomplete/friends
-GET /autocomplete/persons
-GET /autocomplete/taxa
-GET /checklist-versions
-GET /checklist-versions/{id}
-GET /checklists
-GET /checklists/{id}
-GET /collections
-GET /collections/roots
-GET /collections/{id}
-GET /collections/{id}/children
-GET /context/{context}
-POST /coordinates/location
-GET /documents
-POST /documents
-POST /documents/batch
-GET /documents/batch/{jobID}
-POST /documents/batch/{jobID}
-GET /documents/count/byYear
-GET /documents/stats
-POST /documents/validate
-GET /documents/{id}
-PUT /documents/{id}
-DELETE /documents/{id}
-POST /feedback
-GET /form-permissions
-GET /form-permissions/{collectionID}
-POST /form-permissions/{collectionID}
-PUT /form-permissions/{collectionID}/{personID}
-DELETE /form-permissions/{collectionID}/{personID}
-GET /forms
-POST /forms
-POST /forms/transform
-GET /forms/{id}
-PUT /forms/{id}
-DELETE /forms/{id}
-GET /forms/{id}/participants
-POST /geo-convert/
-POST /geo-convert/convert-to-table
-GET /geo-convert/health
-GET /geo-convert/output/{id}
-GET /geo-convert/status/{id}
-GET /geo-convert/{id}
-GET /google-maps/geocode/json
-POST /html-to-pdf
-POST /images
-GET /images/{id}
-PUT /images/{id}
-DELETE /images/{id}
-GET /images/{id}/large.jpg
-GET /images/{id}/square.jpg
-GET /images/{id}/thumbnail.jpg
-POST /images/{tempId}
-GET /informal-taxon-groups
-GET /informal-taxon-groups/roots
-GET /informal-taxon-groups/tree
-GET /informal-taxon-groups/{id}
-GET /informal-taxon-groups/{id}/children
-GET /informal-taxon-groups/{id}/parent
-GET /informal-taxon-groups/{id}/siblings
-GET /information
-GET /information/index
-GET /information/{id}
-GET /logger/status
-POST /logger/{level}
-GET /login
-POST /login/check
-GET /metadata/alts
-GET /metadata/alts/{alt}
-GET /metadata/classes
-GET /metadata/classes/{class}
-GET /metadata/classes/{class}/properties
-GET /metadata/properties
-GET /metadata/properties/{property}
-GET /metadata/properties/{property}/alt
-GET /named-places
-POST /named-places
-GET /named-places/{id}
-PUT /named-places/{id}
-DELETE /named-places/{id}
-POST /named-places/{id}/reservation
-DELETE /named-places/{id}/reservation
-GET /news
-GET /news/{id}
-GET /notifications
-PUT /notifications/{id}
-DELETE /notifications/{id}
-GET /organizations
-GET /organizations/{id}
-GET /person
-GET /person/exists-by-email/{email}
-PUT /person/friends/{id}
-DELETE /person/friends/{id}
-POST /person/friends/{id}
-GET /person/profile
-POST /person/profile
-PUT /person/profile
-GET /person/{id}
-GET /person/{id}/profile
-GET /publications/{id}
-GET /red-list-evaluation-groups
-GET /red-list-evaluation-groups/roots
-GET /red-list-evaluation-groups/tree
-GET /red-list-evaluation-groups/{id}
-GET /red-list-evaluation-groups/{id}/children
-GET /red-list-evaluation-groups/{id}/parent
-GET /red-list-evaluation-groups/{id}/siblings
-GET /shorthand/unit/line-transect
-GET /shorthand/unit/list
-GET /shorthand/unit/trip-report
-GET /shorthand/unit/water-bird-pair-count
-POST /sound-identification
-GET /sources
-GET /sources/{id}
-GET /taxa
-POST /taxa
-GET /taxa/aggregate
-POST /taxa/aggregate
-GET /taxa/search
-GET /taxa/species
-POST /taxa/species
-GET /taxa/species/aggregate
-POST /taxa/species/aggregate
-GET /taxa/{id}
-GET /taxa/{id}/children
-POST /taxa/{id}/children
-GET /taxa/{id}/descriptions
-GET /taxa/{id}/media
-GET /taxa/{id}/parents
-POST /taxa/{id}/parents
-GET /taxa/{id}/species
-POST /taxa/{id}/species
-GET /taxa/{id}/species/aggregate
-POST /taxa/{id}/species/aggregate
-GET /warehouse/enumeration-labels
-GET /warehouse/enumeration-labels/{enumeration}
-GET /warehouse/filters
-GET /warehouse/filters/{filter}
-POST /warehouse/polygon
-GET /warehouse/polygon/{id}
-POST /warehouse/push
-DELETE /warehouse/push
-GET /warehouse/query/annotation/aggregate
-GET /warehouse/query/annotation/list
-GET /warehouse/query/document
-GET /warehouse/query/document/aggregate
-GET /warehouse/query/gathering/aggregate
-GET /warehouse/query/gathering/statistics
-GET /warehouse/query/sample/list
-GET /warehouse/query/unit/aggregate
-GET /warehouse/query/unit/count
-GET /warehouse/query/unit/list
-GET /warehouse/query/unit/statistics
-GET /warehouse/query/unitMedia/list

@@ -1,0 +1,174 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Laji API",
+    "description": "\n## Authentication\n\nThis API requires an **Access Token**. To obtain a token:\n1. [Send a `POST` request with your email address to the `/api-user` endpoint](https://api.laji.fi/openapi#/API%20user/ApiUsersController_register).\n2. An access token will be sent to your email.\n\nInclude the token in all requests using the HTTP header: `Authorization: Bearer <ACCESS_TOKEN>`\n\nHere on the API frontpage, you can configure the **Access Token**, **Person-Token**, and **Accept-Language** globally using the **Authorize** button below.\n\n---\n\n## Documentation & Resources\n\n- **Additional API documentation:**\n  [https://info.laji.fi/en/frontpage/api/api-laji-fi](https://info.laji.fi/en/frontpage/api/api-laji-fi)\n\n- **OpenAPI / Swagger 3.0 specification (machine-readable):**\n  [https://api.laji.fi/openapi-json](https://api.laji.fi/openapi-json)\n\n---\n\n## Support\n\nIf you have any questions, contact us at **helpdesk@laji.fi**.\n",
+    "version": "1",
+    "contact": {}
+  },
+  "target": {
+    "path": "geo-convert/convert-to-table",
+    "method": "POST"
+  },
+  "pathItem": {
+    "parameters": []
+  },
+  "operation": {
+    "tags": [
+      "GeoConvert"
+    ],
+    "summary": "Convert GIS file to CSV table",
+    "description": "Upload a GIS file (Shapefile, GeoJSON, GPKG, etc.) and get back a CSV file with geometry as WKT",
+    "operationId": "convert_gis_to_table_convert_to_table_post",
+    "requestBody": {
+      "content": {
+        "multipart/form-data": {
+          "schema": {
+            "$ref": "#/components/schemas/GeoConvertBody_convert_gis_to_table_convert_to_table_post"
+          }
+        }
+      },
+      "required": true
+    },
+    "responses": {
+      "200": {
+        "description": "CSV file with converted data",
+        "content": {
+          "application/json": {
+            "schema": {}
+          },
+          "text/csv": {}
+        }
+      },
+      "400": {
+        "description": "Unsupported file type",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GeoConvertErrorResponse"
+            }
+          }
+        }
+      },
+      "422": {
+        "description": "Validation Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GeoConvertHTTPValidationError"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Conversion failed",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GeoConvertErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "Access token": []
+      },
+      {
+        "Lang": []
+      },
+      {
+        "Person token": []
+      }
+    ]
+  },
+  "components": {
+    "schemas": {
+      "GeoConvertHTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/GeoConvertValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "GeoConvertValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "GeoConvertErrorResponse": {
+        "properties": {
+          "detail": {
+            "type": "string",
+            "title": "Detail",
+            "description": "Error message",
+            "examples": [
+              "Conversion ID not found"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "detail"
+        ],
+        "title": "ErrorResponse"
+      },
+      "GeoConvertBody_convert_gis_to_table_convert_to_table_post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "title": "File",
+            "description": "GIS file to convert (SHP, GeoJSON, GPKG, KML, GML, ZIP)"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_convert_gis_to_table_convert_to_table_post"
+      }
+    }
+  },
+  "resolvedRefs": [
+    "#/components/schemas/GeoConvertBody_convert_gis_to_table_convert_to_table_post",
+    "#/components/schemas/GeoConvertErrorResponse",
+    "#/components/schemas/GeoConvertHTTPValidationError",
+    "#/components/schemas/GeoConvertValidationError"
+  ]
+}

@@ -1,0 +1,302 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Laji API",
+    "description": "\n## Authentication\n\nThis API requires an **Access Token**. To obtain a token:\n1. [Send a `POST` request with your email address to the `/api-user` endpoint](https://api.laji.fi/openapi#/API%20user/ApiUsersController_register).\n2. An access token will be sent to your email.\n\nInclude the token in all requests using the HTTP header: `Authorization: Bearer <ACCESS_TOKEN>`\n\nHere on the API frontpage, you can configure the **Access Token**, **Person-Token**, and **Accept-Language** globally using the **Authorize** button below.\n\n---\n\n## Documentation & Resources\n\n- **Additional API documentation:**\n  [https://info.laji.fi/en/frontpage/api/api-laji-fi](https://info.laji.fi/en/frontpage/api/api-laji-fi)\n\n- **OpenAPI / Swagger 3.0 specification (machine-readable):**\n  [https://api.laji.fi/openapi-json](https://api.laji.fi/openapi-json)\n\n---\n\n## Support\n\nIf you have any questions, contact us at **helpdesk@laji.fi**.\n",
+    "version": "1",
+    "contact": {}
+  },
+  "target": {
+    "path": "/audio/{id}",
+    "method": "PUT"
+  },
+  "pathItem": {
+    "parameters": []
+  },
+  "operation": {
+    "operationId": "AudioController_updateMetadata",
+    "parameters": [
+      {
+        "name": "id",
+        "required": true,
+        "in": "path",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "Person-Token",
+        "required": false,
+        "description": "Person's authentication token. It is required.",
+        "in": "header",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/Audio"
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/Audio"
+            }
+          }
+        }
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "403": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "406": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "Access token": []
+      },
+      {
+        "Lang": []
+      },
+      {
+        "Person token": []
+      }
+    ],
+    "summary": "Update audio metadata",
+    "tags": [
+      "Audio"
+    ]
+  },
+  "components": {
+    "schemas": {
+      "Audio": {
+        "type": "object",
+        "properties": {
+          "intellectualRights": {
+            "type": "string",
+            "enum": [
+              "MZ.intellectualRightsCC-BY-SA-4.0",
+              "MZ.intellectualRightsCC-BY-NC-4.0",
+              "MZ.intellectualRightsCC-BY-NC-SA-4.0",
+              "MZ.intellectualRightsCC-BY-4.0",
+              "MZ.intellectualRightsCC0-4.0",
+              "MZ.intellectualRightsODBL-1.0",
+              "MZ.intellectualRightsPD",
+              "MZ.intellectualRightsARR",
+              "MZ.intellectualRightsCC-BY-2.0",
+              "MZ.intellectualRightsCC-BY-SA-2.0",
+              "MZ.intellectualRightsCC-BY-SA-2.0-DE",
+              "MZ.intellectualRightsCC-BY-NC-2.0",
+              "MZ.intellectualRightsCC-BY-NC-SA-2.0",
+              "MZ.intellectualRightsCC-BY-NC-ND-2.0",
+              "MZ.intellectualRightsCC-BY-SA-2.5",
+              "MZ.intellectualRightsCC-BY-SA-2.5-SE",
+              "MZ.intellectualRightsCC-BY-3.0",
+              "MZ.intellectualRightsCC-BY-SA-3.0",
+              "MZ.intellectualRightsCC-BY-NC-SA-3.0",
+              "MZ.intellectualRightsCC-BY-ND-4.0",
+              "MZ.intellectualRightsCC-BY-NC-ND-4.0"
+            ]
+          },
+          "caption": {
+            "type": "string"
+          },
+          "captureDateTime": {
+            "type": "string"
+          },
+          "capturerVerbatim": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "flacURL": {
+            "type": "string"
+          },
+          "fullURL": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string"
+          },
+          "intellectualOwner": {
+            "type": "string"
+          },
+          "keyword": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "mp3URL": {
+            "type": "string"
+          },
+          "thumbnailURL": {
+            "type": "string"
+          },
+          "uploadedBy": {
+            "type": "string"
+          },
+          "wavURL": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "intellectualRights",
+          "fullURL",
+          "intellectualOwner",
+          "mp3URL",
+          "thumbnailURL"
+        ]
+      }
+    }
+  },
+  "resolvedRefs": [
+    "#/components/schemas/Audio"
+  ]
+}

@@ -1,0 +1,359 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Laji API",
+    "description": "\n## Authentication\n\nThis API requires an **Access Token**. To obtain a token:\n1. [Send a `POST` request with your email address to the `/api-user` endpoint](https://api.laji.fi/openapi#/API%20user/ApiUsersController_register).\n2. An access token will be sent to your email.\n\nInclude the token in all requests using the HTTP header: `Authorization: Bearer <ACCESS_TOKEN>`\n\nHere on the API frontpage, you can configure the **Access Token**, **Person-Token**, and **Accept-Language** globally using the **Authorize** button below.\n\n---\n\n## Documentation & Resources\n\n- **Additional API documentation:**\n  [https://info.laji.fi/en/frontpage/api/api-laji-fi](https://info.laji.fi/en/frontpage/api/api-laji-fi)\n\n- **OpenAPI / Swagger 3.0 specification (machine-readable):**\n  [https://api.laji.fi/openapi-json](https://api.laji.fi/openapi-json)\n\n---\n\n## Support\n\nIf you have any questions, contact us at **helpdesk@laji.fi**.\n",
+    "version": "1",
+    "contact": {}
+  },
+  "target": {
+    "path": "/person/profile",
+    "method": "GET"
+  },
+  "pathItem": {
+    "parameters": []
+  },
+  "operation": {
+    "operationId": "PersonsController_findProfileByPersonToken",
+    "parameters": [
+      {
+        "name": "Person-Token",
+        "required": false,
+        "description": "Person's authentication token. It is required.",
+        "in": "header",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/store-profile"
+            }
+          }
+        }
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "403": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "406": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "Access token": []
+      },
+      {
+        "Lang": []
+      },
+      {
+        "Person token": []
+      }
+    ],
+    "summary": "Get profile",
+    "tags": [
+      "Person"
+    ]
+  },
+  "components": {
+    "schemas": {
+      "store-profile": {
+        "type": "object",
+        "properties": {
+          "@context": {
+            "type": "string",
+            "title": "Context for the MA.profile"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id for the MA.profile"
+          },
+          "@type": {
+            "type": "string",
+            "title": "Type for the MA.profile"
+          },
+          "birdSongRecognitionSkillLevels": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/store-birdSongRecognitionSkillLevel"
+            }
+          },
+          "birdwatchingActivityLevel": {
+            "type": "string",
+            "enum": [
+              "",
+              "MA.birdwatchingActivityLevelEnum1",
+              "MA.birdwatchingActivityLevelEnum2",
+              "MA.birdwatchingActivityLevelEnum3",
+              "MA.birdwatchingActivityLevelEnum4"
+            ],
+            "title": "User's activity level in birdwatching"
+          },
+          "blocked": {
+            "type": "array",
+            "uniqueItems": false,
+            "items": {
+              "type": "string"
+            },
+            "minItems": 0,
+            "title": "Blocked ppl"
+          },
+          "finnishBirdSongRecognitionSkillLevel": {
+            "type": "string",
+            "enum": [
+              "",
+              "MA.finnishBirdSongRecognitionSkillLevelEnum1",
+              "MA.finnishBirdSongRecognitionSkillLevelEnum2",
+              "MA.finnishBirdSongRecognitionSkillLevelEnum3",
+              "MA.finnishBirdSongRecognitionSkillLevelEnum4"
+            ],
+            "title": "User's skill level in Finnish bird song recognition"
+          },
+          "friendRequests": {
+            "type": "array",
+            "uniqueItems": false,
+            "items": {
+              "type": "string"
+            },
+            "minItems": 0,
+            "title": "Friend requests received"
+          },
+          "friends": {
+            "type": "array",
+            "uniqueItems": false,
+            "items": {
+              "type": "string"
+            },
+            "minItems": 0,
+            "title": "List of friends of the user"
+          },
+          "image": {
+            "type": "string",
+            "title": "Image for the profile"
+          },
+          "nameVisibleInKerttu": {
+            "type": "boolean",
+            "title": "Name is visible to others in Kerttu"
+          },
+          "personalCollectionIdentifier": {
+            "type": "string",
+            "title": "Own collection identifier"
+          },
+          "profileDescription": {
+            "type": "string",
+            "title": "Profile description"
+          },
+          "settings": {
+            "type": "object",
+            "additionalProperties": true,
+            "title": "Settings for the user"
+          },
+          "taxonExpertise": {
+            "type": "array",
+            "uniqueItems": false,
+            "items": {
+              "type": "string"
+            },
+            "minItems": 0,
+            "title": "Expertise"
+          },
+          "taxonExpertiseNotes": {
+            "type": "string",
+            "title": "Expertise notes"
+          },
+          "userID": {
+            "type": "string",
+            "title": "This users profile"
+          },
+          "profileKey": {
+            "type": "string",
+            "title": "profileKey"
+          }
+        },
+        "required": [
+          "userID"
+        ],
+        "additionalProperties": false
+      },
+      "store-birdSongRecognitionSkillLevel": {
+        "type": "object",
+        "properties": {
+          "@context": {
+            "type": "string",
+            "title": "Context for the Instances of this class are bird song recognition skill levels of a certain area"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id for the Instances of this class are bird song recognition skill levels of a certain area"
+          },
+          "@type": {
+            "type": "string",
+            "title": "Type for the Instances of this class are bird song recognition skill levels of a certain area"
+          },
+          "birdSongRecognitionArea": {
+            "type": "string",
+            "title": "Area"
+          },
+          "birdSongRecognitionSkillLevel": {
+            "type": "string",
+            "enum": [
+              "MA.birdSongRecognitionSkillLevelEnum1",
+              "MA.birdSongRecognitionSkillLevelEnum2",
+              "MA.birdSongRecognitionSkillLevelEnum3",
+              "MA.birdSongRecognitionSkillLevelEnum4"
+            ],
+            "title": "Skill level"
+          }
+        },
+        "required": [
+          "birdSongRecognitionArea",
+          "birdSongRecognitionSkillLevel"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "resolvedRefs": [
+    "#/components/schemas/store-birdSongRecognitionSkillLevel",
+    "#/components/schemas/store-profile"
+  ]
+}

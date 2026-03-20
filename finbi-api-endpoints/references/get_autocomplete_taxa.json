@@ -1,0 +1,430 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Laji API",
+    "description": "\n## Authentication\n\nThis API requires an **Access Token**. To obtain a token:\n1. [Send a `POST` request with your email address to the `/api-user` endpoint](https://api.laji.fi/openapi#/API%20user/ApiUsersController_register).\n2. An access token will be sent to your email.\n\nInclude the token in all requests using the HTTP header: `Authorization: Bearer <ACCESS_TOKEN>`\n\nHere on the API frontpage, you can configure the **Access Token**, **Person-Token**, and **Accept-Language** globally using the **Authorize** button below.\n\n---\n\n## Documentation & Resources\n\n- **Additional API documentation:**\n  [https://info.laji.fi/en/frontpage/api/api-laji-fi](https://info.laji.fi/en/frontpage/api/api-laji-fi)\n\n- **OpenAPI / Swagger 3.0 specification (machine-readable):**\n  [https://api.laji.fi/openapi-json](https://api.laji.fi/openapi-json)\n\n---\n\n## Support\n\nIf you have any questions, contact us at **helpdesk@laji.fi**.\n",
+    "version": "1",
+    "contact": {}
+  },
+  "target": {
+    "path": "/autocomplete/taxa",
+    "method": "GET"
+  },
+  "pathItem": {
+    "parameters": []
+  },
+  "operation": {
+    "operationId": "AutocompleteController_getTaxa",
+    "parameters": [
+      {
+        "name": "query",
+        "required": true,
+        "in": "query",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "limit",
+        "required": false,
+        "in": "query",
+        "description": "Limit the number of results",
+        "schema": {
+          "default": 10,
+          "type": "number"
+        }
+      },
+      {
+        "name": "checklist",
+        "required": false,
+        "in": "query",
+        "description": "Include taxa from the specified checklists (defaults to FinBIF master checklist)",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "taxonSets",
+        "required": false,
+        "in": "query",
+        "description": "Filter based on taxon set(s). Multiple values are separated by a comma (,)",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "informalTaxonGroups",
+        "required": false,
+        "in": "query",
+        "description": "Search taxa from specified informal taxon group(s). Multiple values are separated by a comma (,). An exclamation mark in the beginning of a matches exclusively.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "includeHidden",
+        "required": false,
+        "in": "query",
+        "description": "Include hidden taxa in the response",
+        "schema": {
+          "default": false,
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "nameTypes",
+        "required": false,
+        "in": "query",
+        "description": "Filter by type of the matching name (e.g., MX.vernacularName, MX.hasMisappliedName). Multiple values are separated by a comma (,). An exclamation mark in the beginning of a matches exclusively.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "languages",
+        "required": false,
+        "in": "query",
+        "description": "Filters by the language of the matching name. Multiple values can be specified, separated by commas (,). This applies only to name types that are available in multiple languages (e.g., MX.vernacularName) and does not apply to scientific names.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "matchType",
+        "required": false,
+        "in": "query",
+        "description": "Default: All match types; exact = exact matches, partial = partially matching, likely = fuzzy matching. Multiple values are separated by a comma (,)",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "species",
+        "required": false,
+        "in": "query",
+        "description": "true: Will include only \"lower taxa\" (species, subspecies, aggregates, ...)\nfalse: Will only include \"higher taxa\" (genus and above)",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "finnish",
+        "required": false,
+        "in": "query",
+        "description": "true: Will include only finnish taxa.\nfalse: Will exclude finnish taxa.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "invasiveSpecies",
+        "required": false,
+        "in": "query",
+        "description": "Filter to include only invasive species",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "selectedFields",
+        "required": false,
+        "in": "query",
+        "description": "Multiple values are separated by a comma (,)",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "results": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TaxonAutocompleteResponse"
+                  }
+                },
+                "@context": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "403": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "406": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "Access token": []
+      },
+      {
+        "Lang": []
+      },
+      {
+        "Person token": []
+      }
+    ],
+    "tags": [
+      "Autocomplete"
+    ]
+  },
+  "components": {
+    "schemas": {
+      "TaxonAutocompleteResponse": {
+        "type": "object",
+        "properties": {
+          "matchingName": {
+            "type": "string",
+            "description": "Name that matched the search word"
+          },
+          "nameType": {
+            "type": "string",
+            "description": "Type of the name.",
+            "enum": [
+              "MX.scientificName",
+              "MX.vernacularName",
+              "MX.hasSynonym",
+              "MX.hasBasionym",
+              "MX.alternativeVernacularName",
+              "MX.hasMisappliedName",
+              "MX.birdlifeCode",
+              "MX.obsoleteVernacularName",
+              "MX.euringCode",
+              "MX.hasSubjectiveSynonym",
+              "MX.hasAlternativeName",
+              "MX.hasOrthographicVariant",
+              "MX.hasObjectiveSynonym",
+              "MX.hasMisspelledName",
+              "MX.colloquialVernacularName",
+              "MX.hasUncertainSynonym",
+              "MX.hasHomotypicSynonym",
+              "MX.tradeName",
+              "MX.hasHeterotypicSynonym"
+            ]
+          },
+          "id": {
+            "type": "string",
+            "description": "Taxon identifier of the taxon that has the matching name; in the short Qname format, for example 'MX.123'"
+          },
+          "checklist": {
+            "type": "string",
+            "description": "Checklist identifier of the matching taxon; in the short Qname format, for example 'MR.1'. For taxa not part of any checklist the value is 'undefined'."
+          },
+          "scientificName": {
+            "type": "string",
+            "description": "Accepted scientific name of the taxon that has the matching name"
+          },
+          "scientificNameAuthorship": {
+            "type": "string",
+            "description": "Author of the above mentioned scientific name"
+          },
+          "taxonRank": {
+            "type": "string",
+            "description": "Taxonomic rank of the taxon that has the matching name; in the short Qname format, for example 'MX.genus'"
+          },
+          "cursiveName": {
+            "type": "boolean",
+            "description": "Should the matching name be cursived"
+          },
+          "finnish": {
+            "type": "boolean",
+            "description": "Is the taxon that has the mathing name marked as a Finnish taxon"
+          },
+          "species": {
+            "type": "boolean",
+            "description": "Is the taxon that has the mathing name species level or lower, or a higher taxon"
+          },
+          "vernacularName": {
+            "$ref": "#/components/schemas/LajiBackendLocalizedText"
+          },
+          "informalGroups": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "description": "Identifier of the informal taxon group that the matching taxon belongs to); in the short Qname format, for example 'MVL.1'"
+                },
+                "name": {
+                  "$ref": "#/components/schemas/LajiBackendLocalizedText"
+                }
+              }
+            }
+          },
+          "kingdomScientificName": {
+            "type": "string",
+            "description": "Scientific name of the kingdom that the matching taxon belongs to"
+          },
+          "type": {
+            "type": "string",
+            "description": "Type of the matching name",
+            "enum": [
+              "exactMatches",
+              "partialMatches",
+              "likelyMatches"
+            ]
+          },
+          "key": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "LajiBackendLocalizedText": {
+        "type": "string"
+      }
+    }
+  },
+  "resolvedRefs": [
+    "#/components/schemas/LajiBackendLocalizedText",
+    "#/components/schemas/TaxonAutocompleteResponse"
+  ]
+}

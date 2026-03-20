@@ -1,0 +1,229 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Laji API",
+    "description": "\n## Authentication\n\nThis API requires an **Access Token**. To obtain a token:\n1. [Send a `POST` request with your email address to the `/api-user` endpoint](https://api.laji.fi/openapi#/API%20user/ApiUsersController_register).\n2. An access token will be sent to your email.\n\nInclude the token in all requests using the HTTP header: `Authorization: Bearer <ACCESS_TOKEN>`\n\nHere on the API frontpage, you can configure the **Access Token**, **Person-Token**, and **Accept-Language** globally using the **Authorize** button below.\n\n---\n\n## Documentation & Resources\n\n- **Additional API documentation:**\n  [https://info.laji.fi/en/frontpage/api/api-laji-fi](https://info.laji.fi/en/frontpage/api/api-laji-fi)\n\n- **OpenAPI / Swagger 3.0 specification (machine-readable):**\n  [https://api.laji.fi/openapi-json](https://api.laji.fi/openapi-json)\n\n---\n\n## Support\n\nIf you have any questions, contact us at **helpdesk@laji.fi**.\n",
+    "version": "1",
+    "contact": {}
+  },
+  "target": {
+    "path": "geo-convert/",
+    "method": "POST"
+  },
+  "pathItem": {
+    "parameters": []
+  },
+  "operation": {
+    "tags": [
+      "GeoConvert"
+    ],
+    "summary": "Convert uploaded ZIP file to a zipped GeoPackage",
+    "description": "Upload a ZIP file containing TSV data ('occurrences.tsv') and convert it to a zipped GeoPackage format. ID is generated based on the original filename and parameters.",
+    "operationId": "convert_with_file__post",
+    "parameters": [
+      {
+        "name": "lang",
+        "in": "query",
+        "required": false,
+        "schema": {
+          "enum": [
+            "fi",
+            "en",
+            "tech"
+          ],
+          "type": "string",
+          "description": "Language for field names (fi=Finnish, en=English, tech=technical)",
+          "default": "tech",
+          "title": "Lang"
+        },
+        "description": "Language for field names (fi=Finnish, en=English, tech=technical)"
+      },
+      {
+        "name": "geometryType",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "enum": [
+            "bbox",
+            "point",
+            "footprint"
+          ],
+          "type": "string",
+          "description": "Geometry type to use",
+          "title": "Geometrytype"
+        },
+        "description": "Geometry type to use"
+      },
+      {
+        "name": "crs",
+        "in": "query",
+        "required": true,
+        "schema": {
+          "enum": [
+            "euref",
+            "wgs84"
+          ],
+          "type": "string",
+          "description": "Coordinate reference system",
+          "title": "Crs"
+        },
+        "description": "Coordinate reference system"
+      }
+    ],
+    "requestBody": {
+      "required": true,
+      "content": {
+        "multipart/form-data": {
+          "schema": {
+            "$ref": "#/components/schemas/GeoConvertBody_convert_with_file__post"
+          }
+        }
+      }
+    },
+    "responses": {
+      "200": {
+        "description": "Conversion started successfully. Returns the conversion ID string.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "string",
+              "title": "Response Convert With File  Post"
+            }
+          },
+          "text/plain": {
+            "example": "dataset123_tech_point_wgs84"
+          }
+        }
+      },
+      "400": {
+        "description": "Invalid file or parameters",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GeoConvertErrorResponse"
+            }
+          }
+        }
+      },
+      "422": {
+        "description": "Validation Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GeoConvertHTTPValidationError"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Conversion failed",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/GeoConvertErrorResponse"
+            }
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "Access token": []
+      },
+      {
+        "Lang": []
+      },
+      {
+        "Person token": []
+      }
+    ]
+  },
+  "components": {
+    "schemas": {
+      "GeoConvertHTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/GeoConvertValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "GeoConvertValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      },
+      "GeoConvertErrorResponse": {
+        "properties": {
+          "detail": {
+            "type": "string",
+            "title": "Detail",
+            "description": "Error message",
+            "examples": [
+              "Conversion ID not found"
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "detail"
+        ],
+        "title": "ErrorResponse"
+      },
+      "GeoConvertBody_convert_with_file__post": {
+        "properties": {
+          "file": {
+            "type": "string",
+            "format": "binary",
+            "title": "File",
+            "description": "ZIP file containing TSV data"
+          }
+        },
+        "type": "object",
+        "required": [
+          "file"
+        ],
+        "title": "Body_convert_with_file__post"
+      }
+    }
+  },
+  "resolvedRefs": [
+    "#/components/schemas/GeoConvertBody_convert_with_file__post",
+    "#/components/schemas/GeoConvertErrorResponse",
+    "#/components/schemas/GeoConvertHTTPValidationError",
+    "#/components/schemas/GeoConvertValidationError"
+  ]
+}

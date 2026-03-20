@@ -1,0 +1,772 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Laji API",
+    "description": "\n## Authentication\n\nThis API requires an **Access Token**. To obtain a token:\n1. [Send a `POST` request with your email address to the `/api-user` endpoint](https://api.laji.fi/openapi#/API%20user/ApiUsersController_register).\n2. An access token will be sent to your email.\n\nInclude the token in all requests using the HTTP header: `Authorization: Bearer <ACCESS_TOKEN>`\n\nHere on the API frontpage, you can configure the **Access Token**, **Person-Token**, and **Accept-Language** globally using the **Authorize** button below.\n\n---\n\n## Documentation & Resources\n\n- **Additional API documentation:**\n  [https://info.laji.fi/en/frontpage/api/api-laji-fi](https://info.laji.fi/en/frontpage/api/api-laji-fi)\n\n- **OpenAPI / Swagger 3.0 specification (machine-readable):**\n  [https://api.laji.fi/openapi-json](https://api.laji.fi/openapi-json)\n\n---\n\n## Support\n\nIf you have any questions, contact us at **helpdesk@laji.fi**.\n",
+    "version": "1",
+    "contact": {}
+  },
+  "target": {
+    "path": "/warehouse/query/document/aggregate",
+    "method": "GET"
+  },
+  "pathItem": {
+    "parameters": []
+  },
+  "operation": {
+    "summary": "Perform aggregate queries (group by) on documents.",
+    "description": "Aggregates the results of the query based on given \"aggregateBy\" parameters. Always includes count of rows (count(*)) to the result. Other aggregate functions vary based on the given parameters. Possible aggregate functions are [count, firstLoadDateMin, firstLoadDateMax, securedCount]",
+    "parameters": [
+      {
+        "name": "aggregateBy",
+        "in": "query",
+        "required": false,
+        "description": "Define fields to aggregate by. Multiple values are seperated by ','.",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "document.collectionId",
+              "document.completeListTaxonId",
+              "document.completeListType",
+              "document.createdDate",
+              "document.createdDateMonth",
+              "document.dataSource",
+              "document.documentId",
+              "document.editorUserIds",
+              "document.facts.decimalValue",
+              "document.facts.fact",
+              "document.facts.integerValue",
+              "document.facts.value",
+              "document.firstLoadDate",
+              "document.formId",
+              "document.keywords",
+              "document.licenseId",
+              "document.linkings.collectionQuality",
+              "document.linkings.editors",
+              "document.loadDate",
+              "document.media.author",
+              "document.media.copyrightOwner",
+              "document.media.licenseId",
+              "document.media.mediaType",
+              "document.mediaCount",
+              "document.modifiedDate",
+              "document.namedPlace.alternativeId",
+              "document.namedPlace.alternativeIds",
+              "document.namedPlace.birdAssociationAreaDisplayName",
+              "document.namedPlace.birdAssociationAreaId",
+              "document.namedPlace.collectionId",
+              "document.namedPlace.id",
+              "document.namedPlace.municipalityDisplayName",
+              "document.namedPlace.municipalityId",
+              "document.namedPlace.name",
+              "document.namedPlace.wgs84CenterPoint.lat",
+              "document.namedPlace.wgs84CenterPoint.lon",
+              "document.namedPlace.ykj10km.lat",
+              "document.namedPlace.ykj10km.lon",
+              "document.namedPlaceId",
+              "document.notes",
+              "document.prefix",
+              "document.quality.issue.issue",
+              "document.quality.issue.source",
+              "document.randomKey",
+              "document.secureLevel",
+              "document.secureReasons",
+              "document.secured",
+              "document.siteDead",
+              "document.siteStatus",
+              "document.siteType",
+              "document.sourceId"
+            ]
+          }
+        }
+      },
+      {
+        "name": "orderBy",
+        "in": "query",
+        "required": false,
+        "description": "Define what fields to use when sorting results. Defaults to count (desc) and each aggregate by field (asc). Each fieldname given as parameter defaults to ASC - if you want to sort using descending order, add \" DESC\" to the end of the field name. In addition to aggregateBy fields you can use the following aggregate function names: [count, firstLoadDateMin, firstLoadDateMax, securedCount]. Multiple values are seperated by ','.",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "document.collectionId",
+              "document.completeListTaxonId",
+              "document.completeListType",
+              "document.createdDate",
+              "document.createdDateMonth",
+              "document.dataSource",
+              "document.documentId",
+              "document.editorUserIds",
+              "document.facts.decimalValue",
+              "document.facts.fact",
+              "document.facts.integerValue",
+              "document.facts.value",
+              "document.firstLoadDate",
+              "document.formId",
+              "document.keywords",
+              "document.licenseId",
+              "document.linkings.collectionQuality",
+              "document.linkings.editors",
+              "document.loadDate",
+              "document.media.author",
+              "document.media.copyrightOwner",
+              "document.media.licenseId",
+              "document.media.mediaType",
+              "document.mediaCount",
+              "document.modifiedDate",
+              "document.namedPlace.alternativeId",
+              "document.namedPlace.alternativeIds",
+              "document.namedPlace.birdAssociationAreaDisplayName",
+              "document.namedPlace.birdAssociationAreaId",
+              "document.namedPlace.collectionId",
+              "document.namedPlace.id",
+              "document.namedPlace.municipalityDisplayName",
+              "document.namedPlace.municipalityId",
+              "document.namedPlace.name",
+              "document.namedPlace.wgs84CenterPoint.lat",
+              "document.namedPlace.wgs84CenterPoint.lon",
+              "document.namedPlace.ykj10km.lat",
+              "document.namedPlace.ykj10km.lon",
+              "document.namedPlaceId",
+              "document.notes",
+              "document.prefix",
+              "document.quality.issue.issue",
+              "document.quality.issue.source",
+              "document.randomKey",
+              "document.secureLevel",
+              "document.secureReasons",
+              "document.secured",
+              "document.siteDead",
+              "document.siteStatus",
+              "document.siteType",
+              "document.sourceId",
+              "count",
+              "firstLoadDateMin",
+              "firstLoadDateMax",
+              "securedCount"
+            ]
+          }
+        }
+      },
+      {
+        "name": "onlyCount",
+        "in": "query",
+        "required": false,
+        "description": "Return only count of rows (default) or also additional aggregate function values.",
+        "schema": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      {
+        "name": "excludeNulls",
+        "in": "query",
+        "required": false,
+        "description": "Include or exclude nulls to result. Will only check nullness of the first aggregateBy field.",
+        "schema": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      {
+        "name": "pessimisticDateRangeHandling",
+        "in": "query",
+        "required": false,
+        "description": "Value of this parameter affects how oldestRecord and newestRecord are calculated regarding observations reported as date span. False (default): oldest=min(date.begin), newest=max(date.end). True: oldest=min(date.end), newest=max(date.begin).",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      {
+        "name": "pageSize",
+        "in": "query",
+        "required": false,
+        "description": "Set number of results in one page.",
+        "schema": {
+          "type": "integer",
+          "default": 100,
+          "minimum": 1,
+          "maximum": 10000
+        }
+      },
+      {
+        "name": "page",
+        "in": "query",
+        "required": false,
+        "description": "Set current page.",
+        "schema": {
+          "type": "integer",
+          "default": 1,
+          "minimum": 1
+        }
+      },
+      {
+        "name": "cache",
+        "in": "query",
+        "required": false,
+        "description": "Use cache for this query. Defaults to false.",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      {
+        "name": "namedPlaceId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of a NamedPlace. Use NamedPlace-API to find identifiers. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /named-places",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "namedPlaceTag",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of MNP.tagEnum (use metadata-api to resolve identifiers) Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /metadata/ranges/MNP.tagEnum",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "formId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of a Vihko Notebook form that was used to report the entry. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /forms",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "keyword",
+        "in": "query",
+        "required": false,
+        "description": "Filter using keywords that have been tagged to entries. There are many types of keywods varying from legacy identifiers, project names and IDs, dataset ids, etc.  Will include records with quality issues (normally exluded by default). Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "collectionId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of collections. Use Collections-API to resolve identifiers. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /collections",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "collectionIdExplicit",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of collections. Use Collections-API to resolve identifiers. Will not include child collections Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /collections",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "collectionIdNot",
+        "in": "query",
+        "required": false,
+        "description": "Exclude certain collections. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /collections",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "collectionIdExplicitNot",
+        "in": "query",
+        "required": false,
+        "description": "Exclude certain collection (only the specified collection, not child collections) Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /collections",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "includeSubCollections",
+        "in": "query",
+        "required": false,
+        "description": "Defines if collectionId filter should include sub collections of the given collection ids. By default sub collections are included.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "sourceId",
+        "in": "query",
+        "required": false,
+        "description": "Filter using identifiers of data sources (information systems). Use InformationSystem-API to resolve identifiers. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /sources",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "documentId",
+        "in": "query",
+        "required": false,
+        "description": "Filter using document URIs. Will include records with quality issues (normally exluded by default). Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "documentIdPrefix",
+        "in": "query",
+        "required": false,
+        "description": "Filter using document URI prefix. For example prefix of http://id.luomus.fi/JA.1 is luomus:JA.  Will include records with quality issues (normally exluded by default). Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "loadedSameOrAfter",
+        "in": "query",
+        "required": false,
+        "description": "Filter using the date data was loaded to Data Warehouse. Format is yyyy-MM-dd or UNIX EPOCH timestamp in seconds. Returns entries loaded later or on the same date/timestamp.",
+        "schema": {
+          "type": "string",
+          "format": "yyyy-MM-dd"
+        }
+      },
+      {
+        "name": "loadedSameOrBefore",
+        "in": "query",
+        "required": false,
+        "description": "Filter using the date data was loaded to Data Warehouse. Format is yyyy-MM-dd or UNIX EPOCH timestamp in seconds. Returns entries loaded before or on the same date/timestamp.",
+        "schema": {
+          "type": "string",
+          "format": "yyyy-MM-dd"
+        }
+      },
+      {
+        "name": "firstLoadedSameOrAfter",
+        "in": "query",
+        "required": false,
+        "description": "Filter using the date data was loaded to Data Warehouse (first load of document). Format is yyyy-MM-dd or UNIX EPOCH timestamp in seconds. Returns entries loaded later or on the same date/timestamp.",
+        "schema": {
+          "type": "string",
+          "format": "yyyy-MM-dd"
+        }
+      },
+      {
+        "name": "firstLoadedSameOrBefore",
+        "in": "query",
+        "required": false,
+        "description": "Filter using the date data was loaded to Data Warehouse (first load of document). Format is yyyy-MM-dd or UNIX EPOCH timestamp in seconds. Returns entries loaded before or on the same date/timestamp.",
+        "schema": {
+          "type": "string",
+          "format": "yyyy-MM-dd"
+        }
+      },
+      {
+        "name": "createdDateYear",
+        "in": "query",
+        "required": false,
+        "description": "Filter using the year the record was created",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "hasDocumentMedia",
+        "in": "query",
+        "required": false,
+        "description": "Filter only units where parent document has media or doesn't have media.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "hasMedia",
+        "in": "query",
+        "required": false,
+        "description": "Filter only records where parent document, gathering or unit has media or none have media.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "secureReason",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on secure reasons. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "DEFAULT_TAXON_CONSERVATION",
+            "BREEDING_SITE_CONSERVATION",
+            "NATURA_AREA_CONSERVATION",
+            "WINTER_SEASON_TAXON_CONSERVATION",
+            "BREEDING_SEASON_TAXON_CONSERVATION",
+            "CUSTOM",
+            "USER_HIDDEN",
+            "ADMIN_HIDDEN",
+            "DATA_QUARANTINE_PERIOD",
+            "ONLY_PRIVATE",
+            "USER_PERSON_NAMES_HIDDEN",
+            "USER_HIDDEN_LOCATION",
+            "USER_HIDDEN_TIME"
+          ]
+        }
+      },
+      {
+        "name": "secureLevel",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on secure level. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "NOSHOW",
+            "HIGHEST",
+            "KM100",
+            "KM50",
+            "KM25",
+            "KM10",
+            "KM5",
+            "KM1",
+            "NONE"
+          ]
+        }
+      },
+      {
+        "name": "secured",
+        "in": "query",
+        "required": false,
+        "description": "Include only those that are secured or those that are not secured.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "qualityIssues",
+        "in": "query",
+        "required": false,
+        "description": "Possible values: NO_ISSUES, BOTH, ONLY_ISSUES. Include records with quality issues (document, gathering or unit issues). Default is NO_ISSUES, but when searching by id (documentId, unitId, keyword) or using annotation endpoint the default is BOTH.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "NO_ISSUES",
+            "BOTH",
+            "ONLY_ISSUES"
+          ],
+          "default": "NO_ISSUES"
+        }
+      },
+      {
+        "name": "collectionQuality",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on quality rating of collections. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "PROFESSIONAL",
+            "HOBBYIST",
+            "AMATEUR"
+          ]
+        }
+      },
+      {
+        "name": "completeListTaxonId",
+        "in": "query",
+        "required": false,
+        "description": "Show only records where document contains complete list for this higher taxon. For example include only records where all birds or mammals were documented, if they were seens -> something that is not documented was not seen. Use taxon IDs. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /taxa",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "completeListType",
+        "in": "query",
+        "required": false,
+        "description": "Show only records where document contains complete list and the list is of this type: URI or Qname identifier of MY.completeListTypeEnum (use metadata-api to resolve identifiers) Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /metadata/ranges/MY.completeListTypeEnum",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "documentFact",
+        "in": "query",
+        "required": false,
+        "description": "Format is \"factName=value;otherFact=value\". If value is not given (for example just \"factName\"), this filter matches all records that have the given fact. If value is a numeric range (for example \"factName=-5.0/-1.5\"), this filter matches all values where the value is between the range (inclusive). When multiple fact names are given, this is an AND search. For facts that are URIs, you can use full URI or Qname.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "partition",
+        "in": "query",
+        "required": false,
+        "description": "You can split search results into partitions. Syntax: '1/5' splits the results to five partitions and returns the first. Useful when downloading large lists of results and you want to split the task into smaller sub-queries.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "hasValue",
+        "in": "query",
+        "required": false,
+        "description": "Name (or names) of fields that must be non-null for the occurrence to be included to results. The field must be from level document, gathering or unit (not for example annotation) and must not be an array field. Also, when quering gathering level, unit fields can not be used, etc. When multiple fields are listed, this is an AND search (all must be non-null). Multiple values are seperated by ','.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "selfAsEditor",
+        "in": "query",
+        "required": false,
+        "description": "Search for records the user has save or modified. When using this filter, results come from the private warehouse! You  must provide a Person-Token header when using this filter.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "Permission-Token",
+        "in": "header",
+        "required": false,
+        "description": "Use granted permissions to search the private warehouse",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "Person-Token",
+        "in": "header",
+        "required": false,
+        "description": "Provide identify of the user that is using [selfAsEditor, selfAsObserver, selfAsEditorOrObserver, selfIsNotEditorOrObserver] filters.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "format",
+        "in": "query",
+        "required": false,
+        "description": "Alternative way to Accept header to define content type of the response.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "json",
+            "geojson",
+            "xml",
+            "csv",
+            "tsv"
+          ]
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Succesful query. Schema varies based on content-type of the response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_AggregateResponse"
+            }
+          },
+          "application/geo+json": {
+            "schema": {
+              "type": "string"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "type": "string"
+            }
+          },
+          "text/csv": {
+            "schema": {
+              "type": "string"
+            }
+          },
+          "text/tab-separated-values": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Parameters were not accepted. Message has details.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WarehouseDwError"
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "Invalid credentials. Message has details.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WarehouseDwError"
+            }
+          }
+        }
+      },
+      "429": {
+        "description": "Too many pending requests for the access_token; max is 12",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WarehouseDwError"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Service is in unknown erroneous state.",
+        "content": {
+          "text/plain": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "tags": [
+      "Warehouse"
+    ],
+    "security": [
+      {
+        "Access token": []
+      },
+      {
+        "Lang": []
+      },
+      {
+        "Person token": []
+      }
+    ]
+  },
+  "components": {
+    "schemas": {
+      "WarehouseDwQuery_AggregateResponse": {
+        "type": "object",
+        "properties": {
+          "currentPage": {
+            "type": "integer"
+          },
+          "prevPage": {
+            "type": "integer"
+          },
+          "nextPage": {
+            "type": "integer"
+          },
+          "lastPage": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          },
+          "total": {
+            "type": "integer"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_AggregateRow"
+            }
+          },
+          "cacheTimestamp": {
+            "type": "integer"
+          }
+        }
+      },
+      "WarehouseDwQuery_AggregateRow": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer"
+          },
+          "gatheringCount": {
+            "type": "integer"
+          },
+          "securedCount": {
+            "type": "integer"
+          },
+          "oldestRecord": {
+            "type": "string",
+            "format": "yyyy-MM-dd"
+          },
+          "newestRecord": {
+            "type": "string",
+            "format": "yyyy-MM-dd"
+          },
+          "firstLoadDateMin": {
+            "type": "string",
+            "format": "yyyy-MM-dd"
+          },
+          "firstLoadDateMax": {
+            "type": "string",
+            "format": "yyyy-MM-dd"
+          },
+          "individualCountSum": {
+            "type": "integer"
+          },
+          "individualCountMax": {
+            "type": "integer"
+          },
+          "recordQualityMax": {
+            "type": "string",
+            "format": "URI"
+          },
+          "redListStatusMax": {
+            "type": "string",
+            "format": "URI"
+          },
+          "speciesCount": {
+            "type": "integer"
+          },
+          "taxonCount": {
+            "type": "integer"
+          },
+          "lineLengthSum": {
+            "type": "integer"
+          },
+          "pairCountSum": {
+            "type": "integer"
+          },
+          "pairCountMax": {
+            "type": "integer"
+          },
+          "atlasCodeMax": {
+            "type": "string",
+            "format": "URI"
+          },
+          "atlasClassMax": {
+            "type": "string",
+            "format": "URI"
+          },
+          "aggregateBy": {
+            "type": "object"
+          }
+        }
+      },
+      "WarehouseDwError": {
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    }
+  },
+  "resolvedRefs": [
+    "#/components/schemas/WarehouseDwError",
+    "#/components/schemas/WarehouseDwQuery_AggregateResponse",
+    "#/components/schemas/WarehouseDwQuery_AggregateRow"
+  ]
+}

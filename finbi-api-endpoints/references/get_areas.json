@@ -1,0 +1,363 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Laji API",
+    "description": "\n## Authentication\n\nThis API requires an **Access Token**. To obtain a token:\n1. [Send a `POST` request with your email address to the `/api-user` endpoint](https://api.laji.fi/openapi#/API%20user/ApiUsersController_register).\n2. An access token will be sent to your email.\n\nInclude the token in all requests using the HTTP header: `Authorization: Bearer <ACCESS_TOKEN>`\n\nHere on the API frontpage, you can configure the **Access Token**, **Person-Token**, and **Accept-Language** globally using the **Authorize** button below.\n\n---\n\n## Documentation & Resources\n\n- **Additional API documentation:**\n  [https://info.laji.fi/en/frontpage/api/api-laji-fi](https://info.laji.fi/en/frontpage/api/api-laji-fi)\n\n- **OpenAPI / Swagger 3.0 specification (machine-readable):**\n  [https://api.laji.fi/openapi-json](https://api.laji.fi/openapi-json)\n\n---\n\n## Support\n\nIf you have any questions, contact us at **helpdesk@laji.fi**.\n",
+    "version": "1",
+    "contact": {}
+  },
+  "target": {
+    "path": "/areas",
+    "method": "GET"
+  },
+  "pathItem": {
+    "parameters": []
+  },
+  "operation": {
+    "operationId": "AreaController_getPage",
+    "parameters": [
+      {
+        "name": "idIn",
+        "required": false,
+        "in": "query",
+        "description": "Include only items with the given ids. Multiple values are separated by a comma (,).",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "areaType",
+        "required": false,
+        "in": "query",
+        "description": "Area type",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "ML.country",
+            "ML.biogeographicalProvince",
+            "ML.municipality",
+            "ML.oldMunicipality",
+            "ML.birdAssociationArea",
+            "ML.iucnEvaluationArea"
+          ]
+        }
+      },
+      {
+        "name": "page",
+        "required": false,
+        "in": "query",
+        "schema": {
+          "default": 1,
+          "type": "number"
+        }
+      },
+      {
+        "name": "pageSize",
+        "required": false,
+        "in": "query",
+        "schema": {
+          "default": 20,
+          "type": "number"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "currentPage": {
+                  "type": "number"
+                },
+                "pageSize": {
+                  "type": "number"
+                },
+                "total": {
+                  "type": "number"
+                },
+                "lastPage": {
+                  "type": "number"
+                },
+                "prevPage": {
+                  "type": "number"
+                },
+                "nextPage": {
+                  "type": "number"
+                },
+                "results": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/store-area"
+                  }
+                }
+              },
+              "required": [
+                "currentPage",
+                "pageSize",
+                "total",
+                "lastPage",
+                "results"
+              ]
+            }
+          }
+        }
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "403": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "406": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "Access token": []
+      },
+      {
+        "Lang": []
+      },
+      {
+        "Person token": []
+      }
+    ],
+    "summary": "Get a page of areas",
+    "tags": [
+      "Areas"
+    ]
+  },
+  "components": {
+    "schemas": {
+      "store-area": {
+        "type": "object",
+        "properties": {
+          "@context": {
+            "type": "string",
+            "title": "Context for the Area"
+          },
+          "id": {
+            "type": "string",
+            "title": "Id for the Area"
+          },
+          "@type": {
+            "type": "string",
+            "title": "Type for the Area"
+          },
+          "areaType": {
+            "type": "string",
+            "enum": [
+              "ML.country",
+              "ML.biogeographicalProvince",
+              "ML.municipality",
+              "ML.oldMunicipality",
+              "ML.elyCentre",
+              "ML.province",
+              "ML.continent",
+              "ML.iucnEvaluationArea",
+              "ML.birdAssociationArea"
+            ],
+            "description": "Aluetyyppi",
+            "title": "Area type"
+          },
+          "countryCodeISOalpha2": {
+            "type": "string",
+            "description": "Country code ISO alpha 2",
+            "title": "Country code"
+          },
+          "countryCodeISOalpha3": {
+            "type": "string",
+            "description": "country code ISO alpha 3",
+            "title": "country code"
+          },
+          "isPartOf": {
+            "type": "string",
+            "title": "Part of"
+          },
+          "isPartOfBirdAssociationArea": {
+            "type": "string",
+            "title": "Is part of bird assocation area"
+          },
+          "isPartOfEnvironmentalELY": {
+            "type": "string",
+            "title": "Is part of Environmental ELY"
+          },
+          "isPartOfProvince": {
+            "type": "string",
+            "title": "Is part of province"
+          },
+          "name": {
+            "type": "string"
+          },
+          "previouslyOfficialName": {
+            "type": "array",
+            "uniqueItems": false,
+            "items": {
+              "type": "string"
+            },
+            "minItems": 0,
+            "title": "Previously used name"
+          },
+          "provinceCodeAlpha": {
+            "type": "string"
+          },
+          "provinceCodeNumeric": {
+            "type": "string",
+            "title": "Province code numeric"
+          },
+          "ringingDepartmentBirdAssociationAreaCode": {
+            "type": "string",
+            "title": "ringingDepartmentBirdAssociationAreaCode"
+          },
+          "ringingDepartmentMunicipalityCode": {
+            "type": "string",
+            "title": "ringingDepartmentMunicipalityCode"
+          }
+        },
+        "required": [
+          "areaType",
+          "name"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "resolvedRefs": [
+    "#/components/schemas/store-area"
+  ]
+}

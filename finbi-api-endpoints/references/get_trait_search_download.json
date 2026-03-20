@@ -1,0 +1,108 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Laji API",
+    "description": "\n## Authentication\n\nThis API requires an **Access Token**. To obtain a token:\n1. [Send a `POST` request with your email address to the `/api-user` endpoint](https://api.laji.fi/openapi#/API%20user/ApiUsersController_register).\n2. An access token will be sent to your email.\n\nInclude the token in all requests using the HTTP header: `Authorization: Bearer <ACCESS_TOKEN>`\n\nHere on the API frontpage, you can configure the **Access Token**, **Person-Token**, and **Accept-Language** globally using the **Authorize** button below.\n\n---\n\n## Documentation & Resources\n\n- **Additional API documentation:**\n  [https://info.laji.fi/en/frontpage/api/api-laji-fi](https://info.laji.fi/en/frontpage/api/api-laji-fi)\n\n- **OpenAPI / Swagger 3.0 specification (machine-readable):**\n  [https://api.laji.fi/openapi-json](https://api.laji.fi/openapi-json)\n\n---\n\n## Support\n\nIf you have any questions, contact us at **helpdesk@laji.fi**.\n",
+    "version": "1",
+    "contact": {}
+  },
+  "target": {
+    "path": "/trait/search/download",
+    "method": "GET"
+  },
+  "pathItem": {
+    "parameters": []
+  },
+  "operation": {
+    "summary": "Download traits",
+    "description": "Search traits from all published datasets and download results as Zipped TSV file. Returns maximum of 1000000 rows.",
+    "parameters": [
+      {
+        "name": "searchParams",
+        "in": "query",
+        "required": false,
+        "description": "A set of key-value pairs used to filter search results.\nEach key represents a field name in the result model, and its corresponding value specifies the criteria that must be met for the records to match.\nIf field is given multiple time as parameter, at least one of the given values must match.\nExample: subject.type=TDF.typeTaxon&trait.id=TDF.1&trait.id=TDF.2&subjectFinBIFTaxon.higherTaxa.kingdom=Animalia",
+        "schema": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Succesful response",
+        "content": {
+          "application/zip": {
+            "schema": {
+              "type": "string",
+              "format": "binary",
+              "examples": [
+                "Single TSV file ZIP compressed"
+              ]
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Illegal arguments",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/LajiBackendTraitAPIError"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Unknown failure",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/LajiBackendTraitAPIError"
+            }
+          }
+        }
+      }
+    },
+    "tags": [
+      "Trait"
+    ],
+    "security": [
+      {
+        "Access token": []
+      },
+      {
+        "Lang": []
+      },
+      {
+        "Person token": []
+      }
+    ]
+  },
+  "components": {
+    "schemas": {
+      "LajiBackendTraitAPIError": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "description": "HTTP Status Code"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message"
+          },
+          "stacktrace": {
+            "type": "string",
+            "description": "Stacktrace"
+          }
+        }
+      }
+    }
+  },
+  "resolvedRefs": [
+    "#/components/schemas/LajiBackendTraitAPIError"
+  ]
+}

@@ -1,0 +1,1076 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Laji API",
+    "description": "\n## Authentication\n\nThis API requires an **Access Token**. To obtain a token:\n1. [Send a `POST` request with your email address to the `/api-user` endpoint](https://api.laji.fi/openapi#/API%20user/ApiUsersController_register).\n2. An access token will be sent to your email.\n\nInclude the token in all requests using the HTTP header: `Authorization: Bearer <ACCESS_TOKEN>`\n\nHere on the API frontpage, you can configure the **Access Token**, **Person-Token**, and **Accept-Language** globally using the **Authorize** button below.\n\n---\n\n## Documentation & Resources\n\n- **Additional API documentation:**\n  [https://info.laji.fi/en/frontpage/api/api-laji-fi](https://info.laji.fi/en/frontpage/api/api-laji-fi)\n\n- **OpenAPI / Swagger 3.0 specification (machine-readable):**\n  [https://api.laji.fi/openapi-json](https://api.laji.fi/openapi-json)\n\n---\n\n## Support\n\nIf you have any questions, contact us at **helpdesk@laji.fi**.\n",
+    "version": "1",
+    "contact": {}
+  },
+  "target": {
+    "path": "/warehouse/query/unit/statistics",
+    "method": "GET"
+  },
+  "pathItem": {
+    "parameters": []
+  },
+  "operation": {
+    "summary": "Perform aggregate queries on units to PRIVATE side of the data warehouse.",
+    "description": " Functionality is same as normal /aggregate API except functionaly is limited to only certain collections, filters and aggregateBy fields. CollectionId filter is required and only certain collections are allowed.",
+    "parameters": [
+      {
+        "name": "aggregateBy",
+        "in": "query",
+        "required": false,
+        "description": "Define fields to aggregate by. Multiple values are seperated by ','.",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "document.documentId",
+              "document.namedPlace.birdAssociationAreaDisplayName",
+              "document.namedPlace.birdAssociationAreaId",
+              "document.namedPlace.collectionId",
+              "document.namedPlace.id",
+              "document.namedPlace.municipalityDisplayName",
+              "document.namedPlace.municipalityId",
+              "document.namedPlace.name",
+              "document.namedPlace.ykj10km.lat",
+              "document.namedPlace.ykj10km.lon",
+              "document.namedPlaceId",
+              "document.prefix",
+              "gathering.conversions.birdAssociationArea",
+              "gathering.conversions.day",
+              "gathering.conversions.month",
+              "gathering.conversions.year",
+              "gathering.conversions.ykj10km.lat",
+              "gathering.conversions.ykj10km.lon",
+              "gathering.conversions.ykj10kmCenter.lat",
+              "gathering.conversions.ykj10kmCenter.lon",
+              "gathering.gatheringSection",
+              "unit.atlasClass",
+              "unit.atlasCode",
+              "unit.linkings.originalTaxon.administrativeStatuses",
+              "unit.linkings.originalTaxon.aggregateId",
+              "unit.linkings.originalTaxon.anamorphId",
+              "unit.linkings.originalTaxon.author",
+              "unit.linkings.originalTaxon.birdlifeCode",
+              "unit.linkings.originalTaxon.classId",
+              "unit.linkings.originalTaxon.cultivarId",
+              "unit.linkings.originalTaxon.cursiveName",
+              "unit.linkings.originalTaxon.divisionId",
+              "unit.linkings.originalTaxon.domainId",
+              "unit.linkings.originalTaxon.ecotypeId",
+              "unit.linkings.originalTaxon.euringCode",
+              "unit.linkings.originalTaxon.euringNumber",
+              "unit.linkings.originalTaxon.familyId",
+              "unit.linkings.originalTaxon.finnish",
+              "unit.linkings.originalTaxon.formId",
+              "unit.linkings.originalTaxon.genusId",
+              "unit.linkings.originalTaxon.grexId",
+              "unit.linkings.originalTaxon.groupId",
+              "unit.linkings.originalTaxon.habitats",
+              "unit.linkings.originalTaxon.hybridId",
+              "unit.linkings.originalTaxon.id",
+              "unit.linkings.originalTaxon.informalTaxonGroups",
+              "unit.linkings.originalTaxon.infraclassId",
+              "unit.linkings.originalTaxon.infradivisionId",
+              "unit.linkings.originalTaxon.infragenericHybridId",
+              "unit.linkings.originalTaxon.infragenericTaxonId",
+              "unit.linkings.originalTaxon.infrakingdomId",
+              "unit.linkings.originalTaxon.infraorderId",
+              "unit.linkings.originalTaxon.infraphylumId",
+              "unit.linkings.originalTaxon.infraspecificTaxonId",
+              "unit.linkings.originalTaxon.intergenericHybridId",
+              "unit.linkings.originalTaxon.invasive",
+              "unit.linkings.originalTaxon.kingdomId",
+              "unit.linkings.originalTaxon.nameAccordingTo",
+              "unit.linkings.originalTaxon.nameEnglish",
+              "unit.linkings.originalTaxon.nameFinnish",
+              "unit.linkings.originalTaxon.nameSwedish",
+              "unit.linkings.originalTaxon.nothogenusId",
+              "unit.linkings.originalTaxon.nothospeciesId",
+              "unit.linkings.originalTaxon.nothosubspeciesId",
+              "unit.linkings.originalTaxon.occurrenceCount",
+              "unit.linkings.originalTaxon.occurrenceCountFinland",
+              "unit.linkings.originalTaxon.orderId",
+              "unit.linkings.originalTaxon.parentId",
+              "unit.linkings.originalTaxon.parvclassId",
+              "unit.linkings.originalTaxon.parvorderId",
+              "unit.linkings.originalTaxon.phylumId",
+              "unit.linkings.originalTaxon.populationGroupId",
+              "unit.linkings.originalTaxon.primaryHabitat",
+              "unit.linkings.originalTaxon.qname",
+              "unit.linkings.originalTaxon.redListStatus",
+              "unit.linkings.originalTaxon.redListStatusGroup",
+              "unit.linkings.originalTaxon.scientificName",
+              "unit.linkings.originalTaxon.scientificNameDisplayName",
+              "unit.linkings.originalTaxon.sectionId",
+              "unit.linkings.originalTaxon.sensitive",
+              "unit.linkings.originalTaxon.seriesId",
+              "unit.linkings.originalTaxon.species",
+              "unit.linkings.originalTaxon.speciesAggregateId",
+              "unit.linkings.originalTaxon.speciesId",
+              "unit.linkings.originalTaxon.speciesNameEnglish",
+              "unit.linkings.originalTaxon.speciesNameFinnish",
+              "unit.linkings.originalTaxon.speciesNameSwedish",
+              "unit.linkings.originalTaxon.speciesScientificName",
+              "unit.linkings.originalTaxon.speciesTaxonomicOrder",
+              "unit.linkings.originalTaxon.subclassId",
+              "unit.linkings.originalTaxon.subdivisionId",
+              "unit.linkings.originalTaxon.subfamilyId",
+              "unit.linkings.originalTaxon.subformId",
+              "unit.linkings.originalTaxon.subgenusId",
+              "unit.linkings.originalTaxon.subkingdomId",
+              "unit.linkings.originalTaxon.suborderId",
+              "unit.linkings.originalTaxon.subphylumId",
+              "unit.linkings.originalTaxon.subsectionId",
+              "unit.linkings.originalTaxon.subseriesId",
+              "unit.linkings.originalTaxon.subspeciesId",
+              "unit.linkings.originalTaxon.subspecificAggregateId",
+              "unit.linkings.originalTaxon.subtribeId",
+              "unit.linkings.originalTaxon.subvarietyId",
+              "unit.linkings.originalTaxon.superclassId",
+              "unit.linkings.originalTaxon.superdivisionId",
+              "unit.linkings.originalTaxon.superdomainId",
+              "unit.linkings.originalTaxon.superfamilyId",
+              "unit.linkings.originalTaxon.supergenusId",
+              "unit.linkings.originalTaxon.superorderId",
+              "unit.linkings.originalTaxon.superphylumId",
+              "unit.linkings.originalTaxon.taxonRank",
+              "unit.linkings.originalTaxon.taxonSets",
+              "unit.linkings.originalTaxon.taxonomicOrder",
+              "unit.linkings.originalTaxon.tribeId",
+              "unit.linkings.originalTaxon.typesOfOccurrenceInFinland",
+              "unit.linkings.originalTaxon.varietyId",
+              "unit.linkings.originalTaxon.virva",
+              "unit.linkings.taxon.administrativeStatuses",
+              "unit.linkings.taxon.aggregateId",
+              "unit.linkings.taxon.anamorphId",
+              "unit.linkings.taxon.author",
+              "unit.linkings.taxon.birdlifeCode",
+              "unit.linkings.taxon.classId",
+              "unit.linkings.taxon.cultivarId",
+              "unit.linkings.taxon.cursiveName",
+              "unit.linkings.taxon.divisionId",
+              "unit.linkings.taxon.domainId",
+              "unit.linkings.taxon.ecotypeId",
+              "unit.linkings.taxon.euringCode",
+              "unit.linkings.taxon.euringNumber",
+              "unit.linkings.taxon.familyId",
+              "unit.linkings.taxon.finnish",
+              "unit.linkings.taxon.formId",
+              "unit.linkings.taxon.genusId",
+              "unit.linkings.taxon.grexId",
+              "unit.linkings.taxon.groupId",
+              "unit.linkings.taxon.habitats",
+              "unit.linkings.taxon.hybridId",
+              "unit.linkings.taxon.id",
+              "unit.linkings.taxon.informalTaxonGroups",
+              "unit.linkings.taxon.infraclassId",
+              "unit.linkings.taxon.infradivisionId",
+              "unit.linkings.taxon.infragenericHybridId",
+              "unit.linkings.taxon.infragenericTaxonId",
+              "unit.linkings.taxon.infrakingdomId",
+              "unit.linkings.taxon.infraorderId",
+              "unit.linkings.taxon.infraphylumId",
+              "unit.linkings.taxon.infraspecificTaxonId",
+              "unit.linkings.taxon.intergenericHybridId",
+              "unit.linkings.taxon.invasive",
+              "unit.linkings.taxon.kingdomId",
+              "unit.linkings.taxon.nameAccordingTo",
+              "unit.linkings.taxon.nameEnglish",
+              "unit.linkings.taxon.nameFinnish",
+              "unit.linkings.taxon.nameSwedish",
+              "unit.linkings.taxon.nothogenusId",
+              "unit.linkings.taxon.nothospeciesId",
+              "unit.linkings.taxon.nothosubspeciesId",
+              "unit.linkings.taxon.occurrenceCount",
+              "unit.linkings.taxon.occurrenceCountFinland",
+              "unit.linkings.taxon.orderId",
+              "unit.linkings.taxon.parentId",
+              "unit.linkings.taxon.parvclassId",
+              "unit.linkings.taxon.parvorderId",
+              "unit.linkings.taxon.phylumId",
+              "unit.linkings.taxon.populationGroupId",
+              "unit.linkings.taxon.primaryHabitat",
+              "unit.linkings.taxon.qname",
+              "unit.linkings.taxon.redListStatus",
+              "unit.linkings.taxon.redListStatusGroup",
+              "unit.linkings.taxon.scientificName",
+              "unit.linkings.taxon.scientificNameDisplayName",
+              "unit.linkings.taxon.sectionId",
+              "unit.linkings.taxon.sensitive",
+              "unit.linkings.taxon.seriesId",
+              "unit.linkings.taxon.species",
+              "unit.linkings.taxon.speciesAggregateId",
+              "unit.linkings.taxon.speciesId",
+              "unit.linkings.taxon.speciesNameEnglish",
+              "unit.linkings.taxon.speciesNameFinnish",
+              "unit.linkings.taxon.speciesNameSwedish",
+              "unit.linkings.taxon.speciesScientificName",
+              "unit.linkings.taxon.speciesTaxonomicOrder",
+              "unit.linkings.taxon.subclassId",
+              "unit.linkings.taxon.subdivisionId",
+              "unit.linkings.taxon.subfamilyId",
+              "unit.linkings.taxon.subformId",
+              "unit.linkings.taxon.subgenusId",
+              "unit.linkings.taxon.subkingdomId",
+              "unit.linkings.taxon.suborderId",
+              "unit.linkings.taxon.subphylumId",
+              "unit.linkings.taxon.subsectionId",
+              "unit.linkings.taxon.subseriesId",
+              "unit.linkings.taxon.subspeciesId",
+              "unit.linkings.taxon.subspecificAggregateId",
+              "unit.linkings.taxon.subtribeId",
+              "unit.linkings.taxon.subvarietyId",
+              "unit.linkings.taxon.superclassId",
+              "unit.linkings.taxon.superdivisionId",
+              "unit.linkings.taxon.superdomainId",
+              "unit.linkings.taxon.superfamilyId",
+              "unit.linkings.taxon.supergenusId",
+              "unit.linkings.taxon.superorderId",
+              "unit.linkings.taxon.superphylumId",
+              "unit.linkings.taxon.taxonRank",
+              "unit.linkings.taxon.taxonSets",
+              "unit.linkings.taxon.taxonomicOrder",
+              "unit.linkings.taxon.tribeId",
+              "unit.linkings.taxon.typesOfOccurrenceInFinland",
+              "unit.linkings.taxon.varietyId",
+              "unit.linkings.taxon.virva"
+            ]
+          }
+        }
+      },
+      {
+        "name": "orderBy",
+        "in": "query",
+        "required": false,
+        "description": "Define what fields to use when sorting results. Defaults to count (desc) and each aggregate by field (asc). Each fieldname given as parameter defaults to ASC - if you want to sort using descending order, add \" DESC\" to the end of the field name. In addition to aggregateBy fields you can use the following aggregate function names: [count, individualCountSum, individualCountMax, oldestRecord, newestRecord, recordQualityMax, firstLoadDateMin, firstLoadDateMax, gatheringCount, securedCount, pairCountMax, pairCountSum, taxonCount, speciesCount, redListStatusMax, atlasCodeMax, atlasClassMax]. Multiple values are seperated by ','.",
+        "schema": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "document.documentId",
+              "document.namedPlace.birdAssociationAreaDisplayName",
+              "document.namedPlace.birdAssociationAreaId",
+              "document.namedPlace.collectionId",
+              "document.namedPlace.id",
+              "document.namedPlace.municipalityDisplayName",
+              "document.namedPlace.municipalityId",
+              "document.namedPlace.name",
+              "document.namedPlace.ykj10km.lat",
+              "document.namedPlace.ykj10km.lon",
+              "document.namedPlaceId",
+              "document.prefix",
+              "gathering.conversions.birdAssociationArea",
+              "gathering.conversions.day",
+              "gathering.conversions.month",
+              "gathering.conversions.year",
+              "gathering.conversions.ykj10km.lat",
+              "gathering.conversions.ykj10km.lon",
+              "gathering.conversions.ykj10kmCenter.lat",
+              "gathering.conversions.ykj10kmCenter.lon",
+              "gathering.gatheringSection",
+              "unit.atlasClass",
+              "unit.atlasCode",
+              "unit.linkings.originalTaxon.administrativeStatuses",
+              "unit.linkings.originalTaxon.aggregateId",
+              "unit.linkings.originalTaxon.anamorphId",
+              "unit.linkings.originalTaxon.author",
+              "unit.linkings.originalTaxon.birdlifeCode",
+              "unit.linkings.originalTaxon.classId",
+              "unit.linkings.originalTaxon.cultivarId",
+              "unit.linkings.originalTaxon.cursiveName",
+              "unit.linkings.originalTaxon.divisionId",
+              "unit.linkings.originalTaxon.domainId",
+              "unit.linkings.originalTaxon.ecotypeId",
+              "unit.linkings.originalTaxon.euringCode",
+              "unit.linkings.originalTaxon.euringNumber",
+              "unit.linkings.originalTaxon.familyId",
+              "unit.linkings.originalTaxon.finnish",
+              "unit.linkings.originalTaxon.formId",
+              "unit.linkings.originalTaxon.genusId",
+              "unit.linkings.originalTaxon.grexId",
+              "unit.linkings.originalTaxon.groupId",
+              "unit.linkings.originalTaxon.habitats",
+              "unit.linkings.originalTaxon.hybridId",
+              "unit.linkings.originalTaxon.id",
+              "unit.linkings.originalTaxon.informalTaxonGroups",
+              "unit.linkings.originalTaxon.infraclassId",
+              "unit.linkings.originalTaxon.infradivisionId",
+              "unit.linkings.originalTaxon.infragenericHybridId",
+              "unit.linkings.originalTaxon.infragenericTaxonId",
+              "unit.linkings.originalTaxon.infrakingdomId",
+              "unit.linkings.originalTaxon.infraorderId",
+              "unit.linkings.originalTaxon.infraphylumId",
+              "unit.linkings.originalTaxon.infraspecificTaxonId",
+              "unit.linkings.originalTaxon.intergenericHybridId",
+              "unit.linkings.originalTaxon.invasive",
+              "unit.linkings.originalTaxon.kingdomId",
+              "unit.linkings.originalTaxon.nameAccordingTo",
+              "unit.linkings.originalTaxon.nameEnglish",
+              "unit.linkings.originalTaxon.nameFinnish",
+              "unit.linkings.originalTaxon.nameSwedish",
+              "unit.linkings.originalTaxon.nothogenusId",
+              "unit.linkings.originalTaxon.nothospeciesId",
+              "unit.linkings.originalTaxon.nothosubspeciesId",
+              "unit.linkings.originalTaxon.occurrenceCount",
+              "unit.linkings.originalTaxon.occurrenceCountFinland",
+              "unit.linkings.originalTaxon.orderId",
+              "unit.linkings.originalTaxon.parentId",
+              "unit.linkings.originalTaxon.parvclassId",
+              "unit.linkings.originalTaxon.parvorderId",
+              "unit.linkings.originalTaxon.phylumId",
+              "unit.linkings.originalTaxon.populationGroupId",
+              "unit.linkings.originalTaxon.primaryHabitat",
+              "unit.linkings.originalTaxon.qname",
+              "unit.linkings.originalTaxon.redListStatus",
+              "unit.linkings.originalTaxon.redListStatusGroup",
+              "unit.linkings.originalTaxon.scientificName",
+              "unit.linkings.originalTaxon.scientificNameDisplayName",
+              "unit.linkings.originalTaxon.sectionId",
+              "unit.linkings.originalTaxon.sensitive",
+              "unit.linkings.originalTaxon.seriesId",
+              "unit.linkings.originalTaxon.species",
+              "unit.linkings.originalTaxon.speciesAggregateId",
+              "unit.linkings.originalTaxon.speciesId",
+              "unit.linkings.originalTaxon.speciesNameEnglish",
+              "unit.linkings.originalTaxon.speciesNameFinnish",
+              "unit.linkings.originalTaxon.speciesNameSwedish",
+              "unit.linkings.originalTaxon.speciesScientificName",
+              "unit.linkings.originalTaxon.speciesTaxonomicOrder",
+              "unit.linkings.originalTaxon.subclassId",
+              "unit.linkings.originalTaxon.subdivisionId",
+              "unit.linkings.originalTaxon.subfamilyId",
+              "unit.linkings.originalTaxon.subformId",
+              "unit.linkings.originalTaxon.subgenusId",
+              "unit.linkings.originalTaxon.subkingdomId",
+              "unit.linkings.originalTaxon.suborderId",
+              "unit.linkings.originalTaxon.subphylumId",
+              "unit.linkings.originalTaxon.subsectionId",
+              "unit.linkings.originalTaxon.subseriesId",
+              "unit.linkings.originalTaxon.subspeciesId",
+              "unit.linkings.originalTaxon.subspecificAggregateId",
+              "unit.linkings.originalTaxon.subtribeId",
+              "unit.linkings.originalTaxon.subvarietyId",
+              "unit.linkings.originalTaxon.superclassId",
+              "unit.linkings.originalTaxon.superdivisionId",
+              "unit.linkings.originalTaxon.superdomainId",
+              "unit.linkings.originalTaxon.superfamilyId",
+              "unit.linkings.originalTaxon.supergenusId",
+              "unit.linkings.originalTaxon.superorderId",
+              "unit.linkings.originalTaxon.superphylumId",
+              "unit.linkings.originalTaxon.taxonRank",
+              "unit.linkings.originalTaxon.taxonSets",
+              "unit.linkings.originalTaxon.taxonomicOrder",
+              "unit.linkings.originalTaxon.tribeId",
+              "unit.linkings.originalTaxon.typesOfOccurrenceInFinland",
+              "unit.linkings.originalTaxon.varietyId",
+              "unit.linkings.originalTaxon.virva",
+              "unit.linkings.taxon.administrativeStatuses",
+              "unit.linkings.taxon.aggregateId",
+              "unit.linkings.taxon.anamorphId",
+              "unit.linkings.taxon.author",
+              "unit.linkings.taxon.birdlifeCode",
+              "unit.linkings.taxon.classId",
+              "unit.linkings.taxon.cultivarId",
+              "unit.linkings.taxon.cursiveName",
+              "unit.linkings.taxon.divisionId",
+              "unit.linkings.taxon.domainId",
+              "unit.linkings.taxon.ecotypeId",
+              "unit.linkings.taxon.euringCode",
+              "unit.linkings.taxon.euringNumber",
+              "unit.linkings.taxon.familyId",
+              "unit.linkings.taxon.finnish",
+              "unit.linkings.taxon.formId",
+              "unit.linkings.taxon.genusId",
+              "unit.linkings.taxon.grexId",
+              "unit.linkings.taxon.groupId",
+              "unit.linkings.taxon.habitats",
+              "unit.linkings.taxon.hybridId",
+              "unit.linkings.taxon.id",
+              "unit.linkings.taxon.informalTaxonGroups",
+              "unit.linkings.taxon.infraclassId",
+              "unit.linkings.taxon.infradivisionId",
+              "unit.linkings.taxon.infragenericHybridId",
+              "unit.linkings.taxon.infragenericTaxonId",
+              "unit.linkings.taxon.infrakingdomId",
+              "unit.linkings.taxon.infraorderId",
+              "unit.linkings.taxon.infraphylumId",
+              "unit.linkings.taxon.infraspecificTaxonId",
+              "unit.linkings.taxon.intergenericHybridId",
+              "unit.linkings.taxon.invasive",
+              "unit.linkings.taxon.kingdomId",
+              "unit.linkings.taxon.nameAccordingTo",
+              "unit.linkings.taxon.nameEnglish",
+              "unit.linkings.taxon.nameFinnish",
+              "unit.linkings.taxon.nameSwedish",
+              "unit.linkings.taxon.nothogenusId",
+              "unit.linkings.taxon.nothospeciesId",
+              "unit.linkings.taxon.nothosubspeciesId",
+              "unit.linkings.taxon.occurrenceCount",
+              "unit.linkings.taxon.occurrenceCountFinland",
+              "unit.linkings.taxon.orderId",
+              "unit.linkings.taxon.parentId",
+              "unit.linkings.taxon.parvclassId",
+              "unit.linkings.taxon.parvorderId",
+              "unit.linkings.taxon.phylumId",
+              "unit.linkings.taxon.populationGroupId",
+              "unit.linkings.taxon.primaryHabitat",
+              "unit.linkings.taxon.qname",
+              "unit.linkings.taxon.redListStatus",
+              "unit.linkings.taxon.redListStatusGroup",
+              "unit.linkings.taxon.scientificName",
+              "unit.linkings.taxon.scientificNameDisplayName",
+              "unit.linkings.taxon.sectionId",
+              "unit.linkings.taxon.sensitive",
+              "unit.linkings.taxon.seriesId",
+              "unit.linkings.taxon.species",
+              "unit.linkings.taxon.speciesAggregateId",
+              "unit.linkings.taxon.speciesId",
+              "unit.linkings.taxon.speciesNameEnglish",
+              "unit.linkings.taxon.speciesNameFinnish",
+              "unit.linkings.taxon.speciesNameSwedish",
+              "unit.linkings.taxon.speciesScientificName",
+              "unit.linkings.taxon.speciesTaxonomicOrder",
+              "unit.linkings.taxon.subclassId",
+              "unit.linkings.taxon.subdivisionId",
+              "unit.linkings.taxon.subfamilyId",
+              "unit.linkings.taxon.subformId",
+              "unit.linkings.taxon.subgenusId",
+              "unit.linkings.taxon.subkingdomId",
+              "unit.linkings.taxon.suborderId",
+              "unit.linkings.taxon.subphylumId",
+              "unit.linkings.taxon.subsectionId",
+              "unit.linkings.taxon.subseriesId",
+              "unit.linkings.taxon.subspeciesId",
+              "unit.linkings.taxon.subspecificAggregateId",
+              "unit.linkings.taxon.subtribeId",
+              "unit.linkings.taxon.subvarietyId",
+              "unit.linkings.taxon.superclassId",
+              "unit.linkings.taxon.superdivisionId",
+              "unit.linkings.taxon.superdomainId",
+              "unit.linkings.taxon.superfamilyId",
+              "unit.linkings.taxon.supergenusId",
+              "unit.linkings.taxon.superorderId",
+              "unit.linkings.taxon.superphylumId",
+              "unit.linkings.taxon.taxonRank",
+              "unit.linkings.taxon.taxonSets",
+              "unit.linkings.taxon.taxonomicOrder",
+              "unit.linkings.taxon.tribeId",
+              "unit.linkings.taxon.typesOfOccurrenceInFinland",
+              "unit.linkings.taxon.varietyId",
+              "unit.linkings.taxon.virva",
+              "count",
+              "individualCountSum",
+              "individualCountMax",
+              "oldestRecord",
+              "newestRecord",
+              "recordQualityMax",
+              "firstLoadDateMin",
+              "firstLoadDateMax",
+              "gatheringCount",
+              "securedCount",
+              "pairCountMax",
+              "pairCountSum",
+              "taxonCount",
+              "speciesCount",
+              "redListStatusMax",
+              "atlasCodeMax",
+              "atlasClassMax"
+            ]
+          }
+        }
+      },
+      {
+        "name": "onlyCount",
+        "in": "query",
+        "required": false,
+        "description": "Return only count of rows (default) or also additional aggregate function values.",
+        "schema": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      {
+        "name": "taxonCounts",
+        "in": "query",
+        "required": false,
+        "description": "Include taxon count, species count and max red list status",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      {
+        "name": "gatheringCounts",
+        "in": "query",
+        "required": false,
+        "description": "Include gatheringCount",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      {
+        "name": "pairCounts",
+        "in": "query",
+        "required": false,
+        "description": "Include pair count sum and max.",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      {
+        "name": "atlasCounts",
+        "in": "query",
+        "required": false,
+        "description": "Include atlas code and class max.",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      {
+        "name": "excludeNulls",
+        "in": "query",
+        "required": false,
+        "description": "Include or exclude nulls to result. Will only check nullness of the first aggregateBy field.",
+        "schema": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      {
+        "name": "pessimisticDateRangeHandling",
+        "in": "query",
+        "required": false,
+        "description": "Value of this parameter affects how oldestRecord and newestRecord are calculated regarding observations reported as date span. False (default): oldest=min(date.begin), newest=max(date.end). True: oldest=min(date.end), newest=max(date.begin).",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      {
+        "name": "pageSize",
+        "in": "query",
+        "required": false,
+        "description": "Set number of results in one page.",
+        "schema": {
+          "type": "integer",
+          "default": 100,
+          "minimum": 1,
+          "maximum": 10000
+        }
+      },
+      {
+        "name": "page",
+        "in": "query",
+        "required": false,
+        "description": "Set current page.",
+        "schema": {
+          "type": "integer",
+          "default": 1,
+          "minimum": 1
+        }
+      },
+      {
+        "name": "cache",
+        "in": "query",
+        "required": false,
+        "description": "Use cache for this query. Defaults to false.",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      {
+        "name": "taxonId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of a taxon. Use Taxonomy-API to find identifiers. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /taxa",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "target",
+        "in": "query",
+        "required": false,
+        "description": "Same as taxonId, but system resolves identifier of the taxon based on the given target name. If no such match can be resolved (name does not exist in taxonomy), will filter based on the given verbatim target name (case insensitive). Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "useIdentificationAnnotations",
+        "in": "query",
+        "required": false,
+        "description": "By default, all taxon linking related filters use taxon linking that may have been altered because of quality control identification annotations. If you want to use original user identifications, set this to false.",
+        "schema": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      {
+        "name": "includeSubTaxa",
+        "in": "query",
+        "required": false,
+        "description": "By default, all taxon linking related filters return all entries that belong to the filtered taxa. To return only exact matches (no subtaxa), set this to false.",
+        "schema": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      {
+        "name": "includeNonValidTaxa",
+        "in": "query",
+        "required": false,
+        "description": "Set to false if you want to include only those entries where reported target name can be linked with a taxon of the reference taxonomy. By default includes all entries.",
+        "schema": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      {
+        "name": "onlyNonValidTaxa",
+        "in": "query",
+        "required": false,
+        "description": "Set to true if you want to include only those entries where reported target name can not be linked with a taxon of the reference taxonomy. By default includes all entries.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "informalTaxonGroupId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of an informal taxon group. Use InformalTaxonGroups-API to find identifiers. Will return entries that have been linked with taxa that belong to one of the given groups. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /informal-taxon-groups",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "informalTaxonGroupIdNot",
+        "in": "query",
+        "required": false,
+        "description": "Exclude based on URI or Qname identifier of an informal taxon group. Use InformalTaxonGroups-API to find identifiers. Will exclude entries that have been linked with taxa that belong to any of the given groups. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /informal-taxon-groups",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "informalTaxonGroupIdIncludingReported",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of an informal taxon group. Use InformalTaxonGroups-API to find identifiers. Will return entries that have been linked with taxa that belong to one of the given groups OR reported to belong to one of the given groups. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /informal-taxon-groups",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "countryId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of a country. Use Area-API to find identifiers. Will return entries where we have been able to interpret the country from coordinates or from reported area name. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /areas",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "namedPlaceId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of a NamedPlace. Use NamedPlace-API to find identifiers. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /named-places",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "namedPlaceTag",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of MNP.tagEnum (use metadata-api to resolve identifiers) Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /metadata/ranges/MNP.tagEnum",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "birdAssociationAreaId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of a BirdAssociationArea. Use Area-API to find identifiers. Bird association area is interpreted based on YKJ 10KM grids (the grid the occurrence centerpoint is in). Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /areas",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "formId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of a Vihko Notebook form that was used to report the entry. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /forms",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "time",
+        "in": "query",
+        "required": false,
+        "description": "Filter using event date. Date can be a full date or part of a date, for example 2000, 2000-06 or 2000-06-25. Time can be a range, for example 2000/2005 or 2000-01-01/2005-12-31. Relative days \"last N days\" can be used: 0 is today, -1 is yesterday and so on; for example -7/0 is a range between 7 days ago and today. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "timeAccuracy",
+        "in": "query",
+        "required": false,
+        "description": "Filter using event date accuracy range in days. Will include entries where time span in days is less or equal to the given value.",
+        "schema": {
+          "type": "integer"
+        }
+      },
+      {
+        "name": "yearMonth",
+        "in": "query",
+        "required": false,
+        "description": "Filter using event date. Value can be a year (2000), year range (2000/2001), year-month (2000-06) or a year-month range (2000-06/2000-08). (Note: this filter is mostly aimed to be used in /statistics queries because 'time' filter is not available for /statistics queries.) Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "collectionId",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of collections. Use Collections-API to resolve identifiers. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /collections",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "collectionIdExplicit",
+        "in": "query",
+        "required": false,
+        "description": "Filter based on URI or Qname identifier of collections. Use Collections-API to resolve identifiers. Will not include child collections Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /collections",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "includeSubCollections",
+        "in": "query",
+        "required": false,
+        "description": "Defines if collectionId filter should include sub collections of the given collection ids. By default sub collections are included.",
+        "schema": {
+          "type": "boolean"
+        }
+      },
+      {
+        "name": "individualCountMin",
+        "in": "query",
+        "required": false,
+        "description": "Filter using idividual count. Unreported individual count is assumed to mean \"1+\", so searching min=1 returns where count > 0 or count is not given. To search for \"zero observations\" use max=0. Defaults to 1 but when using annotation endpoint defaults to null.",
+        "schema": {
+          "type": "integer",
+          "default": 1
+        }
+      },
+      {
+        "name": "includeNullLoadDates",
+        "in": "query",
+        "required": false,
+        "description": "Used with filters loadedSameOrAfter, loadedSameOrBefore, firstLoadedSameOrAfter, firstLoadedSameOrBefore: If set to true will include matches even if the date is not present. Default is false.",
+        "schema": {
+          "type": "boolean",
+          "default": false
+        }
+      },
+      {
+        "name": "wild",
+        "in": "query",
+        "required": false,
+        "description": "Filter occurrences based on reported/annotated wild status. By default, non-wild occurrences are exluded. Multiple values are seperated by ','. When multiple values are given, this is an OR search.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "WILD",
+            "WILD_UNKNOWN",
+            "NON_WILD"
+          ],
+          "default": "WILD,UNKNOWN"
+        }
+      },
+      {
+        "name": "qualityIssues",
+        "in": "query",
+        "required": false,
+        "description": "Possible values: NO_ISSUES, BOTH, ONLY_ISSUES. Include records with quality issues (document, gathering or unit issues). Default is NO_ISSUES, but when searching by id (documentId, unitId, keyword) or using annotation endpoint the default is BOTH.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "NO_ISSUES",
+            "BOTH",
+            "ONLY_ISSUES"
+          ],
+          "default": "NO_ISSUES"
+        }
+      },
+      {
+        "name": "completeListTaxonId",
+        "in": "query",
+        "required": false,
+        "description": "Show only records where document contains complete list for this higher taxon. For example include only records where all birds or mammals were documented, if they were seens -> something that is not documented was not seen. Use taxon IDs. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /taxa",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "completeListType",
+        "in": "query",
+        "required": false,
+        "description": "Show only records where document contains complete list and the list is of this type: URI or Qname identifier of MY.completeListTypeEnum (use metadata-api to resolve identifiers) Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /metadata/ranges/MY.completeListTypeEnum",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "taxonCensus",
+        "in": "query",
+        "required": false,
+        "description": "Show only records where observations are completely recorded for this higher taxon. For example include only records where all birds or mammals were documented, if they were seens -> something that is not documented was not seen. Use taxon IDs. Multiple values are seperated by ','. When multiple values are given, this is an OR search. API resource: /taxa",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "format",
+        "in": "query",
+        "required": false,
+        "description": "Alternative way to Accept header to define content type of the response.",
+        "schema": {
+          "type": "string",
+          "enum": [
+            "json",
+            "geojson",
+            "xml",
+            "csv",
+            "tsv"
+          ]
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Succesful query. Schema varies based on content-type of the response.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_AggregateResponse"
+            }
+          },
+          "application/geo+json": {
+            "schema": {
+              "type": "string"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "type": "string"
+            }
+          },
+          "text/csv": {
+            "schema": {
+              "type": "string"
+            }
+          },
+          "text/tab-separated-values": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Parameters were not accepted. Message has details.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WarehouseDwError"
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "Invalid credentials. Message has details.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WarehouseDwError"
+            }
+          }
+        }
+      },
+      "429": {
+        "description": "Too many pending requests for the access_token; max is 12",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WarehouseDwError"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Service is in unknown erroneous state.",
+        "content": {
+          "text/plain": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "tags": [
+      "Warehouse"
+    ],
+    "security": [
+      {
+        "Access token": []
+      },
+      {
+        "Lang": []
+      },
+      {
+        "Person token": []
+      }
+    ]
+  },
+  "components": {
+    "schemas": {
+      "WarehouseDwQuery_AggregateResponse": {
+        "type": "object",
+        "properties": {
+          "currentPage": {
+            "type": "integer"
+          },
+          "prevPage": {
+            "type": "integer"
+          },
+          "nextPage": {
+            "type": "integer"
+          },
+          "lastPage": {
+            "type": "integer"
+          },
+          "pageSize": {
+            "type": "integer"
+          },
+          "total": {
+            "type": "integer"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwQuery_AggregateRow"
+            }
+          },
+          "cacheTimestamp": {
+            "type": "integer"
+          }
+        }
+      },
+      "WarehouseDwQuery_AggregateRow": {
+        "type": "object",
+        "properties": {
+          "count": {
+            "type": "integer"
+          },
+          "gatheringCount": {
+            "type": "integer"
+          },
+          "securedCount": {
+            "type": "integer"
+          },
+          "oldestRecord": {
+            "type": "string",
+            "format": "yyyy-MM-dd"
+          },
+          "newestRecord": {
+            "type": "string",
+            "format": "yyyy-MM-dd"
+          },
+          "firstLoadDateMin": {
+            "type": "string",
+            "format": "yyyy-MM-dd"
+          },
+          "firstLoadDateMax": {
+            "type": "string",
+            "format": "yyyy-MM-dd"
+          },
+          "individualCountSum": {
+            "type": "integer"
+          },
+          "individualCountMax": {
+            "type": "integer"
+          },
+          "recordQualityMax": {
+            "type": "string",
+            "format": "URI"
+          },
+          "redListStatusMax": {
+            "type": "string",
+            "format": "URI"
+          },
+          "speciesCount": {
+            "type": "integer"
+          },
+          "taxonCount": {
+            "type": "integer"
+          },
+          "lineLengthSum": {
+            "type": "integer"
+          },
+          "pairCountSum": {
+            "type": "integer"
+          },
+          "pairCountMax": {
+            "type": "integer"
+          },
+          "atlasCodeMax": {
+            "type": "string",
+            "format": "URI"
+          },
+          "atlasClassMax": {
+            "type": "string",
+            "format": "URI"
+          },
+          "aggregateBy": {
+            "type": "object"
+          }
+        }
+      },
+      "WarehouseDwError": {
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      }
+    }
+  },
+  "resolvedRefs": [
+    "#/components/schemas/WarehouseDwError",
+    "#/components/schemas/WarehouseDwQuery_AggregateResponse",
+    "#/components/schemas/WarehouseDwQuery_AggregateRow"
+  ]
+}

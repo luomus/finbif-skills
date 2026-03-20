@@ -1,0 +1,398 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Laji API",
+    "description": "\n## Authentication\n\nThis API requires an **Access Token**. To obtain a token:\n1. [Send a `POST` request with your email address to the `/api-user` endpoint](https://api.laji.fi/openapi#/API%20user/ApiUsersController_register).\n2. An access token will be sent to your email.\n\nInclude the token in all requests using the HTTP header: `Authorization: Bearer <ACCESS_TOKEN>`\n\nHere on the API frontpage, you can configure the **Access Token**, **Person-Token**, and **Accept-Language** globally using the **Authorize** button below.\n\n---\n\n## Documentation & Resources\n\n- **Additional API documentation:**\n  [https://info.laji.fi/en/frontpage/api/api-laji-fi](https://info.laji.fi/en/frontpage/api/api-laji-fi)\n\n- **OpenAPI / Swagger 3.0 specification (machine-readable):**\n  [https://api.laji.fi/openapi-json](https://api.laji.fi/openapi-json)\n\n---\n\n## Support\n\nIf you have any questions, contact us at **helpdesk@laji.fi**.\n",
+    "version": "1",
+    "contact": {}
+  },
+  "target": {
+    "path": "/taxa/{id}/media",
+    "method": "GET"
+  },
+  "pathItem": {
+    "parameters": []
+  },
+  "operation": {
+    "operationId": "TaxaController_getTaxonMedia",
+    "parameters": [
+      {
+        "name": "id",
+        "required": true,
+        "in": "path",
+        "schema": {
+          "type": "string"
+        }
+      },
+      {
+        "name": "checklist",
+        "required": false,
+        "in": "query",
+        "description": "Include taxa from the specified checklists (defaults to FinBIF master checklist)",
+        "schema": {
+          "default": "MR.1",
+          "type": "string"
+        }
+      },
+      {
+        "name": "checklistVersion",
+        "required": false,
+        "in": "query",
+        "description": "Checklist version to be used. Defaults to the latest version.",
+        "schema": {
+          "default": "current",
+          "type": "string",
+          "enum": [
+            "current",
+            "MR.424",
+            "MR.425",
+            "MR.426",
+            "MR.427",
+            "MR.428",
+            "MR.484"
+          ]
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "results": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/LajiBackendImage"
+                  }
+                },
+                "@context": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      },
+      "400": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "401": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "403": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "406": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "422": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "500": {
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "errorCode": {
+                  "type": "string"
+                },
+                "message": {
+                  "type": "string"
+                },
+                "localized": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "security": [
+      {
+        "Access token": []
+      },
+      {
+        "Lang": []
+      },
+      {
+        "Person token": []
+      }
+    ],
+    "summary": "Get media objects of a taxon",
+    "tags": [
+      "Taxa"
+    ]
+  },
+  "components": {
+    "schemas": {
+      "LajiBackendImage": {
+        "type": "object",
+        "properties": {
+          "author": {
+            "type": "string"
+          },
+          "caption": {
+            "type": "string"
+          },
+          "captureDateTime": {
+            "type": "string"
+          },
+          "copyrightOwner": {
+            "type": "string"
+          },
+          "fullURL": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "description": "Qname identifier"
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "largeURL": {
+            "type": "string"
+          },
+          "licenseAbbreviation": {
+            "type": "string"
+          },
+          "licenseFullname": {
+            "$ref": "#/components/schemas/LajiBackendLocalizedText"
+          },
+          "licenseId": {
+            "type": "string",
+            "description": "Qname identifier"
+          },
+          "lifeStage": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "plantLifeStage": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "sex": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "side": {
+            "type": "string",
+            "description": "Qname identifier"
+          },
+          "sortOrder": {
+            "type": "integer"
+          },
+          "source": {
+            "type": "string",
+            "description": "Qname identifier"
+          },
+          "squareThumbnailURL": {
+            "type": "string"
+          },
+          "taxon": {
+            "$ref": "#/components/schemas/LajiBackendSimpleTaxon"
+          },
+          "taxonDescriptionCaption": {
+            "$ref": "#/components/schemas/LajiBackendLocalizedText"
+          },
+          "thumbnailURL": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "description": "Qname identifier"
+          },
+          "uploadDateTime": {
+            "type": "string"
+          },
+          "primaryForTaxon": {
+            "type": "boolean"
+          }
+        }
+      },
+      "LajiBackendSimpleTaxon": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "scientificName": {
+            "type": "string"
+          },
+          "scientificNameAuthorship": {
+            "type": "string"
+          },
+          "vernacularName": {
+            "$ref": "#/components/schemas/LajiBackendLocalizedText"
+          },
+          "taxonRank": {
+            "type": "string"
+          },
+          "cursiveName": {
+            "type": "boolean"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "bold": {
+            "$ref": "#/components/schemas/LajiBackendBoldRecords"
+          },
+          "hasBold": {
+            "type": "boolean"
+          }
+        }
+      },
+      "LajiBackendLocalizedText": {
+        "type": "string"
+      },
+      "LajiBackendBoldRecords": {
+        "type": "object",
+        "properties": {
+          "barcodes": {
+            "type": "integer"
+          },
+          "binCount": {
+            "type": "integer"
+          },
+          "bins": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "publicRecords": {
+            "type": "integer"
+          },
+          "specimens": {
+            "type": "integer"
+          }
+        }
+      }
+    }
+  },
+  "resolvedRefs": [
+    "#/components/schemas/LajiBackendBoldRecords",
+    "#/components/schemas/LajiBackendImage",
+    "#/components/schemas/LajiBackendLocalizedText",
+    "#/components/schemas/LajiBackendSimpleTaxon"
+  ]
+}

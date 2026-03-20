@@ -1,0 +1,1096 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Laji API",
+    "description": "\n## Authentication\n\nThis API requires an **Access Token**. To obtain a token:\n1. [Send a `POST` request with your email address to the `/api-user` endpoint](https://api.laji.fi/openapi#/API%20user/ApiUsersController_register).\n2. An access token will be sent to your email.\n\nInclude the token in all requests using the HTTP header: `Authorization: Bearer <ACCESS_TOKEN>`\n\nHere on the API frontpage, you can configure the **Access Token**, **Person-Token**, and **Accept-Language** globally using the **Authorize** button below.\n\n---\n\n## Documentation & Resources\n\n- **Additional API documentation:**\n  [https://info.laji.fi/en/frontpage/api/api-laji-fi](https://info.laji.fi/en/frontpage/api/api-laji-fi)\n\n- **OpenAPI / Swagger 3.0 specification (machine-readable):**\n  [https://api.laji.fi/openapi-json](https://api.laji.fi/openapi-json)\n\n---\n\n## Support\n\nIf you have any questions, contact us at **helpdesk@laji.fi**.\n",
+    "version": "1",
+    "contact": {}
+  },
+  "target": {
+    "path": "/warehouse/push",
+    "method": "POST"
+  },
+  "pathItem": {
+    "parameters": []
+  },
+  "operation": {
+    "summary": "Load data to the Data Warehouse",
+    "description": "Requires that API key has load permissions. Data is given in request body. Supports multiple data formats. See [documentation](https://laji.fi/about/1402). Accepts all payloads that pass format validation (for example is valid XML), but that does not mean the data will be processed succesfully. ",
+    "requestBody": {
+      "description": "See [documentation](https://laji.fi/about/1402) for complete reference. Can contain multiple documents.",
+      "content": {
+        "application/json": {
+          "schema": {
+            "$ref": "#/components/schemas/WarehouseDwETL_DwRoot"
+          }
+        },
+        "application/xml": {
+          "schema": {
+            "type": "string"
+          }
+        },
+        "application/rdf+xml": {
+          "schema": {
+            "type": "string"
+          }
+        },
+        "text/plain": {
+          "schema": {
+            "type": "string"
+          }
+        },
+        "text/csv": {
+          "schema": {
+            "type": "string"
+          }
+        }
+      },
+      "required": true
+    },
+    "parameters": [
+      {
+        "name": "sourceId",
+        "in": "query",
+        "required": false,
+        "description": "Normally sourceId is received via the API key. By giving this parameter you can override the sourceId. API key must have permissions to use that sourceId.",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Accepted and stored for processing. Does not neccesarilly mean the data will be successfully processed. Returns \"ok\"",
+        "content": {
+          "text/plain": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "400": {
+        "description": "Data was not accepted. Message tells why.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WarehouseDwError"
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "Invalid credentials. Message has details.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WarehouseDwError"
+            }
+          }
+        }
+      },
+      "429": {
+        "description": "Too many pending requests for the access_token; max is 12",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/WarehouseDwError"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Service is in unknown erroneous state.",
+        "content": {
+          "text/plain": {
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "tags": [
+      "Warehouse"
+    ],
+    "security": [
+      {
+        "Access token": []
+      },
+      {
+        "Lang": []
+      },
+      {
+        "Person token": []
+      }
+    ]
+  },
+  "components": {
+    "schemas": {
+      "WarehouseDwError": {
+        "properties": {
+          "status": {
+            "type": "integer"
+          },
+          "message": {
+            "type": "string"
+          }
+        },
+        "type": "object"
+      },
+      "WarehouseDwETL_DwRoot": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "sourceId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "collectionId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "publicDocument": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwETL_Document"
+          },
+          "privateDocument": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwETL_Document"
+          },
+          "deleteRequest": {
+            "type": "boolean"
+          }
+        }
+      },
+      "WarehouseDwETL_Document": {
+        "type": "object",
+        "properties": {
+          "documentId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "secureLevel": {
+            "type": "string",
+            "enum": [
+              "NOSHOW",
+              "HIGHEST",
+              "KM100",
+              "KM50",
+              "KM25",
+              "KM10",
+              "KM5",
+              "KM1",
+              "NONE"
+            ]
+          },
+          "secureReasons": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "DEFAULT_TAXON_CONSERVATION",
+                "BREEDING_SITE_CONSERVATION",
+                "NATURA_AREA_CONSERVATION",
+                "WINTER_SEASON_TAXON_CONSERVATION",
+                "BREEDING_SEASON_TAXON_CONSERVATION",
+                "CUSTOM",
+                "USER_HIDDEN",
+                "ADMIN_HIDDEN",
+                "DATA_QUARANTINE_PERIOD",
+                "ONLY_PRIVATE",
+                "USER_PERSON_NAMES_HIDDEN",
+                "USER_HIDDEN_LOCATION",
+                "USER_HIDDEN_TIME"
+              ]
+            }
+          },
+          "collectionId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "licenseId": {
+            "type": "string"
+          },
+          "dataSource": {
+            "type": "string"
+          },
+          "quality": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwETL_DocumentQuality"
+          },
+          "sourceId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "siteType": {
+            "type": "string"
+          },
+          "siteStatus": {
+            "type": "string"
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "yyyy-MM-dd"
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "yyyy-MM-dd"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "completeListTaxonId": {
+            "type": "string"
+          },
+          "completeListType": {
+            "type": "string"
+          },
+          "concealment": {
+            "type": "string",
+            "enum": [
+              "PUBLIC",
+              "PRIVATE"
+            ]
+          },
+          "deleted": {
+            "type": "boolean"
+          },
+          "editorUserIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "facts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwETL_Fact"
+            }
+          },
+          "formId": {
+            "type": "string"
+          },
+          "gatherings": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwETL_Gathering"
+            }
+          },
+          "media": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwETL_MediaObject"
+            }
+          },
+          "namedPlaceId": {
+            "type": "string"
+          },
+          "referenceURL": {
+            "type": "string"
+          },
+          "siteDead": {
+            "type": "boolean"
+          },
+          "sourceTags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "ADMIN_MARKED_SPAM",
+                "ADMIN_MARKED_COARSE",
+                "ADMIN_MARKED_NON_WILD",
+                "EXPERT_TAG_VERIFIED",
+                "EXPERT_TAG_UNCERTAIN",
+                "EXPERT_TAG_ERRONEOUS",
+                "COMMUNITY_TAG_VERIFIED",
+                "AUTO_VALIDATIONS_PASS",
+                "CHECKED_CANNOT_VERIFY",
+                "CHANGED_OWNER_MANUAL",
+                "CHANGED_DW_AUTO",
+                "CHECK",
+                "CHECK_COORDINATES",
+                "CHECK_DATETIME",
+                "CHECK_LOCATION",
+                "CHECK_OBSERVER",
+                "CHECK_TAXON",
+                "CHECK_DUPLICATE",
+                "CHECK_WILDNESS",
+                "CHECK_NEEDS_INFO",
+                "CHECK_SPAM",
+                "CHECK_BREEDING_INDEX",
+                "AUTO_DISTRIBUTION_CHECK",
+                "AUTO_PERIOD_CHECK",
+                "FORMADMIN_CENSUS_COUNT_ERROR",
+                "FORMADMIN_CENSUS_INNER_COUNT_ERROR",
+                "FORMADMIN_CENSUS_OTHER_ERROR",
+                "FORMADMIN_VERIFIED",
+                "FORMADMIN_UNCERTAIN",
+                "INVASIVE_FULL",
+                "INVASIVE_PARTIAL",
+                "INVASIVE_NO_EFFECT",
+                "INVASIVE_NOT_FOUND"
+              ]
+            }
+          }
+        }
+      },
+      "WarehouseDwETL_Gathering": {
+        "type": "object",
+        "properties": {
+          "gatheringId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "gatheringSection": {
+            "type": "integer"
+          },
+          "coordinates": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwETL_Coordinates"
+          },
+          "geo": {
+            "type": "object",
+            "externalDocs": {
+              "url": "http://geojson.org/geojson-spec.html#geometry-objects"
+            },
+            "description": "GeoJSON object with custom \"crs\" required property that takes in values WGS84,EUREF,YKJ (WGS84 = EPSG:4326; EUREF = ETRS-TM35FIN EPSG:3067; YKJ = EPSG:2393)"
+          },
+          "eventDate": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwETL_DateRange"
+          },
+          "hourBegin": {
+            "type": "integer"
+          },
+          "hourEnd": {
+            "type": "integer"
+          },
+          "team": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "stateLand": {
+            "type": "boolean"
+          },
+          "accurateArea": {
+            "type": "boolean"
+          },
+          "higherGeography": {
+            "type": "string"
+          },
+          "country": {
+            "type": "string"
+          },
+          "municipality": {
+            "type": "string"
+          },
+          "biogeographicalProvince": {
+            "type": "string"
+          },
+          "province": {
+            "type": "string"
+          },
+          "locality": {
+            "type": "string"
+          },
+          "quality": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwETL_GatheringQuality"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "coordinatesVerbatim": {
+            "type": "string"
+          },
+          "facts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwETL_Fact"
+            }
+          },
+          "media": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwETL_MediaObject"
+            }
+          },
+          "minutesBegin": {
+            "type": "integer"
+          },
+          "minutesEnd": {
+            "type": "integer"
+          },
+          "observerUserIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "taxonCensus": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwETL_TaxonCensus"
+            }
+          },
+          "units": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwETL_Unit"
+            }
+          }
+        }
+      },
+      "WarehouseDwETL_GatheringQuality": {
+        "type": "object",
+        "properties": {
+          "issue": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwETL_Quality"
+          },
+          "locationIssue": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwETL_Quality"
+          },
+          "timeIssue": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwETL_Quality"
+          }
+        }
+      },
+      "WarehouseDwETL_Quality": {
+        "type": "object",
+        "properties": {
+          "issue": {
+            "type": "string",
+            "enum": [
+              "REPORTED_UNRELIABLE",
+              "MEDIA_ISSUE",
+              "INVALID_CREATED_DATE",
+              "INVALID_MODIFIED_DATE",
+              "COORDINATES_COUNTRY_MISMATCH",
+              "COORDINATES_MUNICIPALITY_MISMATCH",
+              "TOO_LARGE_AREA",
+              "INVALID_GEO",
+              "INVALID_YKJ_COORDINATES",
+              "INVALID_EUREF_COORDINATES",
+              "INVALID_WGS84_COORDINATES",
+              "DATE_END_BEFORE_BEGIN",
+              "DATE_END_GIVEN_WITHOUT_BEGIN",
+              "DATE_IN_FUTURE",
+              "DATE_TOO_FAR_IN_THE_PAST",
+              "INVALID_DATE",
+              "RECORD_BASIS_MISSING",
+              "INVALID_HOUR",
+              "INVALID_MINUTE",
+              "TIME_END_BEFORE_BEGIN",
+              "INVALID_COORDINATES",
+              "ETL_ISSUE"
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "source": {
+            "type": "string",
+            "enum": [
+              "AUTOMATED_FINBIF_VALIDATION",
+              "ORIGINAL_DOCUMENT",
+              "QUALITY_CONTROL"
+            ]
+          }
+        }
+      },
+      "WarehouseDwETL_Coordinates": {
+        "type": "object",
+        "properties": {
+          "accuracyInMeters": {
+            "type": "integer"
+          },
+          "latMax": {
+            "type": "number"
+          },
+          "latMin": {
+            "type": "number"
+          },
+          "lonMax": {
+            "type": "number"
+          },
+          "lonMin": {
+            "type": "number"
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "WGS84",
+              "EUREF",
+              "YKJ"
+            ]
+          }
+        }
+      },
+      "WarehouseDwETL_DateRange": {
+        "type": "object",
+        "properties": {
+          "begin": {
+            "type": "string",
+            "format": "yyyy-MM-dd"
+          },
+          "end": {
+            "type": "string",
+            "format": "yyyy-MM-dd"
+          }
+        }
+      },
+      "WarehouseDwETL_TaxonCensus": {
+        "type": "object",
+        "properties": {
+          "taxonId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "type": {
+            "type": "string",
+            "format": "URI"
+          }
+        }
+      },
+      "WarehouseDwETL_Unit": {
+        "type": "object",
+        "properties": {
+          "unitId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "taxonVerbatim": {
+            "type": "string"
+          },
+          "quality": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwETL_UnitQuality"
+          },
+          "reportedTaxonConfidence": {
+            "type": "string",
+            "enum": [
+              "SURE",
+              "UNSURE",
+              "SUBSPECIES_UNSURE"
+            ]
+          },
+          "abundanceString": {
+            "type": "string"
+          },
+          "abundanceUnit": {
+            "type": "string",
+            "enum": [
+              "OCCURS_DOES_NOT_OCCUR",
+              "INDIVIDUAL_COUNT",
+              "PAIRCOUNT",
+              "NESTS",
+              "BREEDING_SITES",
+              "FEEDING_SITES",
+              "COLONIES",
+              "QUEENS",
+              "FRUITBODIES",
+              "SPROUTS",
+              "HUMMOCKS",
+              "THALLI",
+              "FLOWERS",
+              "SPOTS",
+              "TRUNKS",
+              "SHELLS",
+              "DROPPINGS",
+              "FEEDING_MARKS",
+              "INDIRECT_MARKS",
+              "SQUARE_DM",
+              "SQUARE_M",
+              "RELATIVE_DENSITY"
+            ]
+          },
+          "recordBasis": {
+            "type": "string",
+            "enum": [
+              "PRESERVED_SPECIMEN",
+              "LIVING_SPECIMEN",
+              "FOSSIL_SPECIMEN",
+              "SUBFOSSIL_SPECIMEN",
+              "SUBFOSSIL_AMBER_INCLUSION_SPECIMEN",
+              "MICROBIAL_SPECIMEN",
+              "HUMAN_OBSERVATION_UNSPECIFIED",
+              "HUMAN_OBSERVATION_SEEN",
+              "HUMAN_OBSERVATION_HEARD",
+              "HUMAN_OBSERVATION_PHOTO",
+              "HUMAN_OBSERVATION_INDIRECT",
+              "HUMAN_OBSERVATION_HANDLED",
+              "HUMAN_OBSERVATION_VIDEO",
+              "HUMAN_OBSERVATION_RECORDED_AUDIO",
+              "MACHINE_OBSERVATION_UNSPECIFIED",
+              "MACHINE_OBSERVATION_PHOTO",
+              "MACHINE_OBSERVATION_VIDEO",
+              "MACHINE_OBSERVATION_AUDIO",
+              "MACHINE_OBSERVATION_GEOLOGGER",
+              "MACHINE_OBSERVATION_SATELLITE_TRANSMITTER",
+              "LITERATURE",
+              "MATERIAL_SAMPLE",
+              "MATERIAL_SAMPLE_AIR",
+              "MATERIAL_SAMPLE_SOIL",
+              "MATERIAL_SAMPLE_WATER"
+            ]
+          },
+          "typeSpecimen": {
+            "type": "boolean"
+          },
+          "det": {
+            "type": "string"
+          },
+          "sex": {
+            "type": "string",
+            "enum": [
+              "MALE",
+              "FEMALE",
+              "WORKER",
+              "UNKNOWN",
+              "NOT_APPLICABLE",
+              "GYNANDROMORPH",
+              "MULTIPLE",
+              "CONFLICTING"
+            ]
+          },
+          "lifeStage": {
+            "type": "string",
+            "enum": [
+              "ADULT",
+              "JUVENILE",
+              "IMMATURE",
+              "EGG",
+              "TADPOLE",
+              "PUPA",
+              "NYMPH",
+              "SUBIMAGO",
+              "LARVA",
+              "SNAG",
+              "EMBRYO",
+              "SUBADULT",
+              "MATURE",
+              "STERILE",
+              "FERTILE",
+              "SPROUT",
+              "DEAD_SPROUT",
+              "BUD",
+              "FLOWER",
+              "WITHERED_FLOWER",
+              "SEED",
+              "RIPENING_FRUIT",
+              "RIPE_FRUIT",
+              "SUBTERRANEAN",
+              "GALL",
+              "MARKS",
+              "TRIUNGULIN"
+            ]
+          },
+          "wild": {
+            "type": "boolean"
+          },
+          "alive": {
+            "type": "boolean"
+          },
+          "local": {
+            "type": "boolean"
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "breedingSite": {
+            "type": "boolean"
+          },
+          "plantStatusCode": {
+            "type": "string"
+          },
+          "atlasCode": {
+            "type": "string"
+          },
+          "atlasClass": {
+            "type": "string"
+          },
+          "individualId": {
+            "type": "string"
+          },
+          "notes": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "autocompleteSelectedTaxonId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "externalMediaCount": {
+            "type": "integer"
+          },
+          "facts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwETL_Fact"
+            }
+          },
+          "identificationBasis": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "identifications": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwETL_IdentificationEvent"
+            }
+          },
+          "individualCountFemale": {
+            "type": "integer"
+          },
+          "individualCountMale": {
+            "type": "integer"
+          },
+          "media": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwETL_MediaObject"
+            }
+          },
+          "primarySpecimen": {
+            "type": "boolean"
+          },
+          "reportedInformalTaxonGroup": {
+            "type": "string",
+            "format": "URI"
+          },
+          "reportedTaxonId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "samples": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwETL_Sample"
+            }
+          },
+          "samplingMethod": {
+            "type": "string"
+          },
+          "sourceTags": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "ADMIN_MARKED_SPAM",
+                "ADMIN_MARKED_COARSE",
+                "ADMIN_MARKED_NON_WILD",
+                "EXPERT_TAG_VERIFIED",
+                "EXPERT_TAG_UNCERTAIN",
+                "EXPERT_TAG_ERRONEOUS",
+                "COMMUNITY_TAG_VERIFIED",
+                "AUTO_VALIDATIONS_PASS",
+                "CHECKED_CANNOT_VERIFY",
+                "CHANGED_OWNER_MANUAL",
+                "CHANGED_DW_AUTO",
+                "CHECK",
+                "CHECK_COORDINATES",
+                "CHECK_DATETIME",
+                "CHECK_LOCATION",
+                "CHECK_OBSERVER",
+                "CHECK_TAXON",
+                "CHECK_DUPLICATE",
+                "CHECK_WILDNESS",
+                "CHECK_NEEDS_INFO",
+                "CHECK_SPAM",
+                "CHECK_BREEDING_INDEX",
+                "AUTO_DISTRIBUTION_CHECK",
+                "AUTO_PERIOD_CHECK",
+                "FORMADMIN_CENSUS_COUNT_ERROR",
+                "FORMADMIN_CENSUS_INNER_COUNT_ERROR",
+                "FORMADMIN_CENSUS_OTHER_ERROR",
+                "FORMADMIN_VERIFIED",
+                "FORMADMIN_UNCERTAIN",
+                "INVASIVE_FULL",
+                "INVASIVE_PARTIAL",
+                "INVASIVE_NO_EFFECT",
+                "INVASIVE_NOT_FOUND"
+              ]
+            }
+          },
+          "types": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwETL_TypeSpecimen"
+            }
+          }
+        }
+      },
+      "WarehouseDwETL_Sample": {
+        "type": "object",
+        "properties": {
+          "notes": {
+            "type": "string"
+          },
+          "collectionId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "facts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwETL_Fact"
+            }
+          },
+          "keywords": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "material": {
+            "type": "string"
+          },
+          "multiple": {
+            "type": "boolean"
+          },
+          "quality": {
+            "type": "string"
+          },
+          "sampleId": {
+            "type": "string",
+            "format": "URI"
+          },
+          "status": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string"
+          }
+        }
+      },
+      "WarehouseDwETL_Fact": {
+        "type": "object",
+        "properties": {
+          "fact": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          }
+        }
+      },
+      "WarehouseDwETL_IdentificationEvent": {
+        "type": "object",
+        "properties": {
+          "notes": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "det": {
+            "type": "string"
+          },
+          "detDate": {
+            "type": "string"
+          },
+          "facts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwETL_Fact"
+            }
+          },
+          "id": {
+            "type": "string",
+            "format": "URI"
+          },
+          "preferred": {
+            "type": "boolean"
+          },
+          "taxon": {
+            "type": "string"
+          },
+          "taxonID": {
+            "type": "string",
+            "format": "URI"
+          },
+          "taxonSpecifier": {
+            "type": "string"
+          },
+          "taxonSpecifierAuthor": {
+            "type": "string"
+          }
+        }
+      },
+      "WarehouseDwETL_MediaObject": {
+        "type": "object",
+        "properties": {
+          "author": {
+            "type": "string"
+          },
+          "caption": {
+            "type": "string"
+          },
+          "copyrightOwner": {
+            "type": "string"
+          },
+          "fullResolutionMediaAvailable": {
+            "type": "boolean"
+          },
+          "fullURL": {
+            "type": "string"
+          },
+          "highDetailModelURL": {
+            "type": "string"
+          },
+          "id": {
+            "type": "string",
+            "format": "URI"
+          },
+          "licenseId": {
+            "type": "string"
+          },
+          "lowDetailModelURL": {
+            "type": "string"
+          },
+          "mediaType": {
+            "type": "string",
+            "enum": [
+              "IMAGE",
+              "AUDIO",
+              "VIDEO",
+              "MODEL"
+            ]
+          },
+          "mp3URL": {
+            "type": "string"
+          },
+          "squareThumbnailURL": {
+            "type": "string"
+          },
+          "thumbnailURL": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "format": "URI"
+          },
+          "videoURL": {
+            "type": "string"
+          },
+          "wavURL": {
+            "type": "string"
+          }
+        }
+      },
+      "WarehouseDwETL_UnitQuality": {
+        "type": "object",
+        "properties": {
+          "issue": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwETL_Quality"
+          }
+        }
+      },
+      "WarehouseDwETL_TypeSpecimen": {
+        "type": "object",
+        "properties": {
+          "notes": {
+            "type": "string"
+          },
+          "author": {
+            "type": "string"
+          },
+          "basionymePublication": {
+            "type": "string"
+          },
+          "facts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WarehouseDwETL_Fact"
+            }
+          },
+          "id": {
+            "type": "string",
+            "format": "URI"
+          },
+          "publication": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "format": "URI"
+          },
+          "taxon": {
+            "type": "string"
+          },
+          "taxonID": {
+            "type": "string",
+            "format": "URI"
+          },
+          "taxonSpecifier": {
+            "type": "string"
+          },
+          "taxonSpecifierAuthor": {
+            "type": "string"
+          },
+          "typif": {
+            "type": "string"
+          },
+          "typifDate": {
+            "type": "string"
+          },
+          "verification": {
+            "type": "string",
+            "format": "URI"
+          }
+        }
+      },
+      "WarehouseDwETL_DocumentQuality": {
+        "type": "object",
+        "properties": {
+          "issue": {
+            "type": "object",
+            "$ref": "#/components/schemas/WarehouseDwETL_Quality"
+          }
+        }
+      }
+    }
+  },
+  "resolvedRefs": [
+    "#/components/schemas/WarehouseDwETL_Coordinates",
+    "#/components/schemas/WarehouseDwETL_DateRange",
+    "#/components/schemas/WarehouseDwETL_Document",
+    "#/components/schemas/WarehouseDwETL_DocumentQuality",
+    "#/components/schemas/WarehouseDwETL_DwRoot",
+    "#/components/schemas/WarehouseDwETL_Fact",
+    "#/components/schemas/WarehouseDwETL_Gathering",
+    "#/components/schemas/WarehouseDwETL_GatheringQuality",
+    "#/components/schemas/WarehouseDwETL_IdentificationEvent",
+    "#/components/schemas/WarehouseDwETL_MediaObject",
+    "#/components/schemas/WarehouseDwETL_Quality",
+    "#/components/schemas/WarehouseDwETL_Sample",
+    "#/components/schemas/WarehouseDwETL_TaxonCensus",
+    "#/components/schemas/WarehouseDwETL_TypeSpecimen",
+    "#/components/schemas/WarehouseDwETL_Unit",
+    "#/components/schemas/WarehouseDwETL_UnitQuality",
+    "#/components/schemas/WarehouseDwError"
+  ]
+}

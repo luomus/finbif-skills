@@ -1,0 +1,130 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Laji API",
+    "description": "\n## Authentication\n\nThis API requires an **Access Token**. To obtain a token:\n1. [Send a `POST` request with your email address to the `/api-user` endpoint](https://api.laji.fi/openapi#/API%20user/ApiUsersController_register).\n2. An access token will be sent to your email.\n\nInclude the token in all requests using the HTTP header: `Authorization: Bearer <ACCESS_TOKEN>`\n\nHere on the API frontpage, you can configure the **Access Token**, **Person-Token**, and **Accept-Language** globally using the **Authorize** button below.\n\n---\n\n## Documentation & Resources\n\n- **Additional API documentation:**\n  [https://info.laji.fi/en/frontpage/api/api-laji-fi](https://info.laji.fi/en/frontpage/api/api-laji-fi)\n\n- **OpenAPI / Swagger 3.0 specification (machine-readable):**\n  [https://api.laji.fi/openapi-json](https://api.laji.fi/openapi-json)\n\n---\n\n## Support\n\nIf you have any questions, contact us at **helpdesk@laji.fi**.\n",
+    "version": "1",
+    "contact": {}
+  },
+  "target": {
+    "path": "/trait/trait-groups/{id}",
+    "method": "DELETE"
+  },
+  "pathItem": {
+    "parameters": []
+  },
+  "operation": {
+    "summary": "Delete a trait group",
+    "parameters": [
+      {
+        "name": "id",
+        "in": "path",
+        "required": true,
+        "description": "Id",
+        "schema": {
+          "type": "string"
+        }
+      }
+    ],
+    "responses": {
+      "200": {
+        "description": "Succesful response",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/LajiBackendTraitAPIOKResponse"
+            }
+          }
+        }
+      },
+      "403": {
+        "description": "No access / Invalid authorization",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/LajiBackendTraitAPIError"
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "No entity with the given id",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/LajiBackendTraitAPIError"
+            }
+          }
+        }
+      },
+      "422": {
+        "description": "Validation failure - should call validation endpoints before calling upsert operations.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/LajiBackendTraitAPIError"
+            }
+          }
+        }
+      },
+      "500": {
+        "description": "Unknown failure",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/LajiBackendTraitAPIError"
+            }
+          }
+        }
+      }
+    },
+    "tags": [
+      "Trait"
+    ],
+    "security": [
+      {
+        "Access token": []
+      },
+      {
+        "Lang": []
+      },
+      {
+        "Person token": []
+      }
+    ]
+  },
+  "components": {
+    "schemas": {
+      "LajiBackendTraitAPIOKResponse": {
+        "type": "object",
+        "properties": {
+          "ok": {
+            "type": "string",
+            "description": "ok"
+          }
+        }
+      },
+      "LajiBackendTraitAPIError": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "integer",
+            "description": "HTTP Status Code"
+          },
+          "message": {
+            "type": "string",
+            "description": "Error message"
+          },
+          "stacktrace": {
+            "type": "string",
+            "description": "Stacktrace"
+          }
+        }
+      }
+    }
+  },
+  "resolvedRefs": [
+    "#/components/schemas/LajiBackendTraitAPIError",
+    "#/components/schemas/LajiBackendTraitAPIOKResponse"
+  ]
+}
