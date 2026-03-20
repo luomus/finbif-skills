@@ -1,19 +1,19 @@
 ---
 name: finbif-occurrence
-description: Detailed guide to using occurrence data through FInBIF API, including nature observations, museum specimen records, and biodiversity monitoring data. Use this skill when the user wants to search, filter, download, or analyze occurrence records, or when working with the /warehouse, /collection, /source, /images, or /documents endpoints.
+description: Detailed guide to querying nature observations and biodiversity occurrence records through the FinBIF API at api.laji.fi. Use this skill when the user wants to search, filter, aggregate, count, or analyze species observations, museum specimen records, monitoring data, or any occurrence data from Finland. Also use when working with /warehouse, /collection, /source, /images, or /documents endpoints. Covers the Document→Gathering→Unit data model, all major warehouse query parameters, and common query patterns.
 ---
 
 # Purpose
 
-This skill provides detailed information about the occurrence-related endpoints. For general information about the FinBIF API (e.g. authentication, pagination, error handling, etc.), see the `finbif-api` skill offering general guidance on FinBIF API.
+This skill provides detailed information about the occurrence-related endpoints. For general information about the FinBIF API and example usage, see the `finbif-api` skill. For detailed information about specific endpoints and their parameters, see the `finbif-api-endpoints` skill.
 
 # Occurrence records on FinBIF
 
-Finnish Biodiversity Information Facility (FinBIF) data warehouse holds about 60 million biodiversity occurrence records (i.e. nature observations), most of which are from Finland and from recent decades. They are very varied and compiled from over 30 different data sources and 600 datasets.
+Finnish Biodiversity Information Facility (FinBIF) data warehouse holds about 60 million biodiversity occurrence records (i.e. nature observations), most of which are from Finland and from recent decades. They are very varied and compiled from over 30 different data sources and 600 datasets. They range from citizen science observations to museum specimen records and biodiversity monitoring data collected by research institutes.
 
-95% of the occurrence records are open data and available in detailed format. The remaining 5% are available in a coarsened format for various reasons: species sensitivity, research embargo or by data owners' request. Coarsening makes coordinates and date information less detailed, and hides observer and notes fields.
+95% of the occurrence records are open data and available in detailed format as FAIR data. The remaining 5% are available in a coarsened format for various reasons: species sensitivity, research embargo or by data owners' request. Coarsening makes coordinates and date information less detailed, and hides observer and notes fields.
 
-## Data model
+# Data model
 
 - Occurrence data follows a hierarhical data model: `Document` -> `Gathering` -> `Unit`.
   - `Document` is the top level entity containing metadata about how the data was collected, e.g. observer, date, collection, keywords, etc.
@@ -24,46 +24,42 @@ Finnish Biodiversity Information Facility (FinBIF) data warehouse holds about 60
 - For nature observations, a `Document` is usually an event containing rich data about one to many observations i.e. `Units`.
 - Images can be associated with any of the entities in the data model, but most commonly with `Units`.
 
-# OpenAPI specs
-
-The OpenAPI spec of the API is at https://api.laji.fi/openapi-json in OpenAPI 3.x JSON format. Refer to the `finbif-api` skill for how to programmatically fetch the spec.
-
-## Important Endpoints
+# Important Endpoints
 
 These are the most commonly used occurrence-related endpoints of the FInBIF API related to occurrence data.
 
-### `/warehouse`
+## `/warehouse`
 
-Querying occurrence data from FinBIF data warehouse. Can be also used to send data to the data warehouse.
+Querying occurrence data from FinBIF data warehouse. Can be also used to send data to the data warehouse. When working with occurrence data, use units as the primary entity.
 
-Shared parameters:
+**Shared parameters:**
 
-- `pageSize` - Number of records to return per page. Default is 100. Maximum is 1000.
-- `page` - Page number to return. Default is 1.
-- `cache` - Whether to use cached data.
-- `useIdentificationAnnotations` - Whether to include identifications changed by user annotations. Default is true.
-- `includeSubTaxa` - Whether to include sub-taxa of the given taxon.
-- `includeNonValidTaxa` - Whether to include non-valid taxa.
-- `individualCountMin` - Minimum number of individuals in the unit.
-- `includeNullLoadDates` - Whether to include units with null load dates.
-- `wild` - Wildness. Byt default non-wild units are excluded.
-- `qualityIssues` - Quality issues. By default units with quality issues are excluded.
+- `pageSize` integer - Number of records to return per page. Default is 100. Maximum is 1000.
+- `page` integer - Page number to return. Default is 1.
+- `cache` boolean - Whether to use cached data.
+- `useIdentificationAnnotations` boolean - Whether to include identifications changed by user annotations. Default is true.
+- `includeSubTaxa` boolean - Whether to include sub-taxa of the given taxon.
+- `includeNonValidTaxa` boolean - Whether to include non-valid taxa.
+- `individualCountMin` integer - Minimum number of individuals in the unit.
+- `includeNullLoadDates` boolean - Whether to include units with null load dates.
+- `wild` string - Wildness. Byt default non-wild units are excluded.
+- `qualityIssues` string - Quality issues. By default units with quality issues are excluded.
 
-Commonly used parameters:
+**Commonly used parameters:**
 
-- `informalTaxonGroupId` - Informal taxon group ID.
-- `informalTaxonGroupIdNot` - Informal taxon group ID to exclude.
-- `countryId` - Country ID. Finland is `ML.206`.
-- `time` - Time range in ISO 8601 format or number of days before present (e.g. `-6/0` for the last week).
-- `biogeographicalProvinceId` - Biogeographical province ID.
+- `informalTaxonGroupId` string - Informal taxon group qname identifier.
+- `informalTaxonGroupIdNot` string - Informal taxon group qname identifier to exclude.
+- `countryId` string - Country qname identifier. Finland is `ML.206`.
+- `time` string - Time range in ISO 8601 format or number of days before present (e.g. `-6/0` for the last week).
+- `biogeographicalProvinceId` string - Biogeographical province qname identifier.
 - `target` - Taxon name to search for. Multiple values are seperated by ','. When multiple values are given, this is an OR search.
 - `finnish` boolean - Include only taxa defined as Finnish.
 - `invasive` boolean - Include only invasive species.
 - `sensitive` boolean - Include only sensitive species.
-- `finnishMunicipalityId` - Finnish municipality ID.
-- `timeAccuracy` - Include entries where time span in days is less or equal to the given value. Useful for fenology studies since excludes records with low time accuracy.
-- `season` - Day ignoring year. For example `1/59` gives all records for Jan-Feb.
-- `collectionId` - Collection ID.
+- `finnishMunicipalityId` string - Finnish municipality qname identifier.
+- `timeAccuracy` integer - Include entries where time span in days is less or equal to the given value. Useful for fenology studies since excludes records with low time accuracy.
+- `season` string - Day ignoring year. For example `1/59` gives all records for Jan-Feb.
+- `collectionId` string - Collection qname identifier.
 
 Example: Fetch bird observations from Finland during the the last week:
 
@@ -95,6 +91,7 @@ curl -X 'GET' \
   -H 'Authorization: Bearer <ACCESS TOKEN>' \
   -H 'Accept-Language: fi' \
   -H 'API-Version: 1'
+```
 
 Example: Fetch number of insect observations:
 
@@ -107,7 +104,7 @@ curl -X 'GET' \
   -H 'API-Version: 1'
 ```
 
-#### `/collection`
+## `/collection`
 
 Metadata about occurrence datasets/collections. All occurrences belong to one collection and the metadata provides information about the dataset.
 
@@ -122,7 +119,7 @@ curl -X 'GET' \
   -H 'API-Version: 1'
 ```
 
-#### `/images`
+## `/images`
 
 Images associated with occurrences records.
 

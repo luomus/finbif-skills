@@ -1,11 +1,11 @@
 ---
 name: finbif-api
-description: General guide to the FinBIF (Finnish Biodiversity Information Facility) REST API at api.laji.fi. Use this skill whenever the user is building something that uses the FinBIF API or data. Covers overview of the API, authentication, pagination, rate limiting, error handling etc. Start here for any FinBIF data or API-related task.
+description: General guide to the FinBIF (Finnish Biodiversity Information Facility) REST API at api.laji.fi. Use this skill whenever the user mentions FinBIF, laji.fi, Finnish biodiversity data, Finnish species observations, or is building anything that queries biodiversity/nature data from Finland. Covers authentication, pagination, rate limiting, error handling, and endpoint overview. This is the starting point — read this first for any FinBIF-related task.
 ---
 
 # Purpose
 
-This skill provides high-level information about the FinBIF API at `https://api.laji.fi/`, which provides open data about biodiversity in Finland, hosted by the Finnish Biodiversity Information Facility (FinBIF).
+This skill provides high-level information about the FinBIF API at `https://api.laji.fi`, which provides open data about biodiversity in Finland, hosted by the Finnish Biodiversity Information Facility (FinBIF).
 
 If the task is clearly about one API area, prefer the matching specialized skill over this general skill:
 
@@ -20,7 +20,7 @@ Every request must include API-Version and Accept headers:
 `API-Version: 1`
 `Accept: application/json`
 
-Each entity in the API has a unique HTTP-URI identifier, for example `http://tun.fi/MX.123`. The identifier is usually prefixed with `http://tun.fi/`. Museum specimens have identifiers can have different prefixes, e.g. `http://id.luomus.fi/`. Usually only the short qname format `MX.123` is used.
+Each entity in the API has a unique HTTP-URI identifier, for example `http://tun.fi/MX.123`. The identifier is usually prefixed with `http://tun.fi/`. Museum specimens have identifiers can have different prefixes, e.g. `http://id.luomus.fi`. Usually only the short qname format `MX.123` is used.
 
 ## Authentication
 
@@ -31,6 +31,7 @@ Every request must include Authorization header:
 To obtain an access token:
 1. Send a `POST` request with your email address to `/api-user` (see `api.laji.fi` for details).
 2. FinBIF sends the access token to your email.
+3. Store the token in a secure location and use it in all requests to the API.
 
 Example:
 
@@ -39,6 +40,7 @@ curl -X 'GET' \
   'https://api.laji.fi/taxa' \
   -H 'Authorization: Bearer <ACCESS TOKEN>' \
   -H 'API-Version: 1' \
+  -H 'Accept-Language: fi' \
   -H 'Accept: application/json'
 ```
 
@@ -48,7 +50,7 @@ Other token types exist and are not the same as the REST API access token:
 
 ## Language
 
-Use the standard `Accept-Language` header with values `en`, `fi`, or `sv`.
+Use the standard `Accept-Language` header with values `en`, `fi`, or `sv`. Defaults to `en` if not specified.
 
 ## Pagination
 
@@ -93,7 +95,7 @@ Use `cache=true` GET parameter unless you require data that is fresher than 1 ho
 
 ## Test API
 
-Test/development API at http://apitest.laji.fi has the same features as the production API but can have less data and some of it is be bogus test data. It is best to start with the test API and move on to the production API after your application is in stable state.
+Test/development API at https://apitest.laji.fi has the same features as the production API but can have less data and some of it is be bogus test data. It is best to start with the test API and move on to the production API after your application is in stable state.
 
 The test API may have bugs and new features that are not been noted in official documentation.
 
@@ -105,54 +107,27 @@ The following are the most commonly used endpoints of the API. To see all endpoi
 
 ### Occurrence data (i.e. nature observations)
 
-Use `occurrence-skill` for more details about occurrence-related endpoints.
+Use `finbif-occurrence` skill for more details about occurrence-related endpoints.
 
 - `/warehouse` – Querying occurrence data from FinBIF data warehouse. Can be also used to send data to the data warehouse.
 - `/collections` – Metadata about occurrence datasets/collections. All occurrences belong to one collection and the metadata provides information about the dataset.
 - `/source` – Data source. Each occurrence has a source. The source might be an IT-system, but also an Excel spreadsheet copied to FinBIF for long term storage, etc.
 - `/documents` – Metadata about occurrence documents. Each occurrence belongs to one document.
-- `/images` – Images associated with occurrences records.
-- `/audio` – Audio associated with occurrences records.
+- `/images` – Images associated with occurrence records.
+- `/audio` – Audio associated with occurrence records.
 
-Example: Fetch bird observations from Finland during the the last week:
-
-```bash
-curl -X 'GET' \
-  'https://api.laji.fi/warehouse/query/unit/list?pageSize=100&page=1&cache=true&useIdentificationAnnotations=true&includeSubTaxa=true&includeNonValidTaxa=true&informalTaxonGroupId=MVL.1&countryId=ML.206&time=-6%2F0&individualCountMin=1&includeNullLoadDates=false&wild=WILD%2CUNKNOWN&qualityIssues=NO_ISSUES' \
-  -H 'accept: application/json' \
-  -H 'Authorization: Bearer <ACCESS TOKEN>' \
-  -H 'API-Version: 1'
-```
-
-Example: Fetch an image using its qname identifier `MM.3668604`:
-
-```bash
-curl -X 'GET' \
-  'https://api.laji.fi/images/MM.3668604' \
-  -H 'accept: application/json' \
-  -H 'Authorization: Bearer <ACCESS TOKEN>' \
-  -H 'API-Version: 1'
-```
+See `finbif-occurrence` skill for query examples.
 
 ### Taxonomy
 
-Use `taxonomy-skill` for more details about taxonomy-related endpoints.
+Use `finbif-taxonomy` skill for more details about taxonomy-related endpoints.
 
 - `/taxa` – Information about naming of organisms, classifying organisms in a hierarchical system or in taxonomic ranks, distribution data and biological interactions, identifiers across different systems, etc.
 - `/informal-taxon-groups` – Informal groups may be taxonomic groups (such as Aves) or can be used to group similar species together (for example Aphyllophoroid fungi). Some species do not belong to any informal groups and some may belong to several. Informal groups can be used to filter taxa and occurrences.
 - `/checklists` - Checklists taxa belong to
 - `/autocomplete` - Autocomplete for taxa, persons, friends, etc.
 
-Example: Get information about Whooper Swan (Cygnus cygnus) taxon with qname `MX.26280`:
-
-```bash
-curl -X 'GET' \
-  'https://api.laji.fi/taxa/MX.26280?includeMedia=false&includeDescriptions=false&includeRedListEvaluations=false&checklistVersion=current' \
-  -H 'accept: application/json' \
-  -H 'Authorization: Bearer <ACCESS TOKEN>' \
-  -H 'Accept-Language: fi' \
-  -H 'API-Version: 1'
-```
+See `finbif-taxonomy` skill for query examples.
 
 ### Other endpoints
 
@@ -161,7 +136,7 @@ curl -X 'GET' \
 - `/named-places` - Places associated with Vihko form and monitoring projects
 - `/person` - Laji.fi users information
 - `/api-user` - API user information
-- `/annotations` - Annotations associated with occurrences records
+- `/annotations` - Annotations associated with occurrence records
 - `/notifications` - Notifications sent for users regarding their obsrervations
 - `/information` - Laji.fi information page content
 - `/metadata` – Variable names, descriptions, ranges, enumeration values, etc. used in this API in three languages. This data can be browsed at http://schema.laji.fi in human readable format.

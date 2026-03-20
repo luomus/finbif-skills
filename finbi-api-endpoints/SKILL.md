@@ -1,6 +1,6 @@
 ---
 name: finbif-api-endpoints
-description: Skill to get detailed information of specific FinBIF API endpoints at api.laji.fi. Use this skill when you need to see all available endpoints or more information about a specific endpoint.
+description: Detailed OpenAPI reference for every FinBIF API endpoint at api.laji.fi. Use this skill when you need exact parameter names, types, required fields, response schemas, or query string options for any specific endpoint. Contains a lookup table mapping each endpoint to its OpenAPI spec file. Use this after consulting finbif-api (general) or other skills when you need precise parameter-level detail to construct an API call correctly.
 ---
 
 # Purpose
@@ -11,9 +11,17 @@ This skill provides detailed information about specific FinBIF API endpoints. Fo
 
 The OpenAPI specification of the API is at https://api.laji.fi/openapi-json in OpenAPI 3.x JSON format. It is very large, so prefer using references associated with this skill.
 
-Base URL for all endpoints is `https://api.laji.fi`.
+Base URL for all endpoints is `https://api.laji.fi`
 
-`references` folder inside this skillcontains OpenAPI spefication document of each endpoint:
+## Endpoint Eeference Files
+
+`references` folder inside this skill contains OpenAPI spefication document of each endpoint. Each reference file is a JSON document containing the OpenAPI 3.x specification for that single endpoint. It includes:
+
+- Parameter names, types, and descriptions
+- Required vs optional parameters
+- Response schema
+
+To use, read the reference file for the endpoint you need, then extract the parameter details to construct your API call. Don't read reference files speculatively — only load the specific endpoint file you need for the task at hand.
 
 METHOD | ENDPOINT_PATH | REFERENCE_FILE
 GET | /forms/{id}/participants | references/get_forms_{id}_participants.json
