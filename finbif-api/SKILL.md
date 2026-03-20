@@ -13,13 +13,6 @@ If the task is clearly about one API area, prefer the matching specialized skill
 - `finbif-taxonomy` for taxon lookup and taxonomic metadata
 - `finbif-api-endpoints` for a list of all API endpoints and detailed information about each
 
-# OpenAPI specs
-
-The OpenAPI spec of the API is at https://api.laji.fi/openapi-json in OpenAPI 3.x JSON format. It is very large with >100 endpoints, so fetch it programmatically. You are encouraged to explore the API using these scripts associated with this skill:
-
-- `scripts/list_endpoints.py` - lists all endpoints.
-- `scripts/fetch_endpoint.py` - fetches more details about a specific endpoint.
-
 # Using the FinBIF API
 
 Every request must include API-Version and Accept headers:
@@ -115,9 +108,11 @@ The following are the most commonly used endpoints of the API. To see all endpoi
 Use `occurrence-skill` for more details about occurrence-related endpoints.
 
 - `/warehouse` – Querying occurrence data from FinBIF data warehouse. Can be also used to send data to the data warehouse.
-- `/collection` – Metadata about occurrence datasets/collections. All occurrences belong to one collection and the metadata provides information about the dataset.
+- `/collections` – Metadata about occurrence datasets/collections. All occurrences belong to one collection and the metadata provides information about the dataset.
 - `/source` – Data source. Each occurrence has a source. The source might be an IT-system, but also an Excel spreadsheet copied to FinBIF for long term storage, etc.
+- `/documents` – Metadata about occurrence documents. Each occurrence belongs to one document.
 - `/images` – Images associated with occurrences records.
+- `/audio` – Audio associated with occurrences records.
 
 Example: Fetch bird observations from Finland during the the last week:
 
@@ -144,7 +139,9 @@ curl -X 'GET' \
 Use `taxonomy-skill` for more details about taxonomy-related endpoints.
 
 - `/taxa` – Information about naming of organisms, classifying organisms in a hierarchical system or in taxonomic ranks, distribution data and biological interactions, identifiers across different systems, etc.
-- `/informalTaxonGroup` – Informal groups may be taxonomic groups (such as Aves) or can be used to group similar species together (for example Aphyllophoroid fungi). Some species do not belong to any informal groups and some may belong to several. Informal groups can be used to filter taxa and occurrences.
+- `/informal-taxon-groups` – Informal groups may be taxonomic groups (such as Aves) or can be used to group similar species together (for example Aphyllophoroid fungi). Some species do not belong to any informal groups and some may belong to several. Informal groups can be used to filter taxa and occurrences.
+- `/checklists` - Checklists taxa belong to
+- `/autocomplete` - Autocomplete for taxa, persons, friends, etc.
 
 Example: Get information about Whooper Swan (Cygnus cygnus) taxon with qname `MX.26280`:
 
@@ -157,10 +154,24 @@ curl -X 'GET' \
   -H 'API-Version: 1'
 ```
 
-### Other
+### Other endpoints
 
+- `/forms` - Notebook (Vihko forms)
+- `/form-permissions` - Permissions for Notebook (Vihko forms)
+- `/named-places` - Places associated with Vihko form and monitoring projects
+- `/person` - Laji.fi users information
+- `/api-user` - API user information
+- `/annotations` - Annotations associated with occurrences records
+- `/notifications` - Notifications sent for users regarding their obsrervations
+- `/information` - Laji.fi information page content
 - `/metadata` – Variable names, descriptions, ranges, enumeration values, etc. used in this API in three languages. This data can be browsed at http://schema.laji.fi in human readable format.
-- `/area` – Countries, Finnish municipalities, Finnish biogeographical provinces, etc.
+- `/areas` – Countries, Finnish municipalities, Finnish biogeographical provinces, etc.
+- `/organizations` - Organizations owning datasets
+- `/sound-identification` - Sound identification AI
+- `/shorthand` - Shorthand for entering observations to Notebook (Vihko) forms
+- `/sources` - Sources of occurrences, e.g. applications, Excel spreadsheets, etc.
+- `/red-list-evaluation-groups` - Red list evaluation groups
+- `/login` - For logging in users to native applications
 
 Example: Get all alternative names as a lookup object where keys are property names and values are the alternative names:
 

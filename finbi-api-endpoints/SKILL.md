@@ -1,17 +1,19 @@
 ---
 name: finbif-api-endpoints
-description: Skill to get detailed information of specific FinBIF API endpoints. Use this skill when you know which endpoint you want to use and need to know more about it.
+description: Skill to get detailed information of specific FinBIF API endpoints at api.laji.fi. Use this skill when you need to see all available endpoints or more information about a specific endpoint.
 ---
 
 # Purpose
 
-This skill provides detailed information about specific FinBIF API endpoints. For general information about the FinBIF API (e.g. authentication, pagination, error handling, etc.), see the `finbif-api` skill.
+This skill provides detailed information about specific FinBIF API endpoints. For general information about the FinBIF API (e.g. authentication, pagination, error handling, etc.) and example usage, see the `finbif-api` skill.
 
-# Endpoints
+# API Endpoints
+
+The OpenAPI specification of the API is at https://api.laji.fi/openapi-json in OpenAPI 3.x JSON format. It is very large, so prefer using references associated with this skill.
 
 Base URL for all endpoints is `https://api.laji.fi`.
 
-`references` folder contains OpenAPI spefication document of each endpoint:
+`references` folder inside this skillcontains OpenAPI spefication document of each endpoint:
 
 METHOD | ENDPOINT_PATH | REFERENCE_FILE
 GET | /forms/{id}/participants | references/get_forms_{id}_participants.json
@@ -142,7 +144,6 @@ GET | /shorthand/unit/trip-report | references/get_shorthand_unit_trip-report.js
 GET | /shorthand/unit/list | references/get_shorthand_unit_list.json
 GET | /shorthand/unit/line-transect | references/get_shorthand_unit_line-transect.json
 GET | /shorthand/unit/water-bird-pair-count | references/get_shorthand_unit_water-bird-pair-count.json
-POST | /coordinates/location | references/post_coordinates_location.json
 GET | /sources/{id} | references/get_sources_{id}.json
 GET | /sources | references/get_sources.json
 GET | /red-list-evaluation-groups | references/get_red-list-evaluation-groups.json
@@ -174,4 +175,5 @@ GET | /warehouse/filters | references/get_warehouse_filters.json
 GET | /warehouse/filters/{filter} | references/get_warehouse_filters_{filter}.json
 POST | /warehouse/polygon | references/post_warehouse_polygon.json
 GET | /warehouse/polygon/{id} | references/get_warehouse_polygon_{id}.json
+
 
