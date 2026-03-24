@@ -15,7 +15,7 @@ If the task is clearly about one API area, prefer the matching specialized skill
 
 # Using the FinBIF API
 
-Every request must include API-Version and Accept headers:
+Every request must include API-Version header:
 
 `API-Version: 1`
 `Accept: application/json`
@@ -33,7 +33,7 @@ To obtain an access token:
 2. FinBIF sends the access token to your email.
 3. Store the token in a secure location and use it in all requests to the API.
 
-Example:
+Example on how to call the API with the access token:
 
 ```bash
 curl -X 'GET' \
@@ -48,9 +48,13 @@ Other token types exist and are not the same as the REST API access token:
 - `Person-Token` (`Person-Token: <PERSON TOKEN>`) identifies the user. Required by endpoints that return logged-in user info or execute with user permissions.
 - `Permission-Token` (`Permission-Token: <PERMISSION TOKEN>`) is system-specific and used with `/warehouse` for limited access to secured/private occurrence data according to the granted data request scope and validity period.
 
+## Content Type
+
+Use the `Accept` header with value `application/json`. Defaults to `application/json` if not specified.
+
 ## Language
 
-Use the standard `Accept-Language` header with values `en`, `fi`, or `sv`. Defaults to `en` if not specified.
+Use the `Accept-Language` header with values `en`, `fi`, or `sv`. Defaults to `en` if not specified.
 
 ## Pagination
 

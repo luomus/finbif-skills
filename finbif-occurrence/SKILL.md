@@ -61,6 +61,8 @@ Querying occurrence data from FinBIF data warehouse. Can be also used to send da
 - `season` string - Day ignoring year. For example `1/59` gives all records for Jan-Feb.
 - `collectionId` string - Collection qname identifier.
 
+Tip: Easy way to get correct parameters for fetching occurrence records is to use the manual observation search UI at https://laji.fi/en/observation to explore what you want to fetch, then copy the URL and use the parameters from the URL.
+
 Example: Fetch bird observations from Finland during the the last week:
 
 ```bash
