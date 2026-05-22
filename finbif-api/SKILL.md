@@ -9,8 +9,8 @@ This skill provides high-level information about the FinBIF API at `https://api.
 
 If the task is clearly about one API area, prefer the matching specialized skill over this general skill:
 
-- `finbif-occurrence` for occurrence search and filtering
-- `finbif-taxonomy` for taxon lookup and taxonomic metadata
+- `finbif-api-occurrence` for occurrence search and filtering
+- `finbif-api-taxonomy` for taxon lookup and taxonomic metadata
 - `finbif-api-endpoints` for a list of all API endpoints and detailed information about each
 
 # Using the FinBIF API
@@ -111,7 +111,7 @@ The following are the most commonly used endpoints of the API. To see all endpoi
 
 ### Occurrence data (i.e. nature observations)
 
-Use `finbif-occurrence` skill for more details about occurrence-related endpoints.
+Use `finbif-api-occurrence` skill for more details about occurrence-related endpoints.
 
 - `/warehouse` – Querying occurrence data from FinBIF data warehouse. Can be also used to send data to the data warehouse.
 - `/collections` – Metadata about occurrence datasets/collections. All occurrences belong to one collection and the metadata provides information about the dataset.
@@ -120,18 +120,18 @@ Use `finbif-occurrence` skill for more details about occurrence-related endpoint
 - `/images` – Images associated with occurrence records.
 - `/audio` – Audio associated with occurrence records.
 
-See `finbif-occurrence` skill for query examples.
+See `finbif-api-occurrence` skill for query examples.
 
 ### Taxonomy
 
-Use `finbif-taxonomy` skill for more details about taxonomy-related endpoints.
+Use `finbif-api-taxonomy` skill for more details about taxonomy-related endpoints.
 
 - `/taxa` – Information about naming of organisms, classifying organisms in a hierarchical system or in taxonomic ranks, distribution data and biological interactions, identifiers across different systems, etc.
 - `/informal-taxon-groups` – Informal groups may be taxonomic groups (such as Aves) or can be used to group similar species together (for example Aphyllophoroid fungi). Some species do not belong to any informal groups and some may belong to several. Informal groups can be used to filter taxa and occurrences.
 - `/checklists` - Checklists taxa belong to
 - `/autocomplete` - Autocomplete for taxa, persons, friends, etc.
 
-See `finbif-taxonomy` skill for query examples.
+See `finbif-api-taxonomy` skill for query examples.
 
 ### Other endpoints
 

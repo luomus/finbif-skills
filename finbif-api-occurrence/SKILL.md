@@ -1,6 +1,6 @@
 ---
-name: finbif-occurrence
-description: Detailed guide to querying nature observations and biodiversity occurrence records through the FinBIF API at api.laji.fi. Use this skill when the user wants to search, filter, aggregate, count, or analyze species observations, museum specimen records, monitoring data, or any occurrence data from Finland. Also use when working with /warehouse, /collection, /source, /images, or /documents endpoints. Covers the Document→Gathering→Unit data model, all major warehouse query parameters, and common query patterns.
+name: finbif-api-occurrence
+description: Detailed guide to querying biodiversity occurrence records (i.e., nature observations) through the FinBIF API at api.laji.fi. Use this skill when the user wants to search, filter, aggregate, count, or analyze species observations, museum specimen records, monitoring data, or any occurrence data from Finland using THE API. Also use when working with /warehouse, /collection, /source, /images, or /documents endpoints. Covers the Document→Gathering→Unit data model, all major warehouse query parameters, and common query patterns.
 ---
 
 # Purpose
